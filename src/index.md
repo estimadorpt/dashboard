@@ -9,8 +9,9 @@ toc: false
 This map shows the current forecast for the leading party in each electoral district based on our dynamic Bayesian model.
 
 ```js
-// Import the map component
+// Import the map component AND the new chart component
 import { districtMap } from "./components/district-map.js";
+import { nationalTrendsChart } from "./components/national-trends-chart.js";
 // Remove direct loader import
 // import districtForecastLoader from "./data/district_forecast.csv.js"; 
 ```
@@ -18,6 +19,9 @@ import { districtMap } from "./components/district-map.js";
 ```js
 // Load TopoJSON
 const portugalTopoJson = await FileAttachment("data/Portugal-Distritos-Ilhas_TopoJSON.json").json();
+
+// Load National Trends data using its loader
+const nationalTrends = await FileAttachment("data/national_trends.csv").csv({typed: true});
 
 // Define a block to load data implicitly via loader and generate map
 const districtMapPlot = (async () => { 
@@ -49,13 +53,19 @@ const districtMapPlot = (async () => {
   </figure>
 </div>
 
+## National Trends
+
+<div class="card">
+  <h2>National Vote Intention</h2>
+  <p>Modeled national vote share for major parties over time, including 95% credible intervals.</p>
+  <figure>
+    ${resize((width) => nationalTrendsChart(nationalTrends, {width}))}
+  </figure>
+</div>
+
 ## Methodology
 
 (Placeholder for methodology explanation - we can add content from your description later)
-
-## National Trends
-
-(Placeholder for national trends chart)
 
 ## Seat Forecast
 
