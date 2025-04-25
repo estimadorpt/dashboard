@@ -9,7 +9,10 @@
     "observable": "observable"
   },
   "dependencies": {
-    "@observablehq/framework": "^1.13.3"
+    "@observablehq/framework": "^1.13.3",
+    "@observablehq/plot": "^0.6.17",
+    "d3": "^7.9.0",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "rimraf": "^5.0.5"
