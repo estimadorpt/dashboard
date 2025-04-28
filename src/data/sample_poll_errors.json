@@ -1,0 +1,22 @@
+[
+  {
+    "pollster": "Aximage",
+    "party": "PS",
+    "error_pct": -1.5
+  },
+  {
+    "pollster": "Aximage",
+    "party": "AD",
+    "error_pct": 2.1
+  },
+  {
+    "pollster": "CESOP",
+    "party": "PS",
+    "error_pct": 0.8
+  },
+  {
+    "pollster": "CESOP",
+    "party": "AD",
+    "error_pct": -0.5
+  }
+] 

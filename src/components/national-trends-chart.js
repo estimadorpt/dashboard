@@ -20,38 +20,51 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
     return new DocumentFragment();
   }
 
+  // Ensure all date fields are Date objects
+  const typedTrendsData = trendsData.map(d => ({
+    ...d,
+    date: new Date(d.date) // Parse date string to Date object
+  })).filter(d => !isNaN(d.date.getTime())); // Filter out invalid dates
+
+  console.log("[TrendsChart] Parsed dates in typedTrendsData:", typedTrendsData);
+
   // Separate the mean, low, and high values for plotting
-  const meanData = trendsData.filter(d => d.metric === 'vote_share_mean');
+  // Use the data with parsed dates
+  const meanData = typedTrendsData.filter(d => d.metric === 'vote_share_mean');
   console.log("[TrendsChart] Filtered meanData:", meanData);
   
   // Need to pivot the low/high data for the ribbon plot
-  const rawIntervalData = trendsData.filter(d => d.metric !== 'vote_share_mean');
+  // Use the data with parsed dates
+  const rawIntervalData = typedTrendsData.filter(d => d.metric !== 'vote_share_mean');
   console.log("[TrendsChart] Filtered rawIntervalData:", rawIntervalData);
-  const groupedIntervalData = d3.group(rawIntervalData, d => `${d.date}|${d.party}`);
+  // Group by date *object* and party now
+  const groupedIntervalData = d3.group(rawIntervalData, d => `${d.date.toISOString()}|${d.party}`); 
   console.log("[TrendsChart] Grouped interval data:", groupedIntervalData);
 
   const intervalData = Array.from(
     groupedIntervalData,
     ([key, values]) => {
-      const [dateStr, party] = key.split('|');
+      const [dateISOStr, party] = key.split('|');
       // --- Debug Date Parsing ---
-      const attemptedDate = new Date(dateStr);
-      if (isNaN(attemptedDate.getTime())) {
-          console.warn(`[TrendsChart] Invalid date string found: ${dateStr}`);
-      }
+      // const attemptedDate = new Date(dateStr);
+      // if (isNaN(attemptedDate.getTime())) {
+      //     console.warn(`[TrendsChart] Invalid date string found: ${dateStr}`);
+      // }
       // --- End Debug ---
-      const date = attemptedDate; // Use the parsed date
+      // const date = attemptedDate; // Use the parsed date
+      // Date is already an object from grouping key
+      const date = new Date(dateISOStr);
       const low = values.find(d => d.metric === 'vote_share_low95')?.value;
       const high = values.find(d => d.metric === 'vote_share_high95')?.value;
       return { date, party, low, high };
     }
-  ).filter(d => d.low !== undefined && d.high !== undefined && !isNaN(d.date.getTime())); // Ensure pairs exist & date is valid
-  console.log("[TrendsChart] Pivoted intervalData for ribbon:", intervalData);
-
-  if (meanData.length === 0 || intervalData.length === 0) {
-      console.warn("[TrendsChart] Processed data for Plot is empty (mean or interval). Cannot plot.");
-      return new DocumentFragment();
-  }
+  ).filter(d => d.low !== undefined && d.high !== undefined); // Date validity already checked
+  // console.log("[TrendsChart] Pivoted intervalData for ribbon:", intervalData);
+  // Redundant check - already filtered
+  // if (meanData.length === 0 || intervalData.length === 0) {
+  //     console.warn("[TrendsChart] Processed data for Plot is empty (mean or interval). Cannot plot.");
+  //     return new DocumentFragment();
+  // }
 
   // --- Plotting ---
   console.log("[TrendsChart] Attempting Plot.plot...");
@@ -68,6 +81,8 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
           percent: true // Format axis as percent
       },
       x: { 
+          // Explicitly set scale type to utc for dates
+          type: "utc", 
           label: "Date"
       },
       color: { 
@@ -83,7 +98,17 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
           y1: d => d.low / 100, 
           y2: d => d.high / 100,
           fill: "party",
-          fillOpacity: 0.2
+          fillOpacity: 0.2,
+          // Add tip for interval band as well
+          tip: {
+            format: {
+              x: true, // Use default date format
+              y: false, // Don't show y value for band
+              fill: true, // Show party
+              // Custom title for interval
+              title: (d) => `${d.party}\n${(d.low).toFixed(1)}% - ${(d.high).toFixed(1)}%`
+            }
+          }
         }),
         // Mean Trend Line
         Plot.line(meanData, {
