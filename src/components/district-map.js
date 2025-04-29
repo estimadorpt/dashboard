@@ -1,6 +1,7 @@
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
+import {html} from "npm:htl";
 
 // Import geoPath for bounds calculation
 import { geoPath } from "d3-geo";
@@ -71,15 +72,17 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
   };
 
   // 2. Process forecast data to find the winning party per district/region
-  const forecastByDistrict = d3.group(districtForecast, d => d.district_id); 
+  const forecastByDistrict = d3.group(districtForecast, d => d.district_id);
   // console.log("Forecast grouped by district:", forecastByDistrict);
   const winningParty = new Map();
+  const districtProbs = new Map();
   let maxVoteShare;
   let winner;
 
   for (const [district, parties] of forecastByDistrict) {
     maxVoteShare = -1;
-    winner = partyColors.default; 
+    winner = partyColors.default;
+    districtProbs.set(district, parties.map(p => ({ party: p.party, prob: p.vote_share_mean })));
     for (const partyData of parties) {
       if (partyData.vote_share_mean > maxVoteShare) {
         maxVoteShare = partyData.vote_share_mean;
@@ -89,6 +92,7 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
     winningParty.set(district, winner);
   }
   // console.log("Winning party map:", winningParty);
+  // console.log("District Probs map:", districtProbs);
 
   // 3. Create a map to look up forecast data and identify islands
   const geometryDataMap = new Map();
@@ -109,7 +113,7 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
 
       geometryDataMap.set(geometryName, {
           winner: winnerForRegion || partyColors.default,
-          forecast: forecast || [] 
+          forecast: districtProbs.get(regionOrDistrictName) || []
       });
   }
 
@@ -118,17 +122,30 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
     console.warn("Geometry Data Map is empty, check processing logic and NAME_1 matching.");
   }
 
+  // NEW: Log sample feature before plotting
+  if (districts.features && districts.features.length > 0) {
+    console.log("[districtMap] Sample feature data before plot:", districts.features[0]);
+    console.log("[districtMap] Sample feature NAME_1:", districts.features[0]?.properties?.NAME_1);
+  }
+
   // 4. Create the Plot
   try {
     // console.log("Attempting Plot.plot...");
+
+    // REMOVED: Plot.pointer state definition
+    // const pointer = Plot.pointer(...);
+
+    // Variable to store last hovered key on the plot element itself
+    // Initialized here, used in listeners below
+
     const plot = Plot.plot({
       // width, // Let Plot determine width automatically for now
-      // Try Conic Equal Area projection, centered, with domain
+      // REMOVED: state option
+      // state: { pointer }, 
       projection: {
         type: "conic-equal-area",
         domain: districts,
-        rotate: [8.5, -39.5] // Center roughly on Portugal (lon, lat)
-        // parallels: [38, 40] // Optionally add standard parallels if needed
+        rotate: [8.5, -39.5] 
       },
       color: {
         domain: Object.keys(partyColors).filter(p => p !== 'default'),
@@ -141,24 +158,76 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
           fill: (d) => getColor(geometryDataMap.get(d.properties.NAME_1)?.winner),
           stroke: "white",
           strokeWidth: 0.5,
-          title: (d) => {
-              const name = d.properties.NAME_1;
-              const data = geometryDataMap.get(name);
-              let forecastString = 'No forecast data';
-              if (data?.forecast && data.forecast.length > 0) {
-                  forecastString = data.forecast.map(p => {
-                      return `  ${p.party}: ${p.vote_share_mean.toFixed(1)}% (${p.vote_share_low95.toFixed(1)}-${p.vote_share_high95.toFixed(1)}%)`;
-                  }).join("\n");
-              }
-              return name + "\n" +
-                     "Leading: " + (data?.winner || 'N/A') + "\n" +
-                     "Forecast:\n" + forecastString;
-          }
-        }),
-        // Plot.geo(districts, { stroke: "#aaa", strokeWidth: 0.25, fill: "none" })
+          pointer: "xy",
+        })
       ]
     });
     // console.log("Plot.plot succeeded.");
+
+    // REVISED: Click listener uses event.target.__data__ 
+    plot.addEventListener("click", (event) => {
+        console.log("[districtMap] Plot CLICK event fired.");
+        console.log("[districtMap] event.target:", event.target);
+
+        // Check if the __data__ property holds an index (number)
+        const featureIndex = typeof event.target?.__data__ === 'number' ? event.target.__data__ : undefined;
+        console.log("[districtMap] Index from event.target.__data__:", featureIndex);
+
+        let clickedFeatureKey = undefined;
+        let featureDataForDispatch = null;
+
+        // Use the index to look up the feature in the original data array
+        if (featureIndex !== undefined && featureIndex >= 0 && featureIndex < districts.features.length) {
+            const clickedFeature = districts.features[featureIndex];
+            console.log("[districtMap] Feature looked up via index:", clickedFeature);
+            clickedFeatureKey = clickedFeature?.properties?.NAME_1;
+            console.log(`[districtMap] Key from feature lookup = ${clickedFeatureKey}`);
+            
+            // Prepare data for dispatch if key is valid
+            if (clickedFeatureKey) {
+                const regionName = getRegionForIsland(clickedFeatureKey);
+                const probs = districtProbs.get(regionName) || [];
+                featureDataForDispatch = { id: regionName, probs: probs };
+            }
+        } else {
+             console.log("[districtMap] Click did not yield a valid feature index on event.target.__data__.");
+        }
+
+        // --- MANUAL HIGHLIGHT UPDATE --- 
+        const selectedKey = featureDataForDispatch?.id ?? null;
+        // Store the key on the plot element ONLY for potential external reference if needed
+        plot._selectedKey = selectedKey;
+        console.log("[districtMap] Setting _selectedKey for highlight comparison:", selectedKey);
+
+        // Find all path elements associated with the district features
+        const paths = plot.querySelectorAll("path");
+        paths.forEach((path, i) => {
+            // Use the index from the loop (i) which *should* correspond to the feature index
+            if (i < districts.features.length) { // Basic safety check
+                const pathFeatureName = districts.features[i]?.properties?.NAME_1;
+                const pathRegionName = getRegionForIsland(pathFeatureName);
+                // console.log(`Path ${i}: Region=${pathRegionName}, Selected=${selectedKey}`); // Debug log if needed
+                if (pathRegionName === selectedKey) {
+                    // Highlight selected: Keep WHITE, make thicker
+                    path.style.stroke = "white"; 
+                    path.style.strokeWidth = "1.5";
+                } else {
+                    // Reset others
+                    path.style.stroke = "white";
+                    path.style.strokeWidth = "0.5";
+                }
+            }
+        });
+        // --- END MANUAL HIGHLIGHT UPDATE ---
+
+        // Dispatch event with found data or null
+        console.log("[districtMap] Dispatching detail:", featureDataForDispatch);
+        plot.dispatchEvent(new CustomEvent("district-click", {
+            bubbles: true,
+            detail: featureDataForDispatch
+        }));
+    });
+
     return plot;
   } catch (error) {
     console.error("Error during Plot.plot execution:", error);

@@ -1,7 +1,9 @@
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
+import { partyColors, partyOrder } from "../config/colors.js"; // Import shared config
 
-// Re-use party colors (could eventually be moved to a shared config file)
+// Remove local partyColors definition
+/*
 const partyColors = {
   PS: "#E31A1C", 
   AD: "#FF7F00", 
@@ -12,6 +14,7 @@ const partyColors = {
   OTH: "grey",
   default: "lightgrey"
 };
+*/
 
 export function nationalTrendsChart(trendsData, { width } = {}) {
   console.log("[TrendsChart] Received trendsData:", trendsData);
@@ -85,9 +88,10 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
           type: "utc", 
           label: "Date"
       },
+      // Use imported config for color scale
       color: { 
-          domain: Object.keys(partyColors).filter(p => p !== 'default'),
-          range: Object.values(partyColors).filter(c => c !== partyColors.default),
+          domain: partyOrder, // Use ordered list for domain
+          range: partyOrder.map(p => partyColors[p] || "#888888"), // Map names to colors
           legend: true 
       },
       marks: [

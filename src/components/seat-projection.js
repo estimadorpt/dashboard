@@ -12,6 +12,12 @@ export function seatProjection(drawData, options) {
     return placeholderDiv;
   }
 
+  // Calculate medians per party
+  const medians = Array.from(
+    d3.rollup(drawData, v => d3.median(v, d => d.seats), d => d.party),
+    ([party, medianSeats]) => ({party, medianSeats})
+  );
+
   // Use imported partyOrder
   // const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "OTH"]; - Removed
   // Use imported partyColors
@@ -32,7 +38,7 @@ export function seatProjection(drawData, options) {
     height: 300,
     marginLeft: 40,
     marginRight: 20,
-    x: { domain: [0, 230], label: "Seats won ➜", axis: "bottom" },
+    x: { domain: [0, 130], label: "Seats won ➜", axis: "bottom" },
     y: { axis: null }, // No explicit y-axis for count within facets
     // Define vertical facets by party
     fy: {
@@ -63,8 +69,22 @@ export function seatProjection(drawData, options) {
           title: bin => `${bin.fy}\nSeats: ${bin.x0}-${bin.x1}\nDraws: ${bin.length}` // Add party to tooltip
         }
       )),
-      Plot.ruleY([0]) // Baseline for each histogram
-      // Median ticks and majority rule were removed due to layout issues
+      Plot.ruleY([0]), // Baseline for each histogram
+      // Median lines - Explicitly link rule's data to facet via fy channel
+      Plot.ruleX(medians, {
+        x: "medianSeats",
+        fy: "party", // <-- Explicitly link the rule's data via the fy channel
+        stroke: "black",
+        strokeWidth: 1.5,
+        strokeDasharray: "2,2" // Dashed line for median
+      }),
+      // Majority line (drawn once across all facets)
+      Plot.ruleX([116], {
+        stroke: "red",
+        strokeWidth: 1.5,
+        strokeDasharray: "4,2", // Different dash pattern
+        facet: "exclude" // Ensure line spans across all facets
+      })
     ],
     ...options
   });
