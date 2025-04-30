@@ -1,18 +1,7 @@
 import {html} from "npm:htl";
 
-// Consistent Party Colors (reuse from table or define centrally)
-// TODO: Move partyColors to a central config file (e.g., src/config/colors.js)
-const partyColors = {
-  "PS": "#e41a1c",
-  "AD": "#ff7f00", 
-  "CH": "#4daf4a",
-  "IL": "#984ea3",
-  "BE": "#377eb8",
-  "CDU": "#a65628", 
-  "L": "#f781bf",
-  "PAN": "#999999",
-  "Other": "#cccccc" 
-};
+// Import shared party colors
+import { partyColors } from "../config/colors.js";
 
 /**
  * Processes probabilities, aggregates small ones into "Other".
@@ -29,14 +18,16 @@ function processProbabilities(probs, threshold = 0.05) {
 
   for (const [party, prob] of Object.entries(probs)) {
     if (prob >= threshold) {
-      partiesToShow.push({ party, prob, color: partyColors[party] || partyColors["Other"] });
+      // Use imported partyColors and OTH key for fallback
+      partiesToShow.push({ party, prob, color: partyColors[party] || partyColors["OTH"] }); 
     } else {
       otherProb += prob;
     }
   }
 
   if (otherProb > 1e-6) { 
-    partiesToShow.push({ party: "Other", prob: otherProb, color: partyColors["Other"] });
+    // Use imported partyColors and OTH key for "Other" category
+    partiesToShow.push({ party: "Other", prob: otherProb, color: partyColors["OTH"] }); 
   }
 
   partiesToShow.sort((a, b) => b.prob - a.prob);
@@ -62,10 +53,10 @@ export function contestedDetail(selectedSeat) {
     <div class="detail-prob-bar-container" title="${processedProbs.map(p => `${p.party}: ${(p.prob * 100).toFixed(1)}%`).join('\n')}">
       ${processedProbs.map(p => {
         const sliceWidthPercent = p.prob * 100;
-        // Always show text in the detail view if space allows (adjust min width?)
-        const showText = sliceWidthPercent > 5; // Show text if > 5% 
+        // Show text only if slice width >= 15%
+        const showText = sliceWidthPercent >= 15; 
         return html`<div class="detail-prob-bar-slice" style="width: ${sliceWidthPercent}%; background-color: ${p.color};">
-          ${showText ? html`<span class="detail-prob-bar-text">${p.party} ${(p.prob * 100).toFixed(0)}%</span>` : ''}
+          ${showText ? html`<span class="detail-prob-bar-text">${(p.prob * 100).toFixed(0)}%</span>` : ''}
         </div>`;
       })}
     </div>
@@ -103,7 +94,7 @@ export function contestedDetail(selectedSeat) {
        }
       .detail-prob-bar-text {
         color: white;
-        font-size: 0.8em; /* Slightly larger text */
+        font-size: 12px; /* Explicit font size */
         font-weight: bold;
         text-shadow: 1px 1px 1px rgba(0,0,0,0.8); 
         padding: 0 4px;

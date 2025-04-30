@@ -3,20 +3,11 @@ import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import {html} from "npm:htl";
 
+// Import shared party colors and order
+import { partyColors, partyOrder } from "../config/colors.js";
+
 // Import geoPath for bounds calculation
 import { geoPath } from "d3-geo";
-
-// Define a color scale for the parties (customize colors as needed)
-const partyColors = {
-  PS: "#E31A1C", // Example: Red
-  AD: "#FF7F00", // Example: Orange
-  CH: "#1F78B4", // Example: Blue
-  IL: "#FDBF6F", // Example: Light Orange
-  BE: "#CAB2D6", // Example: Light Purple
-  CDU: "#A6CEE3", // Example: Light Blue
-  OTH: "grey",
-  default: "lightgrey" // Fallback color
-};
 
 // Helper function to get color based on party
 function getColor(party) {
@@ -148,14 +139,16 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
         rotate: [8.5, -39.5] 
       },
       color: {
-        domain: Object.keys(partyColors).filter(p => p !== 'default'),
-        range: Object.values(partyColors).filter(c => c !== partyColors.default),
+        // Use imported config
+        domain: partyOrder.filter(p => p !== 'OTH'), // Exclude OTH from legend/domain if needed
+        range: partyOrder.filter(p => p !== 'OTH').map(p => partyColors[p] || "#888888"), // Map names to colors
         legend: true,
         label: "Leading Party"
       },
       marks: [
         Plot.geo(districts, {
-          fill: (d) => getColor(geometryDataMap.get(d.properties.NAME_1)?.winner),
+          // Use imported partyColors directly
+          fill: (d) => partyColors[geometryDataMap.get(d.properties.NAME_1)?.winner] || "lightgrey",
           stroke: "white",
           strokeWidth: 0.5,
           pointer: "xy",

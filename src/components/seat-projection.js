@@ -38,7 +38,12 @@ export function seatProjection(drawData, options) {
     height: 300,
     marginLeft: 40,
     marginRight: 20,
-    x: { domain: [0, 130], label: "Seats won ➜", axis: "bottom" },
+    x: { 
+        domain: [0, 150], 
+        label: "Seats won ➜", 
+        axis: "bottom",
+        ticks: [0, 50, 100, 116, 150]
+    },
     y: { axis: null }, // No explicit y-axis for count within facets
     // Define vertical facets by party
     fy: {

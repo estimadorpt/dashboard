@@ -1,42 +1,29 @@
 import {html} from "npm:htl";
-import { mapSidebar } from "./map-sidebar.js";
 import { districtMap } from "./district-map.js";
+import { mapSidebar } from "./map-sidebar.js";
 
-export function mapWithSidebar(portugalTopoJson, districtForecastData) {
+// Accept nationalTrendsData as the third argument
+export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalTrendsData) {
 
     // State for the CURRENTLY SELECTED/DISPLAYED district data
-    let selectedDistrictData = null;
-    
-    // Create container elements
-    const mapContainer = html`<div></div>`; 
-    const sidebarContainer = html`<div></div>`;
-    const mainContainer = html`
-        <div class="grid grid-cols-3 gap-4" style="grid-auto-rows: auto;"> 
-            <div class="grid-colspan-2" >${mapContainer}</div>
-            <div >${sidebarContainer}</div>
-        </div>
-    `;
+    let selectedDistrictData = null; 
 
-    // Function to update and render sidebar
-    const updateSidebar = (dataToShow) => {
-        selectedDistrictData = dataToShow;
-        while (sidebarContainer.firstChild) {
-             sidebarContainer.removeChild(sidebarContainer.firstChild);
-        }
-        
-        // Get current width of the container to pass down
-        const sidebarWidth = sidebarContainer.clientWidth || 180; // Default if not measurable yet
-        console.log("[mapWithSidebar] Measured sidebar width:", sidebarWidth);
+    // Function to update the sidebar content
+    function updateSidebar(data) {
+        selectedDistrictData = data; 
+        // Create sidebar content - pass nationalTrendsData to mapSidebar
+        const sidebarContent = mapSidebar(selectedDistrictData, 250, nationalTrendsData); 
+        sidebarContainer.replaceChildren(sidebarContent);
+    }
 
-        // Pass width to mapSidebar (which passes it to createBarChartElement)
-        sidebarContainer.appendChild(mapSidebar(selectedDistrictData, sidebarWidth));
-    };
+    // Container setup (use CSS Grid - CHANGED TO 2 COLUMNS)
+    const mainContainer = html`<div class="grid grid-cols-2 gap-4"></div>`; // Changed grid-cols-3 to grid-cols-2
+    const mapContainer = html`<div class="col-span-1"></div>`; // Changed col-span-2 to col-span-1
+    const sidebarContainer = html`<div class="col-span-1" style="overflow-y: auto; max-height: 600px;"></div>`; // Kept col-span-1
+    mainContainer.append(mapContainer, sidebarContainer);
 
-    // Render map ONCE directly
-    const mapElement = districtMap(portugalTopoJson, districtForecastData, {
-        // Map width can be independent, maybe based on mapContainer
-        width: mapContainer.clientWidth || 600 
-    });
+    // Create the SINGLE map instance
+    const mapElement = districtMap(portugalTopoJson, districtForecastData, { width: 600 });
 
     // Attach listener directly to the single map instance
     mapElement.addEventListener("district-click", (event) => {
@@ -55,8 +42,8 @@ export function mapWithSidebar(portugalTopoJson, districtForecastData) {
     // Append the single map instance
     mapContainer.appendChild(mapElement);
 
-    // Render sidebar initially
-    updateSidebar(null);
+    // Render sidebar initially (with national data for default view)
+    updateSidebar(null); // selectedDistrictData is null initially
 
     return mainContainer;
 } 
