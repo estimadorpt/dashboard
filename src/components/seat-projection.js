@@ -18,6 +18,10 @@ export function seatProjection(drawData, options) {
     ([party, medianSeats]) => ({party, medianSeats})
   );
 
+  // Convert medians to a Map for easy lookup in tooltips
+  const medianMap = new Map(medians.map(d => [d.party, d.medianSeats]));
+  console.log("[seatProjection] medianMap:", medianMap); // Log the median map
+
   // Use imported partyOrder
   // const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "OTH"]; - Removed
   // Use imported partyColors
@@ -70,8 +74,7 @@ export function seatProjection(drawData, options) {
           fillOpacity: 0.7, // Slightly adjust opacity if needed
           thresholds: 30, // ~30 bins across 0-230
           inset: 0.5,
-          tip: true,
-          title: bin => `${bin.fy}\nSeats: ${bin.x0}-${bin.x1}\nDraws: ${bin.length}` // Add party to tooltip
+          tip: true // Rely on default tip behavior
         }
       )),
       Plot.ruleY([0]), // Baseline for each histogram
@@ -82,6 +85,16 @@ export function seatProjection(drawData, options) {
         stroke: "black",
         strokeWidth: 1.5,
         strokeDasharray: "2,2" // Dashed line for median
+      }),
+      // Add text labels for medians
+      Plot.text(medians, {
+        x: "medianSeats",
+        fy: "party",
+        text: d => d.medianSeats.toFixed(0), // Display median value (no decimals)
+        dy: -6, // Position slightly above the line
+        fill: "black",
+        fontSize: 10, // Smaller font size
+        textAnchor: "middle"
       }),
       // Majority line (drawn once across all facets)
       Plot.ruleX([116], {

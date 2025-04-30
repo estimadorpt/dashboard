@@ -51,8 +51,8 @@ export function contestedTable(contestedSummaryData, options = {}) {
     // --- Styles --- (Keep existing styles, maybe adjust container height)
     const styles = html`<style>
         .contested-table-container {
-            max-height: 360px; /* Maybe adjust based on detail panel */
-            overflow-y: auto;
+            /* max-height: 360px; */ /* REMOVE Height limit */
+            /* overflow-y: auto; */ /* REMOVE Overflow setting */
         }
         .contested-table {
             width: 100%;
