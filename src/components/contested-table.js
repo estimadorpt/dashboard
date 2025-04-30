@@ -1,17 +1,7 @@
 import {html} from "npm:htl";
 
-// Consistent Party Colors (adjust as needed, add 'Other')
-const partyColors = {
-  "PS": "#e41a1c",
-  "AD": "#ff7f00", 
-  "CH": "#4daf4a",
-  "IL": "#984ea3",
-  "BE": "#377eb8",
-  "CDU": "#a65628", 
-  "L": "#f781bf",
-  "PAN": "#999999",
-  "Other": "#cccccc" // Color for aggregated small parties
-};
+// Import shared party colors
+import { partyColors } from "../config/colors.js";
 
 /**
  * Processes probabilities, aggregates small ones into "Other".
@@ -25,14 +15,16 @@ function processProbabilities(probs, threshold = 0.05) {
 
   for (const [party, prob] of Object.entries(probs)) {
     if (prob >= threshold) {
-      partiesToShow.push({ party, prob, color: partyColors[party] || partyColors["Other"] });
+      // Use imported partyColors and OTH key for fallback
+      partiesToShow.push({ party, prob, color: partyColors[party] || partyColors["OTH"] });
     } else {
       otherProb += prob;
     }
   }
 
   if (otherProb > 1e-6) { // Add "Other" category if it has significant probability
-    partiesToShow.push({ party: "Other", prob: otherProb, color: partyColors["Other"] });
+    // Use imported partyColors and OTH key for "Other" category
+    partiesToShow.push({ party: "Other", prob: otherProb, color: partyColors["OTH"] });
   }
 
   // Sort for consistent order (optional, e.g., by probability descending)
