@@ -1,43 +1,55 @@
 import {html} from "npm:htl";
-import {contestedTable} from "./contested-table.js";
-// Import the actual detail component
-import {contestedDetail} from "./contested-detail.js"; 
+// Import the REFACTORED table and the NEW profile chart
+import { contestedTable } from "./contested-table.js";
+// Import the NEW detail panel component
+import { contestedDistrictDetail } from "./contested-district-detail.js";
 
-export function contestedSeatsSection(contestedData) {
-    // Use the standard html tag function
-    const view = html`<div></div>`; // Initial empty container
+// REMOVE OLD component import
+// import { contestedDetail } from "./contested-detail.js"; 
+
+// Main component function
+export function contestedSeatsSection(contestedSummaryData) {
     
-    // State for selected seat details
-    let selectedSeat = null;
+    // State managed internally via re-rendering child components
+    let selectedDistrictId = null; // Store the NAME of the selected district
+    
+    const tableContainer = html`<div></div>`; // Placeholder for the table
+    const detailContainer = html`<div></div>`; // Placeholder for the detail/profile
 
-    function handleSeatSelect(seat) {
-        console.log("[contestedSeatsSection] Seat selected:", seat);
-        selectedSeat = seat; // Update the state variable
-        update(); // Trigger re-render
+    // --- Update Function (Called by Table onClick) --- 
+    function updateSelection(newDistrictId) {
+        selectedDistrictId = (selectedDistrictId === newDistrictId) ? null : newDistrictId;
+        
+        // Re-render the detail view with data for the selected district ID
+        const districtData = selectedDistrictId ? contestedSummaryData.districts[selectedDistrictId] : null;
+        const detailContent = contestedDistrictDetail(selectedDistrictId, districtData, { width: 350 }); // Pass name and data
+        detailContainer.replaceChildren(detailContent);
+        
+        // Re-render the table with the new selection state highlighted
+        const tableContent = contestedTable(contestedSummaryData, { 
+            onDistrictSelect: updateSelection, 
+            initialSelectedDistrictId: selectedDistrictId // Pass current selection to table
+        });
+        tableContainer.replaceChildren(tableContent);
     }
 
-    function update() {
-        // Render a single card. Inside the card, use a 2-column grid.
-        view.replaceChildren(html`
-            <div class="card p-4">  
-                <h2>Contested Seats & Details</h2>
-                <div class="grid grid-cols-2 gap-4 mt-4"> 
-                    
-                    <div style="overflow-x: auto;"> 
-                        ${contestedTable(contestedData, handleSeatSelect)} 
-                    </div>
-                    
-                    
-                    <div>
-                        ${contestedDetail(selectedSeat)} 
-                    </div>
-                </div>
-            </div>
-        `);
-    }
+    // --- Initial Render --- 
+    const initialTableContent = contestedTable(contestedSummaryData, { 
+        onDistrictSelect: updateSelection,
+        initialSelectedDistrictId: selectedDistrictId
+     });
+    // Initially render the detail placeholder
+    const initialDetailContent = contestedDistrictDetail(null, null, { width: 350 }); 
 
-    // Initial render
-    update();
+    tableContainer.append(initialTableContent);
+    detailContainer.append(initialDetailContent);
 
-    return view; // Return the reactive container
+    // --- Layout --- 
+    // Use a 2-column grid layout
+    const mainContainer = html`<div class="grid grid-cols-2 gap-4" style="align-items: flex-start;">
+        <div class="col-span-1">${tableContainer}</div>
+        <div class="col-span-1">${detailContainer}</div>
+    </div>`;
+
+    return mainContainer;
 } 

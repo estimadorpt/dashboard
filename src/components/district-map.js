@@ -63,28 +63,34 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
   };
 
   // 2. Process forecast data to find the winning party per district/region
-  const forecastByDistrict = d3.group(districtForecast, d => d.district_id);
+  // NORMALIZE Açores name before grouping
+  const normalizedForecast = districtForecast.map(d => ({ 
+      ...d, 
+      district_name: d.district_name === "Açores" ? "Acores" : d.district_name 
+  }));
+  const forecastByDistrict = d3.group(normalizedForecast, d => d.district_name); // USE normalized data
   // console.log("Forecast grouped by district:", forecastByDistrict);
   const winningParty = new Map();
   const districtProbs = new Map();
   let maxVoteShare;
   let winner;
 
-  for (const [district, parties] of forecastByDistrict) {
-    maxVoteShare = -1;
-    winner = partyColors.default;
-    districtProbs.set(district, parties.map(p => ({ party: p.party, prob: p.vote_share_mean })));
-    for (const partyData of parties) {
-      if (partyData.vote_share_mean > maxVoteShare) {
-        maxVoteShare = partyData.vote_share_mean;
-        winner = partyData.party;
+  // Correctly extract the single probs object for each district
+  for (const [districtName, forecastEntries] of forecastByDistrict) {
+      // Assuming forecastEntries is an array with one element for the district
+      if (forecastEntries && forecastEntries.length > 0) {
+          const districtData = forecastEntries[0]; // Get the first (only) entry
+          // Store the actual 'probs' object, not a transformation
+          districtProbs.set(districtName, districtData.probs || {});
+          winner = districtData.winning_party || partyColors.default;
+          winningParty.set(districtName, winner);
+      } else {
+          // Handle case where a district ID has no forecast entries (shouldn't happen)
+          districtProbs.set(districtName, {});
+          winningParty.set(districtName, partyColors.default);
       }
-    }
-    winningParty.set(district, winner);
   }
-  // console.log("Winning party map:", winningParty);
-  // console.log("District Probs map:", districtProbs);
-
+  
   // 3. Create a map to look up forecast data and identify islands
   const geometryDataMap = new Map();
   const islandNames = new Set(); 
@@ -94,9 +100,13 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
   for (const feature of districts.features) {
       const geometryName = feature.properties.NAME_1; 
       const regionOrDistrictName = getRegionForIsland(geometryName); 
-      const forecast = forecastByDistrict.get(regionOrDistrictName); 
+      // REMOVED: Incorrect forecast lookup
+      // const forecast = forecastByDistrict.get(regionOrDistrictName); 
       const winnerForRegion = winningParty.get(regionOrDistrictName); 
-      // console.log(`GeoName: ${geometryName}, Region: ${regionOrDistrictName}, Winner: ${winnerForRegion}`);
+      
+      // Look up the CORRECT probs object
+      const actualProbs = districtProbs.get(regionOrDistrictName) || {}; 
+      // console.log(`GeoName: ${geometryName}, Region: ${regionOrDistrictName}, Winner: ${winnerForRegion}, Probs:`, actualProbs);
 
       if (azoresIslands.has(geometryName) || madeiraIslands.has(geometryName)) {
           islandNames.add(geometryName);
@@ -104,7 +114,8 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
 
       geometryDataMap.set(geometryName, {
           winner: winnerForRegion || partyColors.default,
-          forecast: districtProbs.get(regionOrDistrictName) || []
+          // Store the actual probs object here too for dispatch logic
+          forecast: actualProbs 
       });
   }
 
@@ -178,9 +189,12 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
             
             // Prepare data for dispatch if key is valid
             if (clickedFeatureKey) {
-                const regionName = getRegionForIsland(clickedFeatureKey);
-                const probs = districtProbs.get(regionName) || [];
-                featureDataForDispatch = { id: regionName, probs: probs };
+                // Get the pre-processed data from geometryDataMap
+                const data = geometryDataMap.get(clickedFeatureKey);
+                console.log(`[districtMap] Data retrieved from geometryDataMap for key '${clickedFeatureKey}':`, JSON.stringify(data));
+                const regionName = getRegionForIsland(clickedFeatureKey); // Still need region name for ID
+                // Use the forecast (probs) stored in geometryDataMap
+                featureDataForDispatch = { id: regionName, probs: data?.forecast || {} }; 
             }
         } else {
              console.log("[districtMap] Click did not yield a valid feature index on event.target.__data__.");

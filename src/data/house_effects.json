@@ -1,0 +1,482 @@
+[
+  {
+    "pollster": "Aximage",
+    "party": "PS",
+    "house_effect": -0.0017
+  },
+  {
+    "pollster": "Aximage",
+    "party": "CH",
+    "house_effect": 0.0189
+  },
+  {
+    "pollster": "Aximage",
+    "party": "IL",
+    "house_effect": 0.0417
+  },
+  {
+    "pollster": "Aximage",
+    "party": "BE",
+    "house_effect": -0.006
+  },
+  {
+    "pollster": "Aximage",
+    "party": "CDU",
+    "house_effect": -0.0126
+  },
+  {
+    "pollster": "Aximage",
+    "party": "PAN",
+    "house_effect": 0.0251
+  },
+  {
+    "pollster": "Aximage",
+    "party": "L",
+    "house_effect": 0.0652
+  },
+  {
+    "pollster": "Aximage",
+    "party": "AD",
+    "house_effect": -0.0351
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "PS",
+    "house_effect": 0.0125
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "CH",
+    "house_effect": -0.0389
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "IL",
+    "house_effect": 0.1849
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "BE",
+    "house_effect": -0.0106
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "CDU",
+    "house_effect": 0.0066
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "PAN",
+    "house_effect": -0.1446
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "L",
+    "house_effect": 0.1125
+  },
+  {
+    "pollster": "CESOP-U.Católica",
+    "party": "AD",
+    "house_effect": 0.0143
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "PS",
+    "house_effect": -0.0269
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "CH",
+    "house_effect": 0.0157
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "IL",
+    "house_effect": 0.1739
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "BE",
+    "house_effect": 0.0059
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "CDU",
+    "house_effect": -0.0296
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "PAN",
+    "house_effect": -0.196
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "L",
+    "house_effect": 0.1075
+  },
+  {
+    "pollster": "Consulmark2",
+    "party": "AD",
+    "house_effect": 0.0294
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "PS",
+    "house_effect": -0.032
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "CH",
+    "house_effect": 0.0142
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "IL",
+    "house_effect": 0.1173
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "BE",
+    "house_effect": -0.0058
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "CDU",
+    "house_effect": -0.0261
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "PAN",
+    "house_effect": -0.0479
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "L",
+    "house_effect": 0.1046
+  },
+  {
+    "pollster": "Duplimétrica/IPESPE",
+    "party": "AD",
+    "house_effect": 0.011
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "PS",
+    "house_effect": -0.007
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "CH",
+    "house_effect": -0.0015
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "IL",
+    "house_effect": -0.0047
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "BE",
+    "house_effect": -0.0107
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "CDU",
+    "house_effect": -0.0243
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "PAN",
+    "house_effect": -0.0061
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "L",
+    "house_effect": -0.0116
+  },
+  {
+    "pollster": "Euroexpansão",
+    "party": "AD",
+    "house_effect": 0.0602
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "PS",
+    "house_effect": 0.0961
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "CH",
+    "house_effect": -0.0743
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "IL",
+    "house_effect": -0.3681
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "BE",
+    "house_effect": 0.0235
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "CDU",
+    "house_effect": 0.0885
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "PAN",
+    "house_effect": 0.1875
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "L",
+    "house_effect": -0.7971
+  },
+  {
+    "pollster": "Eurosondagem",
+    "party": "AD",
+    "house_effect": 0.0772
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "PS",
+    "house_effect": 0.0417
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "CH",
+    "house_effect": 0.0334
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "IL",
+    "house_effect": -0.24
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "BE",
+    "house_effect": -0.0072
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "CDU",
+    "house_effect": 0.0687
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "PAN",
+    "house_effect": 0.0234
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "L",
+    "house_effect": -0.3607
+  },
+  {
+    "pollster": "ICS/ISCTE/GFK Metris",
+    "party": "AD",
+    "house_effect": 0.0202
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "PS",
+    "house_effect": -0.0776
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "CH",
+    "house_effect": -0.0055
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "IL",
+    "house_effect": 0.2417
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "BE",
+    "house_effect": 0.0147
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "CDU",
+    "house_effect": -0.0575
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "PAN",
+    "house_effect": 0.2517
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "L",
+    "house_effect": 0.2211
+  },
+  {
+    "pollster": "Intercampus",
+    "party": "AD",
+    "house_effect": -0.1185
+  },
+  {
+    "pollster": "Marktest",
+    "party": "PS",
+    "house_effect": -0.0153
+  },
+  {
+    "pollster": "Marktest",
+    "party": "CH",
+    "house_effect": 0.0045
+  },
+  {
+    "pollster": "Marktest",
+    "party": "IL",
+    "house_effect": 0.0114
+  },
+  {
+    "pollster": "Marktest",
+    "party": "BE",
+    "house_effect": 0.0139
+  },
+  {
+    "pollster": "Marktest",
+    "party": "CDU",
+    "house_effect": 0.0191
+  },
+  {
+    "pollster": "Marktest",
+    "party": "PAN",
+    "house_effect": -0.0584
+  },
+  {
+    "pollster": "Marktest",
+    "party": "L",
+    "house_effect": -0.0348
+  },
+  {
+    "pollster": "Marktest",
+    "party": "AD",
+    "house_effect": -0.0005
+  },
+  {
+    "pollster": "Metris",
+    "party": "PS",
+    "house_effect": -0.0134
+  },
+  {
+    "pollster": "Metris",
+    "party": "CH",
+    "house_effect": -0.0063
+  },
+  {
+    "pollster": "Metris",
+    "party": "IL",
+    "house_effect": 0.0857
+  },
+  {
+    "pollster": "Metris",
+    "party": "BE",
+    "house_effect": -0.0054
+  },
+  {
+    "pollster": "Metris",
+    "party": "CDU",
+    "house_effect": -0.002
+  },
+  {
+    "pollster": "Metris",
+    "party": "PAN",
+    "house_effect": -0.03
+  },
+  {
+    "pollster": "Metris",
+    "party": "L",
+    "house_effect": 0.0574
+  },
+  {
+    "pollster": "Metris",
+    "party": "AD",
+    "house_effect": 0.0012
+  },
+  {
+    "pollster": "Multidados",
+    "party": "PS",
+    "house_effect": 0.0001
+  },
+  {
+    "pollster": "Multidados",
+    "party": "CH",
+    "house_effect": -0.0092
+  },
+  {
+    "pollster": "Multidados",
+    "party": "IL",
+    "house_effect": -0.0783
+  },
+  {
+    "pollster": "Multidados",
+    "party": "BE",
+    "house_effect": 0.0309
+  },
+  {
+    "pollster": "Multidados",
+    "party": "CDU",
+    "house_effect": -0.0174
+  },
+  {
+    "pollster": "Multidados",
+    "party": "PAN",
+    "house_effect": 0.2218
+  },
+  {
+    "pollster": "Multidados",
+    "party": "L",
+    "house_effect": -0.1264
+  },
+  {
+    "pollster": "Multidados",
+    "party": "AD",
+    "house_effect": -0.0579
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "PS",
+    "house_effect": 0.0208
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "CH",
+    "house_effect": -0.0224
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "IL",
+    "house_effect": 0.1933
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "BE",
+    "house_effect": -0.0328
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "CDU",
+    "house_effect": 0.0096
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "PAN",
+    "house_effect": -0.1009
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "L",
+    "house_effect": 0.1282
+  },
+  {
+    "pollster": "Pitagorica",
+    "party": "AD",
+    "house_effect": -0.005
+  }
+]

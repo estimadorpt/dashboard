@@ -12,3 +12,7 @@ export const partyColors = {
 export const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "L", "OTH"]; // Added L
 
 // You could add other color-related constants here if needed 
+
+// Define political blocs - REVERTED
+// export const leftBlocParties = ["PS", "BE", "CDU", "L"];
+// export const rightBlocParties = ["AD", "IL"]; 

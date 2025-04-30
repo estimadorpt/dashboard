@@ -2,6 +2,8 @@ import {html} from "npm:htl";
 import { partyColors, partyOrder } from "../config/colors.js"; // Import shared config
 // Import Plot for the bar chart
 import * as Plot from "@observablehq/plot"; 
+// Import resize helper
+import { resize } from "npm:@observablehq/stdlib";
 
 // Generate legend data dynamically from imported config
 // Note: This assumes the legend should show all parties from partyOrder.
@@ -25,29 +27,48 @@ const legendData = [
 */
 
 // --- Helper: Create Vertical Bar Chart Element (Handles District OR National Data) ---
-// Make this function handle data with either 'prob' or 'vote_share_mean'
 function createBarChartElement(forecastData, width) { 
-    console.log("[createBarChartElement] Received forecastData:", JSON.stringify(forecastData)); // Log raw input
-    
-    // Process probabilities/vote shares: Use prob OR vote_share_mean
-    const processedData = forecastData
-        .map(d => ({ 
-            party: d.party, 
-            value: (d.prob ?? d.vote_share_mean ?? 0) // Use 'prob' or 'vote_share_mean', fallback 0
-        })) 
-        .filter(d => d.value > 0) // Filter out zero values if needed, though sorting handles it mostly
-        .sort((a, b) => b.value - a.value); // Sort by the value
-    
-    // --- Optional: Sort by partyOrder if preferred over sorting by value ---
-    // const partyOrderMap = new Map(partyOrder.map((p, i) => [p, i]));
-    // const sortedData = processedData.sort((a, b) => (partyOrderMap.get(a.party) ?? Infinity) - (partyOrderMap.get(b.party) ?? Infinity));
-    // Use processedData directly if sorting by value is intended:
-    const sortedData = processedData;
-    
-    console.log("[createBarChartElement] Processed sortedData for plot:", JSON.stringify(sortedData)); // Log data going into plot
+    // Log raw input for debugging
+    console.log("[createBarChartElement] Received forecastData (direct):", forecastData); // Log directly
+    console.log("[createBarChartElement] Received forecastData (keys):", forecastData ? Object.keys(forecastData) : 'null/undefined'); // Log keys
+    console.log("[createBarChartElement] Received forecastData (stringified):", JSON.stringify(forecastData)); // Keep stringify for comparison
 
-    if (sortedData.length === 0) { 
-        return html`<p class="small note">No forecast data available.</p>`;
+    // --- Data Transformation --- 
+    let inputDataAsArray;
+    
+    // Check if forecastData is an array (national trends) or an object (district probs)
+    if (Array.isArray(forecastData)) {
+        // Already an array (national trends)
+        inputDataAsArray = forecastData.map(d => ({
+            party: d.party,
+            value: d.vote_share_mean // National data is already 0-100
+        }));
+    } else if (typeof forecastData === 'object' && forecastData !== null) {
+        // It's an object (district probs), convert to array AND scale to percentage
+        console.log("[createBarChartElement] Processing district object. Keys:", Object.keys(forecastData)); // Log keys
+        inputDataAsArray = Object.entries(forecastData).map(([party, prob]) => ({
+            party: party,
+            value: prob * 100 // Scale district prob (0-1) to percentage (0-100)
+        }));
+         console.log("[createBarChartElement] Object converted to array (scaled):", JSON.stringify(inputDataAsArray)); // Log result
+    } else {
+        // Invalid data format
+        console.error("[createBarChartElement] Invalid forecastData format:", forecastData);
+        inputDataAsArray = [];
+    }
+    
+    // Now process the unified array format
+    const processedData = inputDataAsArray
+        // Filter out entries with undefined/null/NaN values or missing party
+        .filter(d => d && d.party && d.value !== undefined && d.value !== null && !isNaN(d.value))
+        // Sort data by VALUE descending
+        .sort((a, b) => b.value - a.value); 
+
+    console.log("[createBarChartElement] Processed sortedData for plot:", JSON.stringify(processedData));
+
+    // Check if processed data is empty after filtering/transformation
+    if (processedData.length === 0) {
+        return html`<p class="small note">No valid forecast data available to display.</p>`;
     }
 
     const marginLeft = 40;
@@ -62,20 +83,21 @@ function createBarChartElement(forecastData, width) {
         marginLeft: marginLeft, 
         marginRight: marginRight,
         marginBottom: 20, 
-        height: 240, 
-        // Use parties from the actual data for the y-domain, sorted by value
-        y: { domain: sortedData.map(d => d.party), axis: "left", label: null, padding: 0.2 },
-        x: { grid: true, label: null, domain: [0, 100] }, // Assuming 0-100 range
+        // height: "auto", // REVERT: Remove height parameter again
+        // Use parties from the actual data for the y-domain, now sorted by value
+        y: { domain: processedData.map(d => d.party), axis: "left", label: null, padding: 0.1 },
+        x: { grid: true, label: null, domain: [0, 50] }, // ADJUSTED domain to 0-50
         marks: [
-            Plot.barX(sortedData, {
+            Plot.barX(processedData, {
                 y: "party",
                 x: "value", // Use the unified 'value' field
                 fill: (d) => partyColors[d.party] || '#888888', 
-                title: (d) => `${d.party}: ${d.value.toFixed(1)}%` // Use the unified 'value'
+                title: (d) => `${d.party}: ${d.value.toFixed(1)}%`, // Use the unified 'value'
+                inset: 0.1 // ADD inset to reduce padding within the band
             }),
             Plot.ruleX([0]),
             // Add text labels inside bars
-            Plot.text(sortedData.filter(d => (d.value / 100 * plotAreaWidth) > pixelThreshold), { // Filter data based on calculated width
+            Plot.text(processedData.filter(d => (d.value / 100 * plotAreaWidth) > pixelThreshold), { // Filter data based on calculated width
                 x: "value", // Use unified 'value'
                 y: "party",
                 text: d => `${d.value.toFixed(0)}%`, // Display integer percentage
@@ -96,18 +118,20 @@ function createBarChartElement(forecastData, width) {
 // --- Main Component ---
 // Accept nationalTrendsData as the third argument
 export function mapSidebar(clickedData, width, nationalTrendsData) { 
+  console.log("[mapSidebar] Received clickedData:", JSON.stringify(clickedData)); // Log received data
   if (clickedData) {
     const { id, probs } = clickedData;
-    // Use the existing bar chart function for district data
-    const chartElement = createBarChartElement(probs, width); 
+    console.log("[mapSidebar] Destructured probs:", JSON.stringify(probs)); // Log after destructuring
+    // Use resize to pass container width to the chart function
+    const chartElement = resize((w) => createBarChartElement(probs, w)); 
     return html`<div>
         <h4>${id}</h4> 
         <p style="font-size: 0.85em; margin-bottom: 0.1rem;">Vote Share Forecast:</p>
         ${chartElement}
     </div>`;
   } else {
-    // Show national bar chart by default using the SAME function
-    const nationalChartElement = createBarChartElement(nationalTrendsData, width);
+    // Show national bar chart by default using the SAME function, wrapped in resize
+    const nationalChartElement = resize((w) => createBarChartElement(nationalTrendsData, w));
     return html`<div>
         <p style="font-size: 0.85em; margin-bottom: 0.1rem;">National Vote Intention (Latest):</p>
         ${nationalChartElement}

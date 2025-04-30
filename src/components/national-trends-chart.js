@@ -57,8 +57,8 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
       // const date = attemptedDate; // Use the parsed date
       // Date is already an object from grouping key
       const date = new Date(dateISOStr);
-      const low = values.find(d => d.metric === 'vote_share_low95')?.value;
-      const high = values.find(d => d.metric === 'vote_share_high95')?.value;
+      const low = values.find(d => d.metric === 'vote_share_low')?.value;
+      const high = values.find(d => d.metric === 'vote_share_high')?.value;
       return { date, party, low, high };
     }
   ).filter(d => d.low !== undefined && d.high !== undefined); // Date validity already checked

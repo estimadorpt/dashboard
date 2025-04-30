@@ -11,6 +11,7 @@ export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalT
     // Function to update the sidebar content
     function updateSidebar(data) {
         selectedDistrictData = data; 
+        console.log("[mapWithSidebar] Data being passed TO mapSidebar:", JSON.stringify(selectedDistrictData));
         // Create sidebar content - pass nationalTrendsData to mapSidebar
         const sidebarContent = mapSidebar(selectedDistrictData, 250, nationalTrendsData); 
         sidebarContainer.replaceChildren(sidebarContent);

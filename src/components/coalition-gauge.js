@@ -1,11 +1,8 @@
 import {html} from "npm:htl";
 import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
-
-// Define coalitions directly
-const leftBlocParties = ["PS", "BE", "CDU"];
-const rightBlocParties = ["AD", "IL"];
-const majorityThreshold = 116;
+// Import bloc definitions from NEW config file
+import { leftBlocParties, rightBlocParties, majorityThreshold } from "../config/blocs.js";
 
 // Helper function to calculate seat arrays, medians, probabilities
 function getBlocStats(drawData, coalitionParties) {

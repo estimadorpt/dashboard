@@ -13,7 +13,11 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
   const parties = partyOrder; // Use defined party order
 
   // Calculate max absolute effect for symmetric color scale
-  const maxAbs = d3.max(houseEffectsData, d => Math.abs(d.effect));
+  const maxAbs = d3.max(houseEffectsData, d => Math.abs(d.house_effect)); 
+  console.log("[houseEffectsHeatmap] Calculated maxAbs:", maxAbs);
+  // Log actual min/max for comparison
+  const [minEffect, maxEffect] = d3.extent(houseEffectsData, d => d.house_effect);
+  console.log(`[houseEffectsHeatmap] Actual min/max effect: ${minEffect} / ${maxEffect}`);
 
   if (!maxAbs) {
      console.warn("[houseEffectsHeatmap] Max absolute effect is 0 or undefined. Check data.");
@@ -26,7 +30,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
   const marginTop = 30;
   const marginRight = 10;
   const marginBottom = 40; // Space for legend
-  const marginLeft = 80; // Space for pollster labels
+  const marginLeft = 120; // INCREASED Space for pollster labels
   
   // Calculate available width for cells
   const availableWidth = width - marginLeft - marginRight;
@@ -34,7 +38,19 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
 
   // --- Define Color Scale Explicitly ---
   // Use the same scale for plot fill and legend
-  const colorScale = d3.scaleSequential(d3.interpolateRdBu).domain([maxAbs, -maxAbs]); // Reversed domain for RdBu interpolator
+  // Revert to scaleSequential RdBu with reversed domain (Red=Positive, Blue=Negative)
+  // Try BrBG interpolator instead
+  const colorScale = d3.scaleSequential(d3.interpolateBrBG).domain([maxAbs, -maxAbs]);
+  /* // scaleDiverging caused TypeErrors
+  const colorScale = d3.scaleDiverging()
+                      .domain([-maxAbs, 0, maxAbs]) 
+                      .interpolator(d3.interpolateBuRd);
+  */
+  // Log scale outputs for debugging
+  console.log(`[houseEffectsHeatmap] colorScale(0): ${colorScale(0)}`);
+  console.log(`[houseEffectsHeatmap] colorScale(${maxAbs}): ${colorScale(maxAbs)}`); // Should be Red-ish
+  console.log(`[houseEffectsHeatmap] colorScale(${-maxAbs}): ${colorScale(-maxAbs)}`); // Should be Blue-ish
+  console.log(`[houseEffectsHeatmap] colorScale(${maxEffect}): ${colorScale(maxEffect)}`); // Color for max positive value in data
 
   // --- Plotting ---
   const plot = Plot.plot({
@@ -64,8 +80,8 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       Plot.cell(houseEffectsData, {
         x: "party",
         y: "pollster",
-        fill: d => colorScale(d.effect),
-        title: (d) => `${d.pollster} - ${d.party}\nEffect: ${d.effect.toFixed(1)} pp`,
+        fill: d => colorScale(d.house_effect), // Use correct field
+        title: (d) => `${d.pollster} - ${d.party}\nEffect: ${d.house_effect.toFixed(1)} pp`, // Use correct field
         width: cellWidth,
         height: cellHeight,
         inset: 0.5 
@@ -95,13 +111,13 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
   // Use the SAME colorScale for the legend stops
   linearGradient.append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", colorScale(-maxAbs)); // colorScale expects value from effect domain
+      .attr("stop-color", colorScale(maxAbs));
   linearGradient.append("stop")
       .attr("offset", "50%")
       .attr("stop-color", colorScale(0)); 
   linearGradient.append("stop")
       .attr("offset", "100%")
-      .attr("stop-color", colorScale(maxAbs));
+      .attr("stop-color", colorScale(-maxAbs));
 
   // Draw the legend rectangle
   legendSvg.append("rect")
@@ -118,7 +134,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       .attr("text-anchor", "start")
       .attr("font-size", "10px")
       .attr("fill", "currentColor")
-      .text("Under-estimates");
+      .text("Over-estimates");
 
   legendSvg.append("text")
       .attr("x", legendWidth / 2)
@@ -134,7 +150,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       .attr("text-anchor", "end")
       .attr("font-size", "10px")
       .attr("fill", "currentColor")
-      .text("Over-estimates");
+      .text("Under-estimates");
 
   // --- Combine Plot and Legend ---
   const container = html`<div>

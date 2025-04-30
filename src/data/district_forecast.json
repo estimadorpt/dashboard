@@ -1,0 +1,282 @@
+[
+  {
+    "district_name": "Aveiro",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2748,
+      "CH": 0.1555,
+      "IL": 0.072,
+      "BE": 0.0273,
+      "CDU": 0.0176,
+      "PAN": 0.0141,
+      "L": 0.0483,
+      "AD": 0.3904
+    }
+  },
+  {
+    "district_name": "Açores",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.3213,
+      "CH": 0.1495,
+      "IL": 0.0557,
+      "BE": 0.0242,
+      "CDU": 0.0129,
+      "PAN": 0.0128,
+      "L": 0.0437,
+      "AD": 0.3799
+    }
+  },
+  {
+    "district_name": "Beja",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.3391,
+      "CH": 0.2179,
+      "IL": 0.046,
+      "BE": 0.0261,
+      "CDU": 0.1237,
+      "PAN": 0.0128,
+      "L": 0.0453,
+      "AD": 0.1891
+    }
+  },
+  {
+    "district_name": "Braga",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.3008,
+      "CH": 0.1539,
+      "IL": 0.0735,
+      "BE": 0.0253,
+      "CDU": 0.0217,
+      "PAN": 0.0131,
+      "L": 0.0463,
+      "AD": 0.3653
+    }
+  },
+  {
+    "district_name": "Bragança",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2954,
+      "CH": 0.1694,
+      "IL": 0.0336,
+      "BE": 0.0162,
+      "CDU": 0.0127,
+      "PAN": 0.0082,
+      "L": 0.029,
+      "AD": 0.4356
+    }
+  },
+  {
+    "district_name": "Castelo Branco",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.3458,
+      "CH": 0.189,
+      "IL": 0.0509,
+      "BE": 0.0267,
+      "CDU": 0.024,
+      "PAN": 0.0132,
+      "L": 0.0469,
+      "AD": 0.3036
+    }
+  },
+  {
+    "district_name": "Coimbra",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.3275,
+      "CH": 0.1521,
+      "IL": 0.0648,
+      "BE": 0.0302,
+      "CDU": 0.0295,
+      "PAN": 0.015,
+      "L": 0.0543,
+      "AD": 0.3266
+    }
+  },
+  {
+    "district_name": "Faro",
+    "winning_party": "CH",
+    "probs": {
+      "PS": 0.2587,
+      "CH": 0.2636,
+      "IL": 0.0741,
+      "BE": 0.0347,
+      "CDU": 0.0337,
+      "PAN": 0.0186,
+      "L": 0.061,
+      "AD": 0.2556
+    }
+  },
+  {
+    "district_name": "Guarda",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.3131,
+      "CH": 0.1783,
+      "IL": 0.0414,
+      "BE": 0.0205,
+      "CDU": 0.0166,
+      "PAN": 0.0102,
+      "L": 0.036,
+      "AD": 0.3839
+    }
+  },
+  {
+    "district_name": "Leiria",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2348,
+      "CH": 0.1868,
+      "IL": 0.0776,
+      "BE": 0.0275,
+      "CDU": 0.0228,
+      "PAN": 0.0143,
+      "L": 0.0511,
+      "AD": 0.3851
+    }
+  },
+  {
+    "district_name": "Lisboa",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.2839,
+      "CH": 0.1735,
+      "IL": 0.1044,
+      "BE": 0.0318,
+      "CDU": 0.039,
+      "PAN": 0.0181,
+      "L": 0.0713,
+      "AD": 0.278
+    }
+  },
+  {
+    "district_name": "Madeira",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2315,
+      "CH": 0.1711,
+      "IL": 0.0601,
+      "BE": 0.0232,
+      "CDU": 0.0169,
+      "PAN": 0.0124,
+      "L": 0.0407,
+      "AD": 0.4441
+    }
+  },
+  {
+    "district_name": "Portalegre",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.3458,
+      "CH": 0.2401,
+      "IL": 0.0416,
+      "BE": 0.0223,
+      "CDU": 0.0533,
+      "PAN": 0.0109,
+      "L": 0.0389,
+      "AD": 0.2471
+    }
+  },
+  {
+    "district_name": "Porto",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.3101,
+      "CH": 0.1391,
+      "IL": 0.083,
+      "BE": 0.0304,
+      "CDU": 0.0274,
+      "PAN": 0.0161,
+      "L": 0.0572,
+      "AD": 0.3367
+    }
+  },
+  {
+    "district_name": "Santarém",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2817,
+      "CH": 0.2277,
+      "IL": 0.0623,
+      "BE": 0.0283,
+      "CDU": 0.0389,
+      "PAN": 0.0142,
+      "L": 0.0507,
+      "AD": 0.2963
+    }
+  },
+  {
+    "district_name": "Setúbal",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.309,
+      "CH": 0.2052,
+      "IL": 0.0843,
+      "BE": 0.0364,
+      "CDU": 0.079,
+      "PAN": 0.0195,
+      "L": 0.0695,
+      "AD": 0.1971
+    }
+  },
+  {
+    "district_name": "Viana do Castelo",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2885,
+      "CH": 0.1645,
+      "IL": 0.0538,
+      "BE": 0.0238,
+      "CDU": 0.0229,
+      "PAN": 0.0123,
+      "L": 0.0428,
+      "AD": 0.3914
+    }
+  },
+  {
+    "district_name": "Vila Real",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.3036,
+      "CH": 0.1574,
+      "IL": 0.0371,
+      "BE": 0.0174,
+      "CDU": 0.0142,
+      "PAN": 0.0091,
+      "L": 0.0323,
+      "AD": 0.4288
+    }
+  },
+  {
+    "district_name": "Viseu",
+    "winning_party": "AD",
+    "probs": {
+      "PS": 0.2824,
+      "CH": 0.179,
+      "IL": 0.0462,
+      "BE": 0.0203,
+      "CDU": 0.0142,
+      "PAN": 0.0106,
+      "L": 0.0372,
+      "AD": 0.4102
+    }
+  },
+  {
+    "district_name": "Évora",
+    "winning_party": "PS",
+    "probs": {
+      "PS": 0.3322,
+      "CH": 0.1986,
+      "IL": 0.0492,
+      "BE": 0.0256,
+      "CDU": 0.1022,
+      "PAN": 0.0126,
+      "L": 0.045,
+      "AD": 0.2345
+    }
+  }
+]

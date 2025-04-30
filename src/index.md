@@ -7,15 +7,19 @@ toc: false
 # Portuguese Election Forecast
 <p class="text-muted text-sm">Last model run: ${new Date().toUTCString()}</p>
 
-<!-- NEW HERO PROBABILITIES SECTION -->
+<!-- UPDATED HERO PROBABILITIES SECTION -->
 <div style="text-align: center; margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
-  <div style="display: inline-block; margin: 0 2rem;">
+  <div style="display: inline-block; margin: 0 1.5rem;">
     <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probLeftMajority * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Probability</p>
+    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Probability<br><span style="font-size: 0.8em;">(PS+BE+CDU ≥ 116 seats)</span></p>
   </div>
-  <div style="display: inline-block; margin: 0 2rem;">
+  <div style="display: inline-block; margin: 0 1.5rem;">
     <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probRightMajority * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Right Bloc Majority Probability</p>
+    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Right Bloc Majority Probability<br><span style="font-size: 0.8em;">(AD+IL ≥ 116 seats)</span></p>
+  </div>
+  <div style="display: inline-block; margin: 0 1.5rem;">
+    <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${((1 - probLeftMajority - probRightMajority) * 100).toFixed(0)}%</p>
+    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">No Bloc Majority<br><span style="font-size: 0.8em;">(Complex negotiations likely)</span></p>
   </div>
 </div>
 
@@ -46,20 +50,31 @@ import {html} from "npm:htl";
 
 // Data loaders
 const portugalTopoJson = await FileAttachment("data/Portugal-Distritos-Ilhas_TopoJSON.json").json();
-const nationalTrends = await FileAttachment("data/national_trends.json").json({typed: true});
+const allNationalTrends = await FileAttachment("data/national_trends.json").json({typed: true});
 const districtForecastData = await FileAttachment("./data/district_forecast.json").json({typed: true});
-const contestedSeatsData = await FileAttachment("data/sample_contested_seats.json").json();
-const seatProjectionData = await FileAttachment("data/sample_seat_forecast.json").json();
+
+// Filter national trends data from March 10, 2024 onwards
+const startDate = new Date("2024-03-10");
+const nationalTrends = allNationalTrends.filter(d => new Date(d.date) >= startDate);
+console.log(`[index.md] Filtered national trends. Original count: ${allNationalTrends.length}, New count: ${nationalTrends.length}`);
+
+// REMOVE OLD contested data loader
+// ADD NEW contested data loader
+const contestedSummaryData = await FileAttachment("data/contested_summary.json").json(); 
+// const seatProjectionData = await FileAttachment("data/sample_seat_forecast.json").json(); // CHANGE FROM SAMPLE
+const wideSeatProjectionData = await FileAttachment("data/seat_forecast_simulations.json").json(); // USE REAL SIMULATIONS
 // REMOVE OLD poll error data (or keep if used elsewhere, but not by heatmap)
 // const pollErrorData = await FileAttachment("data/sample_poll_errors.json").json(); 
 // Load NEW house effects data
-const houseEffectsData = await FileAttachment("data/house_effect.json").json();
+const houseEffectsData = await FileAttachment("data/house_effects.json").json();
 
 // --- Calculate Hero Banner Probs ---
 import * as d3 from "npm:d3"; // Need d3 for calculations
-const leftBlocParties = ["PS", "BE", "CDU"]; // Assuming these match coalitionGauge
-const rightBlocParties = ["AD", "IL"];
-const majorityThreshold = 116;
+// Import bloc definitions from NEW config file
+import { leftBlocParties, rightBlocParties, majorityThreshold } from "./config/blocs.js";
+// const leftBlocParties = ["PS", "BE", "CDU", "L"]; // REMOVE local definition 
+// const rightBlocParties = ["AD", "IL"]; // REMOVE local definition
+// const majorityThreshold = 116; // REMOVE local definition
 
 function calculateBlocMajorityProbability(drawData, coalitionParties) {
   if (!drawData || drawData.length === 0) return 0;
@@ -75,8 +90,8 @@ function calculateBlocMajorityProbability(drawData, coalitionParties) {
   return totalDraws > 0 ? (majorityDraws / totalDraws) : 0;
 }
 
-const probLeftMajority = calculateBlocMajorityProbability(seatProjectionData, leftBlocParties);
-const probRightMajority = calculateBlocMajorityProbability(seatProjectionData, rightBlocParties);
+const probLeftMajority = calculateBlocMajorityProbability(wideSeatProjectionData, leftBlocParties);
+const probRightMajority = calculateBlocMajorityProbability(wideSeatProjectionData, rightBlocParties);
 
 // --- Get Latest National Trends for Sidebar Default ---
 // Sort trends by date descending, filter for the mean metric, and transform the structure
@@ -84,7 +99,9 @@ const latestTrends = nationalTrends
   .filter(d => d.metric === "vote_share_mean") // Keep only the mean values
   .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date descending
   .filter((d, i, arr) => arr.findIndex(t => t.party === d.party) === i) // Get the first (latest) entry for each party
-  .map(d => ({ party: d.party, vote_share_mean: d.value })); // Transform to {party, vote_share_mean}
+  .map(d => ({ party: d.party, vote_share_mean: d.value * 100 })); // Transform to {party, vote_share_mean} AND SCALE
+
+console.log("[index.md] Calculated latestTrends:", JSON.stringify(latestTrends)); // ADD LOG
 
 // REMOVE State for Methodology visibility
 // let methodologyVisible = false;
@@ -201,6 +218,16 @@ const methodologyContent = html`
     </div>
 `;
 
+// --- Transform Seat Projection Data from Wide to Long --- 
+const seatProjectionData = wideSeatProjectionData.flatMap((drawObject, drawIndex) => 
+    Object.entries(drawObject).map(([party, seats]) => ({
+        draw: drawIndex, // Add a draw identifier if needed later, though not strictly used by current component
+        party: party,
+        seats: seats
+    }))
+);
+console.log("[index.md] Transformed seatProjectionData (first 10 entries):", JSON.stringify(seatProjectionData.slice(0, 10)));
+
 // Prepare map data
 const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.NAME_1}));
 
@@ -212,9 +239,9 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 ```
 
 <!-- Row 1 Annotation -->
-<p class="text-muted text-sm mb-2">Seat projections based on 10,000 simulations, showing the range of likely outcomes per party (histograms) and potential coalition majorities (density plots).</p>
+<p class="text-muted text-sm mb-2">Seat projections show likely outcomes for each party with 116 seats needed for a majority (red line). Left chart shows distribution by party; right chart shows probability of coalition blocs reaching majority threshold.</p>
 
-<!-- Row 1: Seat Projection -->
+<!-- Row 1: Seat Projection Histogram and Coalition Gauge -->
 <div class="grid grid-cols-2 gap-4">
   <div class="card p-4">
     <h2>Seat Projection</h2>
@@ -227,7 +254,7 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 </div>
 
 <!-- Row 2 Annotation -->
-<p class="text-muted text-sm mb-2">District map showing the party forecast to win the most votes in each region. Click a district for detailed vote share probabilities.</p>
+<p class="text-muted text-sm mb-2">District map colored by predicted leading party in each region. Click any district to see detailed vote share forecasts, or view national trends in the right panel when no district is selected.</p>
 
 <!-- Row 2: Combined Map and Sidebar -->
 <div class="card col-span-2 p-4">
@@ -236,17 +263,17 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 </div>
   
 <!-- Row 3 Annotation -->
-<p class="text-muted text-sm mb-2">Table highlighting the most contested seats (based on rank/uncertainty). Click a row to see the detailed win probabilities for that specific seat.</p>
+<p class="text-muted text-sm mb-2">Most contested seats across Portugal where small shifts could change outcomes. The table shows seats closest to flipping, with probability breakdown bars showing which parties might win each seat. Click any row for detailed analysis.</p>
   
-<!-- Row 3: Combined Contested Seats Section -->
-<div class="grid-colspan-2">
-${contestedSeatsSection(contestedSeatsData)}
+<!-- Row 3: Contested Seats Section -->
+<div class="card grid-colspan-2 p-4">
+${contestedSeatsSection(contestedSummaryData)}
 </div>
 
 <!-- Row 4 Annotation -->
-<p class="text-muted text-sm mb-2">Left: Modeled national vote intention trends over time, combining polls and historical data. Right: Estimated house effects showing systematic bias for each pollster and party.</p>
+<p class="text-muted text-sm mb-2">Left: National voting intention trends with 95% credible intervals, combining polling data since 2024. Right: Estimated polling house effects showing systematic biases — red indicates pollsters overestimating parties, blue shows underestimation.</p>
 
-<!-- Row 4: National Trends and Diagnostics -->
+<!-- Row 4: National Trends Chart and Pollster Diagnostics -->
 <div class="grid grid-cols-2 gap-4">
   <div class="card p-4">
     <h2>National Vote Intention</h2>
@@ -266,8 +293,11 @@ ${contestedSeatsSection(contestedSeatsData)}
 ${methodologyContent}
 </div>
 
-<!-- Footer -->
-<div class="small note py-4">Model and visualizations developed by [Your Name/Organization]. Last updated: ${new Date().toLocaleDateString()}.</div>
+<!-- Updated Footer -->
+<div class="small note py-4">
+    Model and visualizations by [Your Organization]. Last updated: ${new Date().toLocaleDateString()}.
+    <br>Data sources: Polling aggregation from national pollsters (Aximage, CESOP, Eurosondagem, Intercampus), historical election results from CNE, and demographic data from INE.
+  </div>
 
 <!-- Add global styles via a style tag -->
 <style>
