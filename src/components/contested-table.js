@@ -1,5 +1,4 @@
 import {html} from "npm:htl";
-import {showSeatModal} from "./seat-modal.js"; // Import the modal function
 
 // Consistent Party Colors (adjust as needed, add 'Other')
 const partyColors = {
@@ -42,7 +41,8 @@ function processProbabilities(probs, threshold = 0.05) {
   return partiesToShow;
 }
 
-export function contestedTable(contestedData) {
+// Accept onSeatSelect callback as the second argument
+export function contestedTable(contestedData, onSeatSelect) {
   if (!contestedData || !contestedData.districts) {
     return html`<p>No contested seat data available.</p>`;
   }
@@ -114,9 +114,15 @@ export function contestedTable(contestedData) {
               </div>
             </td>
           </tr>`;
-          // Add click listener to the row
-          row.onclick = () => showSeatModal(seat);
-          row.style.cursor = 'pointer'; // Indicate clickable
+          // Add click listener to the row - Call onSeatSelect if provided
+          if (typeof onSeatSelect === 'function') {
+            row.onclick = () => onSeatSelect(seat);
+            row.style.cursor = 'pointer'; // Indicate clickable
+          } else {
+            // Optional: Keep some default behavior or remove clickability if no callback
+             row.onclick = null; 
+             row.style.cursor = 'default';
+          }
           return row;
         })}
       </tbody>
