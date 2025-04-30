@@ -1,0 +1,982 @@
+[
+  {
+    "NAME_1": "Aveiro",
+    "party": "PS",
+    "vote_share_mean": 35.1,
+    "vote_share_low95": 31.0,
+    "vote_share_high95": 39.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "AD",
+    "vote_share_mean": 33.2,
+    "vote_share_low95": 29.0,
+    "vote_share_high95": 37.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "CH",
+    "vote_share_mean": 14.0,
+    "vote_share_low95": 10.0,
+    "vote_share_high95": 18.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "IL",
+    "vote_share_mean": 6.5,
+    "vote_share_low95": 4.0,
+    "vote_share_high95": 9.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "BE",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "CDU",
+    "vote_share_mean": 3.2,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Aveiro",
+    "party": "OTH",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "PS",
+    "vote_share_mean": 40.5,
+    "vote_share_low95": 36.0,
+    "vote_share_high95": 45.0
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "AD",
+    "vote_share_mean": 25.0,
+    "vote_share_low95": 21.0,
+    "vote_share_high95": 29.0
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "CDU",
+    "vote_share_mean": 15.0,
+    "vote_share_low95": 11.0,
+    "vote_share_high95": 19.0
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "CH",
+    "vote_share_mean": 10.0,
+    "vote_share_low95": 7.0,
+    "vote_share_high95": 14.0
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "BE",
+    "vote_share_mean": 4.5,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 6.5
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "IL",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Beja",
+    "party": "OTH",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 0.5,
+    "vote_share_high95": 3.5
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "PS",
+    "vote_share_mean": 34.0,
+    "vote_share_low95": 30.0,
+    "vote_share_high95": 38.0
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "AD",
+    "vote_share_mean": 35.0,
+    "vote_share_low95": 31.0,
+    "vote_share_high95": 39.0
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "CH",
+    "vote_share_mean": 13.0,
+    "vote_share_low95": 9.0,
+    "vote_share_high95": 17.0
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "IL",
+    "vote_share_mean": 7.0,
+    "vote_share_low95": 4.5,
+    "vote_share_high95": 9.5
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "BE",
+    "vote_share_mean": 4.5,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 6.5
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "CDU",
+    "vote_share_mean": 3.5,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Braga",
+    "party": "OTH",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "PS",
+    "vote_share_mean": 36.0,
+    "vote_share_low95": 32.0,
+    "vote_share_high95": 40.0
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "AD",
+    "vote_share_mean": 28.0,
+    "vote_share_low95": 24.0,
+    "vote_share_high95": 32.0
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "CH",
+    "vote_share_mean": 12.0,
+    "vote_share_low95": 9.0,
+    "vote_share_high95": 15.0
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "IL",
+    "vote_share_mean": 9.0,
+    "vote_share_low95": 6.5,
+    "vote_share_high95": 11.5
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "BE",
+    "vote_share_mean": 6.5,
+    "vote_share_low95": 4.5,
+    "vote_share_high95": 8.5
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "CDU",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Lisboa",
+    "party": "OTH",
+    "vote_share_mean": 4.5,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "PS",
+    "vote_share_mean": 37.0,
+    "vote_share_low95": 33.0,
+    "vote_share_high95": 41.0
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "AD",
+    "vote_share_mean": 32.0,
+    "vote_share_low95": 28.0,
+    "vote_share_high95": 36.0
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "CH",
+    "vote_share_mean": 11.0,
+    "vote_share_low95": 8.0,
+    "vote_share_high95": 14.0
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "IL",
+    "vote_share_mean": 8.0,
+    "vote_share_low95": 5.5,
+    "vote_share_high95": 10.5
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "BE",
+    "vote_share_mean": 5.5,
+    "vote_share_low95": 3.5,
+    "vote_share_high95": 7.5
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "CDU",
+    "vote_share_mean": 3.5,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Porto",
+    "party": "OTH",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "PS",
+    "vote_share_mean": 30.0,
+    "vote_share_low95": 26.0,
+    "vote_share_high95": 34.0
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "AD",
+    "vote_share_mean": 38.0,
+    "vote_share_low95": 34.0,
+    "vote_share_high95": 42.0
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "CH",
+    "vote_share_mean": 15.0,
+    "vote_share_low95": 11.0,
+    "vote_share_high95": 19.0
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "IL",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "CDU",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Viseu",
+    "party": "OTH",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "PS",
+    "vote_share_mean": 33.0,
+    "vote_share_low95": 29.0,
+    "vote_share_high95": 37.0
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "AD",
+    "vote_share_mean": 30.0,
+    "vote_share_low95": 26.0,
+    "vote_share_high95": 34.0
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "CH",
+    "vote_share_mean": 18.0,
+    "vote_share_low95": 14.0,
+    "vote_share_high95": 22.0
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "IL",
+    "vote_share_mean": 7.0,
+    "vote_share_low95": 4.5,
+    "vote_share_high95": 9.5
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "BE",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "CDU",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Faro",
+    "party": "OTH",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "PS",
+    "vote_share_mean": 40.0,
+    "vote_share_low95": 36.0,
+    "vote_share_high95": 44.0
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "AD",
+    "vote_share_mean": 35.0,
+    "vote_share_low95": 31.0,
+    "vote_share_high95": 39.0
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "CH",
+    "vote_share_mean": 10.0,
+    "vote_share_low95": 7.0,
+    "vote_share_high95": 13.0
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "IL",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "BE",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "CDU",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 0.5,
+    "vote_share_high95": 3.5
+  },
+  {
+    "NAME_1": "Acores",
+    "party": "OTH",
+    "vote_share_mean": 6.0,
+    "vote_share_low95": 4.0,
+    "vote_share_high95": 8.0
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "PS",
+    "vote_share_mean": 25.0,
+    "vote_share_low95": 21.0,
+    "vote_share_high95": 29.0
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "AD",
+    "vote_share_mean": 45.0,
+    "vote_share_low95": 41.0,
+    "vote_share_high95": 49.0
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "CH",
+    "vote_share_mean": 15.0,
+    "vote_share_low95": 12.0,
+    "vote_share_high95": 18.0
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "IL",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "BE",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "CDU",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 0.5,
+    "vote_share_high95": 3.5
+  },
+  {
+    "NAME_1": "Madeira",
+    "party": "OTH",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "PS",
+    "vote_share_mean": 30.0,
+    "vote_share_low95": 26.0,
+    "vote_share_high95": 34.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "AD",
+    "vote_share_mean": 42.0,
+    "vote_share_low95": 38.0,
+    "vote_share_high95": 46.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "CH",
+    "vote_share_mean": 12.0,
+    "vote_share_low95": 9.0,
+    "vote_share_high95": 15.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "IL",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "BE",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "CDU",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 0.5,
+    "vote_share_high95": 3.5
+  },
+  {
+    "NAME_1": "Bragança",
+    "party": "OTH",
+    "vote_share_mean": 8.0,
+    "vote_share_low95": 6.0,
+    "vote_share_high95": 10.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "PS",
+    "vote_share_mean": 38.0,
+    "vote_share_low95": 34.0,
+    "vote_share_high95": 42.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "AD",
+    "vote_share_mean": 35.0,
+    "vote_share_low95": 31.0,
+    "vote_share_high95": 39.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "CH",
+    "vote_share_mean": 10.0,
+    "vote_share_low95": 7.0,
+    "vote_share_high95": 13.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "IL",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "CDU",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Castelo Branco",
+    "party": "OTH",
+    "vote_share_mean": 6.0,
+    "vote_share_low95": 4.0,
+    "vote_share_high95": 8.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "PS",
+    "vote_share_mean": 36.0,
+    "vote_share_low95": 32.0,
+    "vote_share_high95": 40.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "AD",
+    "vote_share_mean": 32.0,
+    "vote_share_low95": 28.0,
+    "vote_share_high95": 36.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "CH",
+    "vote_share_mean": 11.0,
+    "vote_share_low95": 8.0,
+    "vote_share_high95": 14.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "IL",
+    "vote_share_mean": 7.0,
+    "vote_share_low95": 5.0,
+    "vote_share_high95": 9.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "BE",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "CDU",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Coimbra",
+    "party": "OTH",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "PS",
+    "vote_share_mean": 42.0,
+    "vote_share_low95": 38.0,
+    "vote_share_high95": 46.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "AD",
+    "vote_share_mean": 26.0,
+    "vote_share_low95": 22.0,
+    "vote_share_high95": 30.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "CDU",
+    "vote_share_mean": 14.0,
+    "vote_share_low95": 10.0,
+    "vote_share_high95": 18.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "CH",
+    "vote_share_mean": 9.0,
+    "vote_share_low95": 6.0,
+    "vote_share_high95": 12.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "IL",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Évora",
+    "party": "OTH",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 0.5,
+    "vote_share_high95": 3.5
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "PS",
+    "vote_share_mean": 33.0,
+    "vote_share_low95": 29.0,
+    "vote_share_high95": 37.0
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "AD",
+    "vote_share_mean": 40.0,
+    "vote_share_low95": 36.0,
+    "vote_share_high95": 44.0
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "CH",
+    "vote_share_mean": 11.0,
+    "vote_share_low95": 8.0,
+    "vote_share_high95": 14.0
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "IL",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "BE",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "CDU",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 3.0
+  },
+  {
+    "NAME_1": "Guarda",
+    "party": "OTH",
+    "vote_share_mean": 8.0,
+    "vote_share_low95": 6.0,
+    "vote_share_high95": 10.0
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "PS",
+    "vote_share_mean": 34.0,
+    "vote_share_low95": 30.0,
+    "vote_share_high95": 38.0
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "AD",
+    "vote_share_mean": 36.0,
+    "vote_share_low95": 32.0,
+    "vote_share_high95": 40.0
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "CH",
+    "vote_share_mean": 13.0,
+    "vote_share_low95": 10.0,
+    "vote_share_high95": 16.0
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "IL",
+    "vote_share_mean": 6.0,
+    "vote_share_low95": 4.0,
+    "vote_share_high95": 8.0
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "CDU",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Leiria",
+    "party": "OTH",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "PS",
+    "vote_share_mean": 40.0,
+    "vote_share_low95": 36.0,
+    "vote_share_high95": 44.0
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "AD",
+    "vote_share_mean": 30.0,
+    "vote_share_low95": 26.0,
+    "vote_share_high95": 34.0
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "CDU",
+    "vote_share_mean": 8.0,
+    "vote_share_low95": 5.0,
+    "vote_share_high95": 11.0
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "CH",
+    "vote_share_mean": 12.0,
+    "vote_share_low95": 9.0,
+    "vote_share_high95": 15.0
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "BE",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "IL",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 5.0
+  },
+  {
+    "NAME_1": "Portalegre",
+    "party": "OTH",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "PS",
+    "vote_share_mean": 35.0,
+    "vote_share_low95": 31.0,
+    "vote_share_high95": 39.0
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "AD",
+    "vote_share_mean": 33.0,
+    "vote_share_low95": 29.0,
+    "vote_share_high95": 37.0
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "CH",
+    "vote_share_mean": 15.0,
+    "vote_share_low95": 12.0,
+    "vote_share_high95": 18.0
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "IL",
+    "vote_share_mean": 6.0,
+    "vote_share_low95": 4.0,
+    "vote_share_high95": 8.0
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "CDU",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Santarém",
+    "party": "OTH",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "PS",
+    "vote_share_mean": 39.0,
+    "vote_share_low95": 35.0,
+    "vote_share_high95": 43.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "AD",
+    "vote_share_mean": 24.0,
+    "vote_share_low95": 20.0,
+    "vote_share_high95": 28.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "CH",
+    "vote_share_mean": 14.0,
+    "vote_share_low95": 11.0,
+    "vote_share_high95": 17.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "CDU",
+    "vote_share_mean": 9.0,
+    "vote_share_low95": 6.0,
+    "vote_share_high95": 12.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "IL",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "BE",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Setúbal",
+    "party": "OTH",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "PS",
+    "vote_share_mean": 36.0,
+    "vote_share_low95": 32.0,
+    "vote_share_high95": 40.0
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "AD",
+    "vote_share_mean": 37.0,
+    "vote_share_low95": 33.0,
+    "vote_share_high95": 41.0
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "CH",
+    "vote_share_mean": 10.0,
+    "vote_share_low95": 7.0,
+    "vote_share_high95": 13.0
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "IL",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.5,
+    "vote_share_high95": 5.5
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "CDU",
+    "vote_share_mean": 3.0,
+    "vote_share_low95": 1.5,
+    "vote_share_high95": 4.5
+  },
+  {
+    "NAME_1": "Viana do Castelo",
+    "party": "OTH",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "PS",
+    "vote_share_mean": 32.0,
+    "vote_share_low95": 28.0,
+    "vote_share_high95": 36.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "AD",
+    "vote_share_mean": 41.0,
+    "vote_share_low95": 37.0,
+    "vote_share_high95": 45.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "CH",
+    "vote_share_mean": 12.0,
+    "vote_share_low95": 9.0,
+    "vote_share_high95": 15.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "IL",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "BE",
+    "vote_share_mean": 4.0,
+    "vote_share_low95": 2.0,
+    "vote_share_high95": 6.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "CDU",
+    "vote_share_mean": 2.0,
+    "vote_share_low95": 1.0,
+    "vote_share_high95": 3.0
+  },
+  {
+    "NAME_1": "Vila Real",
+    "party": "OTH",
+    "vote_share_mean": 5.0,
+    "vote_share_low95": 3.0,
+    "vote_share_high95": 7.0
+  }
+] 

@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Organize your project using the `pages` configuration for better navigation
+- Use the `head` property to add essential meta tags and favicons
+- Leverage the `root` configuration to manage your source files effectively
+- Customize the user experience with `theme`, `header`, and `footer` options
+- Optimize performance by enabling `search` and `linkify` features
