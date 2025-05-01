@@ -1,12 +1,12 @@
 // See https://observablehq.com/framework/config for documentation.
 export default {
-  // The app’s title; used in the sidebar and webpage titles.
+  // The app's title; used in the sidebar and webpage titles.
   title: "Portugal Election Dashboard",
 
   // Base path for deployment (e.g., GitHub Pages subdirectory)
   base: "/",
 
-  // The pages and sections in the sidebar. If you don’t specify this option,
+  // The pages and sections in the sidebar. If you don't specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
   // lets you organize them into sections and have unlisted pages.
   // pages: [
@@ -20,7 +20,11 @@ export default {
   // ],
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
+  head: '\
+    <link rel="icon" href="observable.png" type="image/png" sizes="32x32">\
+    <!-- 100% privacy-first analytics -->\
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>\
+  ',
 
   // The path to the source root.
   root: "src",
