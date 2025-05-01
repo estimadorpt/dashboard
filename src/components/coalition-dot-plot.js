@@ -31,10 +31,16 @@ export function coalitionDotPlot(drawData, options = {}) {
     ([bloc, medianSeats]) => ({ bloc, medianSeats })
   );
 
-  // --- Sample Data for Plotting --- 
-  // const sampleSize = 2000;
-  const sampleSize = 1000; // REDUCE sample size further
-  // Shuffle the full data and take the first N points
+  // --- Dynamically Sample Data based on Width ---
+  const width = options.width ?? 600; // Default width if not provided
+  const minSampleSize = 250;
+  const maxSampleSize = 2000; 
+  const targetSampleSize = Math.round((5 / 3) * width);
+  const sampleSize = Math.max(minSampleSize, Math.min(targetSampleSize, maxSampleSize));
+  console.log(`[coalition-dot-plot] Width: ${width}, TargetSampleSize: ${targetSampleSize}, ActualSampleSize: ${sampleSize}`); // Log for debugging
+
+  // const sampleSize = 500; // REMOVE static sample size
+  // Shuffle the full data and take the calculated sample size
   const sampledBlocData = d3.shuffle(blocDrawData.slice()).slice(0, sampleSize);
 
   const blocOrder = ["Left Bloc", "Right Bloc"]; // Define facet order

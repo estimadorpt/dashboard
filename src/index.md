@@ -238,7 +238,7 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 ```
 
 <!-- Row 1 Annotation -->
-<p class="text-muted text-sm mb-2">Seat projections show likely outcomes for each party with 116 seats needed for a majority (red line). Left chart shows distribution by party; right chart shows probability of coalition blocs reaching majority threshold.</p>
+<p class="text-muted text-sm mb-2">Seat projections show likely outcomes for each party, with 116 seats needed for a majority (red line). The first chart displays the seat distribution per party, while the second illustrates the distribution of total seats for the left and right coalition blocs.</p>
 
 <!-- Row 1: Seat Projection Histogram and NEW Coalition Dot Plot -->
 <div class="grid grid-cols-2 gap-4">
@@ -246,7 +246,7 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
     <h2>Seat Projection</h2>
     ${seatProjection(seatProjectionData)}
   </div>
-  <div class="card p-4">
+  <div class="card p-4" style="overflow: hidden;">
     <h2>Coalition Totals Distribution</h2>
     ${resize((width) => coalitionDotPlot(seatProjectionData, {width}))}
   </div>
