@@ -12,17 +12,22 @@ export function seatProjection(drawData, options) {
     return placeholderDiv;
   }
 
-  // Calculate medians per party
+  // --- Filter out 'OTH' --- 
+  const filteredDrawData = drawData.filter(d => d.party !== 'OTH');
+  // Filter partyOrder locally, keeping the original import for colors
+  const filteredPartyOrder = partyOrder.filter(p => p !== 'OTH'); 
+
+  // Calculate medians per party using FILTERED data
   const medians = Array.from(
-    d3.rollup(drawData, v => d3.median(v, d => d.seats), d => d.party),
+    d3.rollup(filteredDrawData, v => d3.median(v, d => d.seats), d => d.party),
     ([party, medianSeats]) => ({party, medianSeats})
   );
 
-  // Convert medians to a Map for easy lookup in tooltips
+  // Convert medians to a Map for easy lookup in tooltips (use filtered medians)
   const medianMap = new Map(medians.map(d => [d.party, d.medianSeats]));
-  console.log("[seatProjection] medianMap:", medianMap); // Log the median map
+  // console.log("[seatProjection] medianMap:", medianMap); // REMOVE Log
 
-  // Use imported partyOrder
+  // Use imported partyOrder for colors, but filtered order for domains
   // const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "OTH"]; - Removed
   // Use imported partyColors
   /* // Define party colors (example colors, adjust as needed) - Removed
@@ -49,22 +54,22 @@ export function seatProjection(drawData, options) {
         ticks: [0, 50, 100, 116, 150]
     },
     y: { axis: null }, // No explicit y-axis for count within facets
-    // Define vertical facets by party
+    // Define vertical facets by party using FILTERED order
     fy: {
-        domain: partyOrder,
+        domain: filteredPartyOrder,
         axis: "left",
         label: null,
         marginBottom: 4
     },
-    // Add color scale
+    // Add color scale - Use filtered order for domain, but map includes OTH for consistency
     color: {
-      domain: partyOrder,
-      range: partyOrder.map(p => partyColors[p] || "#888888"), // Map names to colors, fallback grey
+      domain: filteredPartyOrder, 
+      range: filteredPartyOrder.map(p => partyColors[p] || "#888888"), // Map names to colors
       legend: false // Optionally hide color legend if redundant with fy axis
     },
     // Histogram bars using rectY and binX, relying on fy for data filtering
     marks: [
-      Plot.rectY(drawData, Plot.binX(
+      Plot.rectY(filteredDrawData, Plot.binX(
         { y: "count" }, // Calculate count within each bin for each facet
         {
           x: "seats",

@@ -29,7 +29,7 @@ import { districtMap } from "./components/district-map.js";
 import { nationalTrendsChart } from "./components/national-trends-chart.js";
 // Placeholder components
 import { seatProjection } from "./components/seat-projection.js";
-import { coalitionGauge } from "./components/coalition-gauge.js";
+import { coalitionDotPlot } from "./components/coalition-dot-plot.js";
 // REMOVE OLD diagnostics placeholder import
 // import { pollsterDiagnostics } from "./components/pollster-diagnostics.js"; 
 // Remove placeholder import
@@ -241,15 +241,15 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 <!-- Row 1 Annotation -->
 <p class="text-muted text-sm mb-2">Seat projections show likely outcomes for each party with 116 seats needed for a majority (red line). Left chart shows distribution by party; right chart shows probability of coalition blocs reaching majority threshold.</p>
 
-<!-- Row 1: Seat Projection Histogram and Coalition Gauge -->
+<!-- Row 1: Seat Projection Histogram and NEW Coalition Dot Plot -->
 <div class="grid grid-cols-2 gap-4">
   <div class="card p-4">
     <h2>Seat Projection</h2>
     ${seatProjection(seatProjectionData)}
   </div>
   <div class="card p-4">
-    <h2>Coalition Gauge</h2>
-    ${resize((width) => coalitionGauge(seatProjectionData, {width}))}
+    <h2>Coalition Totals Distribution</h2>
+    ${resize((width) => coalitionDotPlot(seatProjectionData, {width}))}
   </div>
 </div>
 

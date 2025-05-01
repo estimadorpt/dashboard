@@ -8,16 +8,22 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
     return html`<div class="small note" style="padding: 1rem; text-align: center;">House effects data not available.</div>`;
   }
 
-  // --- Data processing ---
-  const pollsters = [...new Set(houseEffectsData.map(d => d.pollster))].sort(); // Alphabetical pollsters
-  const parties = partyOrder; // Use defined party order
+  // --- Filter out 'OTH' --- 
+  const filteredHouseEffectsData = houseEffectsData.filter(d => d.party !== 'OTH');
+  // Filter partyOrder locally for the x-axis
+  const filteredPartyOrder = partyOrder.filter(p => p !== 'OTH');
 
-  // Calculate max absolute effect for symmetric color scale
-  const maxAbs = d3.max(houseEffectsData, d => Math.abs(d.house_effect)); 
-  console.log("[houseEffectsHeatmap] Calculated maxAbs:", maxAbs);
-  // Log actual min/max for comparison
-  const [minEffect, maxEffect] = d3.extent(houseEffectsData, d => d.house_effect);
-  console.log(`[houseEffectsHeatmap] Actual min/max effect: ${minEffect} / ${maxEffect}`);
+  // --- Data processing --- // USE FILTERED DATA
+  const pollsters = [...new Set(filteredHouseEffectsData.map(d => d.pollster))].sort(); // Alphabetical pollsters
+  // const parties = partyOrder; // Use defined party order - OLD
+  const parties = filteredPartyOrder; // Use filtered order for x-axis
+
+  // Calculate max absolute effect for symmetric color scale - USE FILTERED DATA
+  const maxAbs = d3.max(filteredHouseEffectsData, d => Math.abs(d.house_effect)); 
+  // console.log("[houseEffectsHeatmap] Calculated maxAbs:", maxAbs); // REMOVE Log
+  // Log actual min/max for comparison - USE FILTERED DATA
+  const [minEffect, maxEffect] = d3.extent(filteredHouseEffectsData, d => d.house_effect);
+  // console.log(`[houseEffectsHeatmap] Actual min/max effect: ${minEffect} / ${maxEffect}`); // REMOVE Log
 
   if (!maxAbs) {
      console.warn("[houseEffectsHeatmap] Max absolute effect is 0 or undefined. Check data.");
@@ -64,7 +70,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
     marginLeft: marginLeft,
     x: { 
         axis: "top", 
-        domain: parties, 
+        domain: parties, // This now uses the filtered list
         tickSize: 0,
         label: null,
         textAnchor: "middle",
@@ -77,7 +83,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
         label: null
     },
     marks: [
-      Plot.cell(houseEffectsData, {
+      Plot.cell(filteredHouseEffectsData, { // USE FILTERED DATA
         x: "party",
         y: "pollster",
         fill: d => colorScale(d.house_effect), // Use correct field
