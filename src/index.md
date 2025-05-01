@@ -214,7 +214,6 @@ const methodologyContent = html`
             <li>Historical election results from CNE (Comissão Nacional de Eleições).</li>
             <li>Demographic data from INE (Instituto Nacional de Estatística).</li>
         </ul>
-        <p><em>Code available at [Link to Repo]</em></p>
     </div>
 `;
 
