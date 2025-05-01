@@ -11,7 +11,7 @@ toc: false
 <div style="text-align: center; margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
   <div style="display: inline-block; margin: 0 1.5rem;">
     <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probLeftMajority * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Probability<br><span style="font-size: 0.8em;">(PS+BE+CDU ≥ 116 seats)</span></p>
+    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Probability<br><span style="font-size: 0.8em;">(PS+BE+CDU+L ≥ 116 seats)</span></p>
   </div>
   <div style="display: inline-block; margin: 0 1.5rem;">
     <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probRightMajority * 100).toFixed(0)}%</p>
