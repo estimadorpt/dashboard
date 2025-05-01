@@ -46,7 +46,7 @@ export function coalitionDotPlot(drawData, options = {}) {
     marginRight: 20,
     x: {
         domain: [0, d3.max(blocDrawData, d => d.totalSeats) * 1.05 ?? 230], // Use original data
-        label: "Total Seats Won by Bloc ➜", // Restore label
+        label: "Total Seats Won by Bloc", // Restore label
         axis: "bottom",
         ticks: [0, 50, 100, majorityThreshold, 150, 200] // Include majority threshold
     },

@@ -294,7 +294,7 @@ ${methodologyContent}
 
 <!-- Updated Footer -->
 <div class="small note py-4">
-    Model and visualizations by [Your Organization]. Last updated: ${new Date().toLocaleDateString()}.
+    Model and visualizations by Estimador. Last updated: ${new Date().toLocaleDateString()}.
     <br>Data sources: Polling aggregation from national pollsters (Aximage, CESOP, Eurosondagem, Intercampus), historical election results from CNE, and demographic data from INE.
   </div>
 

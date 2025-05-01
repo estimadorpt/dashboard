@@ -44,12 +44,12 @@ export function seatProjection(drawData, options) {
 
   // --- Rebuilding Plot: Step 2 - Colors Added ---
   const plot = Plot.plot({
-    height: 300,
+    height: 400,
     marginLeft: 40,
     marginRight: 20,
     x: { 
         domain: [0, 150], 
-        label: "Seats won ➜", 
+        label: "Seats won", 
         axis: "bottom",
         ticks: [0, 50, 100, 116, 150]
     },
@@ -59,7 +59,8 @@ export function seatProjection(drawData, options) {
         domain: filteredPartyOrder,
         axis: "left",
         label: null,
-        marginBottom: 4
+        marginBottom: 4,
+        dy: 60
     },
     // Add color scale - Use filtered order for domain, but map includes OTH for consistency
     color: {
