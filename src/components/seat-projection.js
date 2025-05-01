@@ -23,6 +23,10 @@ export function seatProjection(drawData, options) {
     ([party, medianSeats]) => ({party, medianSeats})
   );
 
+  // --- Sort parties by median seats (descending) ---
+  medians.sort((a, b) => b.medianSeats - a.medianSeats);
+  const sortedPartyNames = medians.map(d => d.party);
+
   // Convert medians to a Map for easy lookup in tooltips (use filtered medians)
   const medianMap = new Map(medians.map(d => [d.party, d.medianSeats]));
   // console.log("[seatProjection] medianMap:", medianMap); // REMOVE Log
@@ -54,18 +58,18 @@ export function seatProjection(drawData, options) {
         ticks: [0, 50, 100, 116, 150]
     },
     y: { axis: null }, // No explicit y-axis for count within facets
-    // Define vertical facets by party using FILTERED order
+    // Define vertical facets by party using SORTED order
     fy: {
-        domain: filteredPartyOrder,
+        domain: sortedPartyNames, // Use sorted names for facet domain
         axis: "left",
         label: null,
         marginBottom: 4,
         dy: 60
     },
-    // Add color scale - Use filtered order for domain, but map includes OTH for consistency
+    // Add color scale - Use SORTED order for domain and range mapping
     color: {
-      domain: filteredPartyOrder, 
-      range: filteredPartyOrder.map(p => partyColors[p] || "#888888"), // Map names to colors
+      domain: sortedPartyNames, // Use sorted names for color domain
+      range: sortedPartyNames.map(p => partyColors[p] || "#888888"), // Map sorted names to colors
       legend: false // Optionally hide color legend if redundant with fy axis
     },
     // Histogram bars using rectY and binX, relying on fy for data filtering

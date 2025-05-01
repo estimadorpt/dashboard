@@ -7,19 +7,37 @@ toc: false
 # Portuguese Election Forecast
 <p class="text-muted text-sm">Last model run: ${new Date().toUTCString()}</p>
 
-<!-- UPDATED HERO PROBABILITIES SECTION -->
-<div style="text-align: center; margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
-  <div style="display: inline-block; margin: 0 1.5rem;">
-    <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probLeftMajority * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Probability<br><span style="font-size: 0.8em;">(PS+BE+CDU+L ≥ 116 seats)</span></p>
+<!-- UPDATED HERO PROBABILITIES SECTION - TWO ROWS -->
+<div style="margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
+  <!-- Row 1: Bloc Probabilities -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem; margin-bottom: 1rem;">
+    <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probLeftMajority)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Prob.<br><span style="font-size: 0.8em;">(PS+BE+CDU+L ≥ 116)</span></p>
+    </div>
+    <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probRightMajority)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Right Bloc Majority Prob.<br><span style="font-size: 0.8em;">(AD+IL ≥ 116)</span></p>
+    </div>
+    <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(1 - probLeftMajority - probRightMajority)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">No Bloc Majority Prob.<br><span style="font-size: 0.8em;">(Neither bloc ≥ 116)</span></p>
+    </div>
   </div>
-  <div style="display: inline-block; margin: 0 1.5rem;">
-    <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${(probRightMajority * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Right Bloc Majority Probability<br><span style="font-size: 0.8em;">(AD+IL ≥ 116 seats)</span></p>
-  </div>
-  <div style="display: inline-block; margin: 0 1.5rem;">
-    <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${((1 - probLeftMajority - probRightMajority) * 100).toFixed(0)}%</p>
-    <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">No Bloc Majority<br><span style="font-size: 0.8em;">(Complex negotiations likely)</span></p>
+  <!-- Row 2: Party Most Seats Probabilities -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem;">
+     <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probAdMostSeats)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">AD Most Seats Prob.<br><span style="font-size: 0.8em;">(AD > PS and AD > CH)</span></p>
+    </div>
+     <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probPsMostSeats)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">PS Most Seats Prob.<br><span style="font-size: 0.8em;">(PS > AD and PS > CH)</span></p>
+    </div>
+     <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probChMostSeats)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">CH Most Seats Prob.<br><span style="font-size: 0.8em;">(CH > AD and CH > PS)</span></p>
+    </div>
   </div>
 </div>
 
@@ -47,6 +65,8 @@ import { contestedSeatsSection } from "./components/contested-seats-section.js";
 import { houseEffectsHeatmap } from "./components/house-effects-heatmap.js";
 // Import the standard html tag function
 import {html} from "npm:htl"; 
+// Import the NEW probability calculation functions
+import { calculateBlocMajorityProbability, calculatePartyMostSeatsProbability, formatProbabilityPercent } from "./components/probability-calculator.js";
 
 // Data loaders
 const portugalTopoJson = await FileAttachment("data/Portugal-Distritos-Ilhas_TopoJSON.json").json();
@@ -76,22 +96,14 @@ import { leftBlocParties, rightBlocParties, majorityThreshold } from "./config/b
 // const rightBlocParties = ["AD", "IL"]; // REMOVE local definition
 // const majorityThreshold = 116; // REMOVE local definition
 
-function calculateBlocMajorityProbability(drawData, coalitionParties) {
-  if (!drawData || drawData.length === 0) return 0;
-  const seatsByDraw = d3.rollup(
-    drawData,
-    (v) => d3.sum(v, (d) => coalitionParties.includes(d.party) ? d.seats : 0),
-    (d) => d.draw
-  );
-  const blocSeats = Array.from(seatsByDraw.values());
-  const totalDraws = blocSeats.length;
-  if (totalDraws === 0) return 0;
-  const majorityDraws = blocSeats.filter(seats => seats >= majorityThreshold).length;
-  return totalDraws > 0 ? (majorityDraws / totalDraws) : 0;
-}
+// USE imported functions
+const probLeftMajority = calculateBlocMajorityProbability(wideSeatProjectionData, leftBlocParties, majorityThreshold);
+const probRightMajority = calculateBlocMajorityProbability(wideSeatProjectionData, rightBlocParties, majorityThreshold);
 
-const probLeftMajority = calculateBlocMajorityProbability(wideSeatProjectionData, leftBlocParties);
-const probRightMajority = calculateBlocMajorityProbability(wideSeatProjectionData, rightBlocParties);
+// USE imported function for party most seats probabilities
+const probAdMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'AD', ['PS', 'CH']);
+const probPsMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'PS', ['AD', 'CH']);
+const probChMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'CH', ['AD', 'PS']);
 
 // --- Get Latest National Trends for Sidebar Default ---
 // Sort trends by date descending, filter for the mean metric, and transform the structure

@@ -34,7 +34,7 @@ export function coalitionDotPlot(drawData, options = {}) {
   // --- Dynamically Sample Data based on Width ---
   const width = options.width ?? 600; // Default width if not provided
   const minSampleSize = 250;
-  const maxSampleSize = 2000; 
+  const maxSampleSize = 2500; // INCREASE max sample size
   const targetSampleSize = Math.round((5 / 3) * width);
   const sampleSize = Math.max(minSampleSize, Math.min(targetSampleSize, maxSampleSize));
   console.log(`[coalition-dot-plot] Width: ${width}, TargetSampleSize: ${targetSampleSize}, ActualSampleSize: ${sampleSize}`); // Log for debugging
@@ -47,7 +47,7 @@ export function coalitionDotPlot(drawData, options = {}) {
 
   // --- Plotting ---
   const plot = Plot.plot({
-    height: 300, // INCREASE height to accommodate dodged dots
+    height: 350, // INCREASE height to accommodate dodged dots and fill space
     marginLeft: 60, // Restore margin for facet labels
     marginRight: 20,
     x: {
@@ -82,6 +82,18 @@ export function coalitionDotPlot(drawData, options = {}) {
         stroke: "black",
         strokeWidth: 1.5,
         strokeDasharray: "2,2"
+      }),
+      // Add text labels for medians
+      Plot.text(blocMedians, {
+        x: "medianSeats",
+        fy: "bloc",
+        text: d => d.medianSeats.toFixed(0),
+        dy: -8, // Position slightly above the line/dots
+        dx: 5, // Slightly to the right of the line start
+        fill: "black",
+        fontSize: 10,
+        fontWeight: "bold",
+        textAnchor: "start"
       }),
       // Majority line
       Plot.ruleX([majorityThreshold], {
