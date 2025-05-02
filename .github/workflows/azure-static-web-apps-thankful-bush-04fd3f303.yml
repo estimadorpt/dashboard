@@ -38,7 +38,7 @@ jobs:
       - name: Start local server for built site
         run: |
           npm install -g serve
-          serve -s dist -l 4173 &
+          serve dist -l 4173 &
           echo $! > serve.pid
         shell: bash
 
