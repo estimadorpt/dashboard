@@ -22,32 +22,49 @@ jobs:
           lfs: false
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 20 # Or your specific Node.js version
+          node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        uses: microsoft/playwright-github-action@v1
 
       - name: Build Observable site
         run: npm run build
 
+      - name: Start local server for built site
+        run: |
+          npm install -g serve
+          serve -s dist -l 4173 &
+          echo $! > serve.pid
+        shell: bash
+
       - name: Generate OG Image
-        run: node scripts/generate-og-image.mjs
+        run: node scripts/capture-og.cjs
+        env:
+          NODE_ENV: production
+
+      - name: Stop local server
+        run: kill $(cat serve.pid)
+        shell: bash
+        if: always()
+
+      - name: Copy OG Image to dist
+        run: cp public/og.png dist/og.png
 
       - name: Deploy to Azure Static Web Apps
-        id: builddeploy # Keep the id for potential future use
+        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_BUSH_04FD3F303 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          ###### Repository/Build Configurations ######
-          app_location: "dist" # Point directly to the folder containing build artifacts
-          api_location: "" # Api source code path - optional
-          # output_location: "" # Not needed when app_location is the output dir and skipping build
-          skip_app_build: true # Skip the build within the action as we did it manually
-          ###### End of Repository/Build Configurations ######
+          app_location: "dist"
+          api_location: ""
+          skip_app_build: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

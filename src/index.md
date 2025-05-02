@@ -8,7 +8,7 @@ toc: false
 <p class="text-muted text-sm">Last model run: ${new Date().toUTCString()}</p>
 
 <!-- UPDATED HERO PROBABILITIES SECTION - TWO ROWS -->
-<div style="margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
+<div id="hero-strip" style="margin-bottom: 2rem; padding: 1rem 0; border-top: 1px solid var(--theme-foreground-faint); border-bottom: 1px solid var(--theme-foreground-faint);">
   <!-- Row 1: Bloc Probabilities -->
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem; margin-bottom: 1rem;">
     <div style="min-width: 150px; flex: 1 1 150px;">
@@ -254,11 +254,11 @@ const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.
 
 <!-- Row 1: Seat Projection Histogram and NEW Coalition Dot Plot -->
 <div class="grid grid-cols-2 gap-4">
-  <div class="card p-4">
+  <div id="seat-histogram-container" class="card p-4">
     <h2>Seat Projection</h2>
     ${seatProjection(seatProjectionData)}
   </div>
-  <div class="card p-4" style="overflow: hidden;">
+  <div id="coalition-violin-container" class="card p-4" style="overflow: hidden;">
     <h2>Coalition Totals Distribution</h2>
     ${resize((width) => coalitionDotPlot(seatProjectionData, {width}))}
   </div>
@@ -325,23 +325,7 @@ ${methodologyContent}
       font-family: inherit;
   }
   
-  /* REMOVE Button styles if no longer needed - kept for now in case other buttons exist */
-  /*
-  .button {
-      padding: 0.5rem 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: #eee;
-      font-size: 0.9em;
-      margin-bottom: 1rem; 
-  }
-  .button-secondary {
-      background-color: #f8f9fa;
-      border-color: #adb5bd;
-  }
-  .button:hover {
-      background-color: #ddd;
-  }
-  */
+  /* REMOVED OG Mode CSS */
+  /* body.og-mode ... */
+
 </style>

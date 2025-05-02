@@ -29,16 +29,19 @@ export default {
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.estimador.pt">
-    <meta property="og:title" content="Portuguese Election Forecast Model">
-    <meta property="og:description" content="Live forecast model for the upcoming Portuguese elections, showing seat projections, national trends, and district details.">
-    <meta property="og:image" content="/og-image.png">
+    <meta property="og:title" content="Portuguese Election Forecast">
+    <meta property="og:description" content="Live Bayesian seat projections & coalition odds.">
+    <meta property="og:image" content="https://www.estimador.pt/og.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://www.estimador.pt">
-    <meta name="twitter:title" content="Portuguese Election Forecast Model">
-    <meta name="twitter:description" content="Live forecast model for the upcoming Portuguese elections, showing seat projections, national trends, and district details.">
-    <meta name="twitter:image" content="/og-image.png">
+    <meta name="twitter:title" content="Portuguese Election Forecast">
+    <meta name="twitter:description" content="Live Bayesian seat projections & coalition odds.">
+    <meta name="twitter:image" content="https://www.estimador.pt/og.png">
     <!-- Optional: <meta name="twitter:site" content="@YourTwitterHandle"> -->
   `,
 
@@ -48,10 +51,10 @@ export default {
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.
   // header: "", // what to show in the header (HTML)
-  // footer: "Built with Observable.", // what to show in the footer (HTML)
-  // sidebar: true, // whether to show the sidebar
-  // toc: true, // whether to show the table of contents
-  // pager: true, // whether to show previous & next links in the footer
+  footer: "", // Explicitly set footer to empty
+  sidebar: false, // Disable the sidebar globally
+  toc: false, // Ensure TOC is off to hide /og page
+  pager: false, // Disable the previous/next page links in the footer
   // output: "dist", // path to the output root for build
   // search: true, // activate search
   // linkify: true, // convert URLs in Markdown to links
