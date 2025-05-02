@@ -20,11 +20,27 @@ export default {
   // ],
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '\
-    <link rel="icon" href="observable.png" type="image/png" sizes="32x32">\
-    <!-- 100% privacy-first analytics -->\
-    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>\
-  ',
+  // Use template literal (backticks) for multi-line HTML string
+  head: `
+    <link rel="icon" href="observable.png" type="image/png" sizes="32x32">
+    <!-- 100% privacy-first analytics -->
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.estimador.pt">
+    <meta property="og:title" content="Portuguese Election Forecast Model">
+    <meta property="og:description" content="Live forecast model for the upcoming Portuguese elections, showing seat projections, national trends, and district details.">
+    <meta property="og:image" content="/og-image.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.estimador.pt">
+    <meta name="twitter:title" content="Portuguese Election Forecast Model">
+    <meta name="twitter:description" content="Live forecast model for the upcoming Portuguese elections, showing seat projections, national trends, and district details.">
+    <meta name="twitter:image" content="/og-image.png">
+    <!-- Optional: <meta name="twitter:site" content="@YourTwitterHandle"> -->
+  `,
 
   // The path to the source root.
   root: "src",
