@@ -27,6 +27,15 @@ const VIEWPORT_HEIGHT = 630;
     await page.goto(targetUrl, { waitUntil: 'networkidle' });
     console.log('OG page loaded.');
 
+    // ADD Log page title for verification
+    const title = await page.title();
+    console.log(`Page title after navigation: "${title}"`);
+
+    // Wait for the plot SVG to render
+    console.log('Waiting for plot SVG to render...');
+    await page.waitForSelector('#bar-chart-inner-container svg'); 
+    console.log('Plot SVG found.');
+
     console.log(`Taking screenshot (${VIEWPORT_WIDTH}x${VIEWPORT_HEIGHT})...`);
     const buffer = await page.screenshot({ type: 'png' });
 
