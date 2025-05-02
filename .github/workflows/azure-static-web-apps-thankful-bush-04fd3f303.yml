@@ -43,9 +43,9 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations ######
-          app_location: "/" # Keep app location as root for build context if needed by SWA action
+          app_location: "dist" # Point directly to the folder containing build artifacts
           api_location: "" # Api source code path - optional
-          output_location: "dist" # Built app content directory
+          # output_location: "" # Not needed when app_location is the output dir and skipping build
           skip_app_build: true # Skip the build within the action as we did it manually
           ###### End of Repository/Build Configurations ######
 
