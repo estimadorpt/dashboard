@@ -55,6 +55,12 @@ jobs:
       - name: Copy OG Image to dist
         run: cp public/og.png dist/og.png
 
+      - name: Upload OG Image Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: og-image
+          path: dist/og.png
+
       - name: Deploy to Azure Static Web Apps
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
