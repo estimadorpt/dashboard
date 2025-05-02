@@ -6,7 +6,7 @@ const path = require('path');
 // Use the static server port for testing the build
 const LOCAL_URL = 'http://127.0.0.1:4173'; 
 // Correct path for pages built from src/pages/
-const OG_PAGE_PATH = '/pages/og'; 
+const OG_PAGE_PATH = '/pages/og.html'; // Use explicit .html extension
 const OUTPUT_DIR = path.resolve(process.cwd(), 'public');
 const OUTPUT_PATH = path.join(OUTPUT_DIR, 'og.png');
 const VIEWPORT_WIDTH = 1200;
