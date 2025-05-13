@@ -4,9 +4,6 @@ theme: air
 toc: false
 head: |
     <meta property="og:title" content="Portuguese Election Forecast Model">
-    <meta property="og:image" content="/og.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="/og.png">
 ---
 
 ```js
@@ -42,9 +39,6 @@ if (typeof document !== "undefined") {
   document.title = strings.title;
   document.documentElement.lang = currentLang;
 
-  const cacheBuster = new Date().getTime();
-  const ogImageUrlWithBuster = `/og.png?v=${cacheBuster}`;
-
   let ogTitleMeta = document.querySelector('meta[property="og:title"]');
   if (ogTitleMeta) {
     ogTitleMeta.setAttribute('content', strings.title);
@@ -63,35 +57,16 @@ if (typeof document !== "undefined") {
   }
   ogLocaleMeta.setAttribute('content', currentLang === 'pt' ? 'pt_PT' : 'en_US');
 
-  // Update og:image
-  let ogImageMeta = document.querySelector('meta[property="og:image"]');
-  if (ogImageMeta) {
-    ogImageMeta.setAttribute('content', ogImageUrlWithBuster);
-  } else {
-    ogImageMeta = document.createElement('meta');
-    ogImageMeta.setAttribute('property', 'og:image');
-    ogImageMeta.setAttribute('content', ogImageUrlWithBuster);
-    document.head.appendChild(ogImageMeta);
-  }
-
-  // Update twitter:image
-  let twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
-  if (twitterImageMeta) {
-    twitterImageMeta.setAttribute('content', ogImageUrlWithBuster);
-  } else {
-    twitterImageMeta = document.createElement('meta');
-    twitterImageMeta.setAttribute('name', 'twitter:image');
-    twitterImageMeta.setAttribute('content', ogImageUrlWithBuster);
-    document.head.appendChild(twitterImageMeta);
-  }
-
-  // Ensure twitter:card is present
+  // Ensure twitter:card is present if not already handled by global config (optional, for robustness)
+  // Though, it's best defined globally in observablehq.config.js as you've done.
+  // If you are certain it's always in the global config, this specific check can be removed.
   let twitterCardMeta = document.querySelector('meta[name="twitter:card"]');
   if (!twitterCardMeta) {
-    twitterCardMeta = document.createElement('meta');
-    twitterCardMeta.setAttribute('name', 'twitter:card');
-    twitterCardMeta.setAttribute('content', 'summary_large_image');
-    document.head.appendChild(twitterCardMeta);
+    console.warn("twitter:card meta tag not found, consider adding it to observablehq.config.js head for optimal sharing.");
+    // twitterCardMeta = document.createElement('meta');
+    // twitterCardMeta.setAttribute('name', 'twitter:card');
+    // twitterCardMeta.setAttribute('content', 'summary_large_image');
+    // document.head.appendChild(twitterCardMeta);
   }
 }
 ```
