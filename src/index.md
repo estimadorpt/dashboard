@@ -2,8 +2,6 @@
 title: Portuguese Election Forecast Model # Initial title, will be updated by JS
 theme: air
 toc: false
-head: |
-    <meta property="og:title" content="Portuguese Election Forecast Model">
 ---
 
 ```js
