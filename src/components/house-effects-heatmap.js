@@ -3,9 +3,12 @@ import * as d3 from "npm:d3";
 import { partyOrder, partyColors } from "../config/colors.js"; // Use shared party order and colors
 import {html} from "npm:htl";
 
-export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
+export function houseEffectsHeatmap(houseEffectsData, { width, strings } = {}) {
+  if (!strings) {
+    return html`<div class="small note" style="padding: 1rem; text-align: center;">Config error: strings not provided.</div>`;
+  }
   if (!houseEffectsData || houseEffectsData.length === 0) {
-    return html`<div class="small note" style="padding: 1rem; text-align: center;">House effects data not available.</div>`;
+    return html`<div class="small note" style="padding: 1rem; text-align: center;">${strings.houseEffectsDataUnavailable}</div>`;
   }
 
   // --- Filter out 'OTH' --- 
@@ -27,7 +30,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
 
   if (!maxAbs) {
      console.warn("[houseEffectsHeatmap] Max absolute effect is 0 or undefined. Check data.");
-     return html`<div class="small note" style="padding: 1rem; text-align: center;">House effects data shows no variation.</div>`;
+     return html`<div class="small note" style="padding: 1rem; text-align: center;">${strings.houseEffectsNoVariation}</div>`;
   }
 
   // --- Dimensions & Constants ---
@@ -87,7 +90,10 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
         x: "party",
         y: "pollster",
         fill: d => colorScale(d.house_effect), // Use correct field
-        title: (d) => `${d.pollster} - ${d.party}\nEffect: ${d.house_effect.toFixed(1)} pp`, // Use correct field
+        title: (d) => strings.houseEffectsTooltipTitle // TRANSLATED
+                        .replace("{pollster}", d.pollster)
+                        .replace("{party}", d.party)
+                        .replace("{effect}", d.house_effect.toFixed(1)), 
         width: cellWidth,
         height: cellHeight,
         inset: 0.5 
@@ -140,7 +146,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       .attr("text-anchor", "start")
       .attr("font-size", "10px")
       .attr("fill", "currentColor")
-      .text("Over-estimates");
+      .text(strings.houseEffectsLegendOver);
 
   legendSvg.append("text")
       .attr("x", legendWidth / 2)
@@ -148,7 +154,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       .attr("text-anchor", "middle")
       .attr("font-size", "10px")
       .attr("fill", "currentColor")
-      .text("0");
+      .text(strings.houseEffectsLegendZero);
 
   legendSvg.append("text")
       .attr("x", legendWidth)
@@ -156,7 +162,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width } = {}) {
       .attr("text-anchor", "end")
       .attr("font-size", "10px")
       .attr("fill", "currentColor")
-      .text("Under-estimates");
+      .text(strings.houseEffectsLegendUnder);
 
   // --- Combine Plot and Legend ---
   const container = html`<div>

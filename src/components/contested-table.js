@@ -3,11 +3,14 @@ import {html} from "npm:htl";
 // import { partyColors } from "../config/colors.js"; 
 
 // Function to create the district volatility table
-export function contestedTable(contestedSummaryData, options = {}) {
+export function contestedTable(contestedSummaryData, { strings, ...options } = {}) {
     const { onDistrictSelect, initialSelectedDistrictId = null, showEnscColumn = true } = options;
 
+    if (!strings) {
+      return html`<p class='small note'>Config error: strings not provided.</p>`;
+    }
     if (!contestedSummaryData || !contestedSummaryData.districts) {
-        return html`<p class='small note'>Contested district data is unavailable.</p>`;
+        return html`<p class='small note'>${strings.contestedTableDataUnavailable}</p>`;
     }
 
     // --- Data Processing --- 
@@ -20,8 +23,8 @@ export function contestedTable(contestedSummaryData, options = {}) {
     // --- Table Header ---
     const header = html`<thead>
         <tr>
-            <th>District</th>
-            ${showEnscColumn ? html`<th title="Expected Number of Seat Changes vs Modal">Volatility (ENSC)</th>` : ''} 
+            <th>${strings.contestedTableHeaderDistrict}</th>
+            ${showEnscColumn ? html`<th title="${strings.contestedTableHeaderVolatilityTitle}">${strings.contestedTableHeaderVolatility}</th>` : ''} 
         </tr>
     </thead>`;
 
@@ -42,7 +45,7 @@ export function contestedTable(contestedSummaryData, options = {}) {
                     }}
                 >
                     <td>${district.name}</td>
-                    ${showEnscColumn ? html`<td>${district.ENSC.toFixed(2)} seats</td>` : ''}
+                    ${showEnscColumn ? html`<td>${district.ENSC.toFixed(2)}${strings.contestedTableSeatsSuffix}</td>` : ''}
                 </tr>`;
             return row;
         })}

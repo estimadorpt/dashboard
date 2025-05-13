@@ -27,7 +27,7 @@ const legendData = [
 */
 
 // --- Helper: Create Vertical Bar Chart Element (Handles District OR National Data) ---
-function createBarChartElement(forecastData, width) { 
+function createBarChartElement(forecastData, width, strings) { 
     // Log raw input for debugging
     console.log("[createBarChartElement] Received forecastData (direct):", forecastData); // Log directly
     console.log("[createBarChartElement] Received forecastData (keys):", forecastData ? Object.keys(forecastData) : 'null/undefined'); // Log keys
@@ -68,7 +68,7 @@ function createBarChartElement(forecastData, width) {
 
     // Check if processed data is empty after filtering/transformation
     if (processedData.length === 0) {
-        return html`<p class="small note">No valid forecast data available to display.</p>`;
+        return html`<p class="small note">${strings.mapSidebarNoData}</p>`;
     }
 
     const marginLeft = 40;
@@ -92,7 +92,9 @@ function createBarChartElement(forecastData, width) {
                 y: "party",
                 x: "value", // Use the unified 'value' field
                 fill: (d) => partyColors[d.party] || '#888888', 
-                title: (d) => `${d.party}: ${d.value.toFixed(1)}%`, // Use the unified 'value'
+                title: (d) => strings.mapSidebarTooltip
+                                .replace("{party}", d.party)
+                                .replace("{value}", d.value.toFixed(1)), 
                 inset: 0.1 // ADD inset to reduce padding within the band
             }),
             Plot.ruleX([0]),
@@ -111,31 +113,34 @@ function createBarChartElement(forecastData, width) {
       return barChart;
     } catch (error) { 
          console.error("Error creating sidebar bar chart:", error);
-         return html`<p class="small note error">Error displaying chart.</p>`;
+         return html`<p class="small note error">${strings.mapSidebarChartError}</p>`;
     }
 }
 
 // --- Main Component ---
 // Accept nationalTrendsData as the third argument
-export function mapSidebar(clickedData, width, nationalTrendsData) { 
+export function mapSidebar(clickedData, width, nationalTrendsData, strings) { 
+  if (!strings) {
+    return html`<div>Configuration error: strings not provided to mapSidebar.</div>`;
+  }
   console.log("[mapSidebar] Received clickedData:", JSON.stringify(clickedData)); // Log received data
   if (clickedData) {
     const { id, probs } = clickedData;
     console.log("[mapSidebar] Destructured probs:", JSON.stringify(probs)); // Log after destructuring
     // Use resize to pass container width to the chart function
-    const chartElement = resize((w) => createBarChartElement(probs, w)); 
+    const chartElement = resize((w) => createBarChartElement(probs, w, strings)); 
     return html`<div>
         <h4>${id}</h4> 
-        <p style="font-size: 0.85em; margin-bottom: 0.1rem;">Vote Share Forecast:</p>
+        <p style="font-size: 0.85em; margin-bottom: 0.1rem;">${strings.mapSidebarDistrictTitle}</p>
         ${chartElement}
     </div>`;
   } else {
     // Show national bar chart by default using the SAME function, wrapped in resize
-    const nationalChartElement = resize((w) => createBarChartElement(nationalTrendsData, w));
+    const nationalChartElement = resize((w) => createBarChartElement(nationalTrendsData, w, strings));
     return html`<div>
-        <p style="font-size: 0.85em; margin-bottom: 0.1rem;">National Vote Intention (Latest):</p>
+        <p style="font-size: 0.85em; margin-bottom: 0.1rem;">${strings.mapSidebarNationalTitle}</p>
         ${nationalChartElement}
-        <p class="small note" style="padding-top: 1rem; text-align: center;">Click a district on the map for details.</p>
+        <p class="small note" style="padding-top: 1rem; text-align: center;">${strings.mapSidebarInstruction}</p>
     </div>`;
   }
 }

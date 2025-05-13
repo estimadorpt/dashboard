@@ -3,7 +3,7 @@ import { districtMap } from "./district-map.js";
 import { mapSidebar } from "./map-sidebar.js";
 
 // Accept nationalTrendsData as the third argument
-export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalTrendsData) {
+export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalTrendsData, strings) {
 
     // State for the CURRENTLY SELECTED/DISPLAYED district data
     let selectedDistrictData = null; 
@@ -13,7 +13,7 @@ export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalT
         selectedDistrictData = data; 
         console.log("[mapWithSidebar] Data being passed TO mapSidebar:", JSON.stringify(selectedDistrictData));
         // Create sidebar content - pass nationalTrendsData to mapSidebar
-        const sidebarContent = mapSidebar(selectedDistrictData, 250, nationalTrendsData); 
+        const sidebarContent = mapSidebar(selectedDistrictData, 250, nationalTrendsData, strings);
         sidebarContainer.replaceChildren(sidebarContent);
     }
 
@@ -24,7 +24,7 @@ export function mapWithSidebar(portugalTopoJson, districtForecastData, nationalT
     mainContainer.append(mapContainer, sidebarContainer);
 
     // Create the SINGLE map instance
-    const mapElement = districtMap(portugalTopoJson, districtForecastData, { width: 600 });
+    const mapElement = districtMap(portugalTopoJson, districtForecastData, { width: 600, strings });
 
     // Attach listener directly to the single map instance
     mapElement.addEventListener("district-click", (event) => {

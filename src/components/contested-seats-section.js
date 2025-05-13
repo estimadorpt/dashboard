@@ -8,7 +8,10 @@ import { contestedDistrictDetail } from "./contested-district-detail.js";
 // import { contestedDetail } from "./contested-detail.js"; 
 
 // Main component function
-export function contestedSeatsSection(contestedSummaryData) {
+export function contestedSeatsSection(contestedSummaryData, { strings, ...options } = {}) {
+    if (!strings) {
+      return html`<div>Configuration error: strings not provided to contestedSeatsSection.</div>`;
+    }
     
     // State managed internally via re-rendering child components
     let selectedDistrictId = null; // Store the NAME of the selected district
@@ -22,13 +25,14 @@ export function contestedSeatsSection(contestedSummaryData) {
         
         // Re-render the detail view with data for the selected district ID
         const districtData = selectedDistrictId ? contestedSummaryData.districts[selectedDistrictId] : null;
-        const detailContent = contestedDistrictDetail(selectedDistrictId, districtData, { width: 350 }); // Pass name and data
+        const detailContent = contestedDistrictDetail(selectedDistrictId, districtData, { width: 350, strings }); // Pass name and data
         detailContainer.replaceChildren(detailContent);
         
         // Re-render the table with the new selection state highlighted
         const tableContent = contestedTable(contestedSummaryData, { 
             onDistrictSelect: updateSelection, 
-            initialSelectedDistrictId: selectedDistrictId // Pass current selection to table
+            initialSelectedDistrictId: selectedDistrictId, // Pass current selection to table
+            strings // Pass strings down
         });
         tableContainer.replaceChildren(tableContent);
     }
@@ -36,10 +40,11 @@ export function contestedSeatsSection(contestedSummaryData) {
     // --- Initial Render --- 
     const initialTableContent = contestedTable(contestedSummaryData, { 
         onDistrictSelect: updateSelection,
-        initialSelectedDistrictId: selectedDistrictId
+        initialSelectedDistrictId: selectedDistrictId,
+        strings // Pass strings down
      });
     // Initially render the detail placeholder
-    const initialDetailContent = contestedDistrictDetail(null, null, { width: 350 }); 
+    const initialDetailContent = contestedDistrictDetail(null, null, { width: 350, strings }); // Pass strings down
 
     tableContainer.append(initialTableContent);
     detailContainer.append(initialDetailContent);

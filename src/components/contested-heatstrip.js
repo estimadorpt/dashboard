@@ -1,9 +1,14 @@
 import * as d3 from "npm:d3";
 
-export function contestedHeatstrip(contestedData, {width}) {
+export function contestedHeatstrip(contestedData, {width, strings}) {
+  if (!strings) {
+    const p = document.createElement("p");
+    p.textContent = "Configuration error: strings not provided.";
+    return p;
+  }
   if (!contestedData || !contestedData.districts) {
     const p = document.createElement("p");
-    p.textContent = "No contested seat data available for heatstrip.";
+    p.textContent = strings.heatstripNoContestedData;
     return p;
   }
 
@@ -14,7 +19,7 @@ export function contestedHeatstrip(contestedData, {width}) {
 
   if (allSeats.length === 0) {
     const p = document.createElement("p");
-    p.textContent = "No seats found for heatstrip.";
+    p.textContent = strings.heatstripNoSeats;
     return p;
   }
 
@@ -22,7 +27,7 @@ export function contestedHeatstrip(contestedData, {width}) {
   const [minRank, maxRank] = d3.extent(allSeats, d => d.rank);
   if (minRank === undefined || maxRank === undefined) { // Handle case with no ranks
      const p = document.createElement("p");
-     p.textContent = "Could not determine seat ranks.";
+     p.textContent = strings.heatstripNoRanks;
      return p;
   }
   const ranks = d3.range(minRank, maxRank + 1);
@@ -89,7 +94,11 @@ export function contestedHeatstrip(contestedData, {width}) {
         }
       })
     .append("title") // Add tooltip conditionally
-      .text(d => d.seat ? `District: ${d.district}, Seat: ${d.rank}, Flip Prob: ${(d.seat.U * 100).toFixed(1)}%` : null);
+      .text(d => d.seat ? strings.heatstripTooltip
+                        .replace("{district}", d.district)
+                        .replace("{rank}", d.rank)
+                        .replace("{probability}", (d.seat.U * 100).toFixed(1))
+                        : null);
 
   // --- Draw Legend --- (same as before, but update Y position based on new stripHeight)
   const legendWidth = Math.min(width * 0.6, 300); 
@@ -115,7 +124,7 @@ export function contestedHeatstrip(contestedData, {width}) {
       .attr("y", 18)
       .attr("font-size", 10)
       .attr("fill", "currentColor")
-      .text("0%");
+      .text(strings.heatstripLegendMin);
 
   legend.append("text")
       .attr("x", legendWidth)
@@ -123,7 +132,7 @@ export function contestedHeatstrip(contestedData, {width}) {
       .attr("text-anchor", "end")
       .attr("font-size", 10)
       .attr("fill", "currentColor")
-      .text("50% Flip");
+      .text(strings.heatstripLegendMax);
 
   return svg.node();
 } 

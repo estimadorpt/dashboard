@@ -3,13 +3,15 @@ import * as Plot from "@observablehq/plot";
 import {partyOrder as configPartyOrder} from "../config/colors.js"; // Use shared party order if needed
 
 // Helper function to create the detail panel
-export function contestedDistrictDetail(districtName, districtData, options = {}) {
-    const { width = 400 } = options;
+export function contestedDistrictDetail(districtName, districtData, { width = 400, strings } = {}) {
+    if (!strings) {
+      return html`<div>Config error: strings not provided to contestedDistrictDetail.</div>`;
+    }
 
     // --- Placeholder Content ---
     if (!districtName || !districtData) {
         return html`<div style="display: flex; align-items: center; justify-content: center; height: 180px; color: var(--theme-foreground-muted); font-style: italic;">
-                    Click a district row to see details.
+                    ${strings.contestedDetailPlaceholder}
                 </div>`;
     }
 
@@ -19,7 +21,7 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
     const header = html`<div style="margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--theme-foreground-faint); font-size: 0.9em;">
         <span style="font-weight: bold;">${districtName}</span>
         <span style="margin-left: 1rem;">|</span>
-        <span style="margin-left: 1rem;">Volatility (ENSC): ${ENSC.toFixed(2)}</span>
+        <span style="margin-left: 1rem;">${strings.contestedDetailHeaderVolatility}${ENSC.toFixed(2)}</span>
         </div>`;
 
     // --- Section A: Trend vs 2024 Chart --- 
@@ -44,7 +46,7 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
                 marginBottom: 25,
                 x: { 
                     domain: trendXDomain,
-                    label: "Seat Change vs 2024",
+                    label: strings.contestedDetailTrendXLabel,
                     ticks: 7, 
                     tickFormat: d => (d === 0 ? "0" : `${d > 0 ? '+' : ''}${d}`),
                     grid: true
@@ -62,7 +64,9 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
                         x: "delta",
                         y: "party",
                         fill: d => Math.sign(d.delta),
-                        title: d => `${d.party}: ${d.delta > 0 ? '+' : ''}${d.delta} vs 2024`
+                        title: d => strings.contestedDetailTrendTooltip
+                                    .replace("{party}", d.party)
+                                    .replace("{delta}", `${d.delta > 0 ? '+' : ''}${d.delta}`)
                     }),
                     Plot.text(trendData.filter(d => Math.abs(d.delta) > 0), {
                         x: "delta",
@@ -79,11 +83,11 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
             });
         } catch(e) { 
             console.error("Trend chart error:", e);
-            trendChart = html`<div class=warning>Trend chart error: ${e.message}</div>`; 
+            trendChart = html`<div class=warning>${strings.contestedDetailTrendError}${e.message}</div>`;
         }
     } else {
         // Explicitly set placeholder if trendData is empty
-        trendChart = html`<div class="small note" style="height: 80px; display: flex; align-items: center;">No trend data available for this district.</div>`;
+        trendChart = html`<div class="small note" style="height: 80px; display: flex; align-items: center;">${strings.contestedDetailTrendNoData}</div>`;
     }
     
     // --- Section B: Volatility Profile Chart (Stacked Bar) ---
@@ -98,14 +102,14 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
         const calculatedProbZero = Math.max(0, 1 - probLoss - probGain);
 
         // Add segments in the desired stack order: Loss, No Change, Gain
-        if (probLoss > 1e-6) volatilityPlotData.push({ party, type: "Loss", probability: probLoss });
-        if (calculatedProbZero > 1e-6) volatilityPlotData.push({ party, type: "No Change", probability: calculatedProbZero });
-        if (probGain > 1e-6) volatilityPlotData.push({ party, type: "Gain", probability: probGain });
+        if (probLoss > 1e-6) volatilityPlotData.push({ party, type: strings.contestedDetailTypeLoss, probability: probLoss });
+        if (calculatedProbZero > 1e-6) volatilityPlotData.push({ party, type: strings.contestedDetailTypeNoChange, probability: calculatedProbZero });
+        if (probGain > 1e-6) volatilityPlotData.push({ party, type: strings.contestedDetailTypeGain, probability: probGain });
     });
 
     // ADD CHECK: Handle potentially empty volatility data
     if (volatilityPlotData.length === 0) {
-        volatilityChart = html`<div class="small note" style="height: 80px; display: flex; align-items: center;">No volatility data available for this district/selection.</div>`;
+        volatilityChart = html`<div class="small note" style="height: 80px; display: flex; align-items: center;">${strings.contestedDetailVolatilityNoData}</div>`;
     } else {
         try {
             volatilityChart = Plot.plot({
@@ -116,7 +120,7 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
                 marginRight: 10,
                 marginBottom: 30,
                 x: { 
-                    label: "Probability vs Modal Forecast",
+                    label: strings.contestedDetailVolatilityXLabel,
                     domain: [0, 1],
                     tickFormat: "%"
                  },
@@ -125,7 +129,7 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
                     label: null
                 },
                 color: {
-                    domain: ["Loss", "No Change", "Gain"], // Order determines stack order
+                    domain: [strings.contestedDetailTypeLoss, strings.contestedDetailTypeNoChange, strings.contestedDetailTypeGain],
                     range: ["#d7191c", "#bdbdbd", "#1a9641"],
                     legend: true,
                     legendOptions: { columns: "100px", tickSize: 0, fontSize: "0.8em" }
@@ -136,18 +140,21 @@ export function contestedDistrictDetail(districtName, districtData, options = {}
                         y: "party",
                         fill: "type",
                         offset: "normalize", // Use normalize for stacking to 100%
-                        title: d => `${d.party} - ${d.type}: ${(d.probability * 100).toFixed(1)}%` 
+                        title: d => strings.contestedDetailVolatilityTooltip
+                                    .replace("{party}", d.party)
+                                    .replace("{type}", d.type)
+                                    .replace("{probability}", (d.probability * 100).toFixed(1))
                     }),
                     Plot.ruleX([0, 1]) // Add rules at 0% and 100%
                 ]
             });
-        } catch(e) { volatilityChart = html`<div class=warning>Volatility chart error: ${e.message}</div>`; }
+        } catch(e) { volatilityChart = html`<div class=warning>${strings.contestedDetailVolatilityError}${e.message}</div>`; }
     }
 
     // --- Assemble Panel ---
     return html`${header}
-        <h5 style="font-size: 0.85em; margin-bottom: 0.2rem; color: var(--theme-foreground-muted);">Trend vs 2024</h5>
+        <h5 style="font-size: 0.85em; margin-bottom: 0.2rem; color: var(--theme-foreground-muted);">${strings.contestedDetailTitleTrend}</h5>
         ${trendChart}
-        <h5 style="font-size: 0.85em; margin-top: 1rem; margin-bottom: 0.2rem; color: var(--theme-foreground-muted);">Volatility vs Modal</h5>
+        <h5 style="font-size: 0.85em; margin-top: 1rem; margin-bottom: 0.2rem; color: var(--theme-foreground-muted);">${strings.contestedDetailTitleVolatility}</h5>
         ${volatilityChart}`;
 }

@@ -26,8 +26,11 @@ function getRegionForIsland(islandName) {
 }
 
 
-export function districtMap(portugalTopoJson, districtForecast, { width } = {}) {
+export function districtMap(portugalTopoJson, districtForecast, { width, strings } = {}) {
   // console.log("districtMap called. TopoJSON received?", !!portugalTopoJson, "Forecast received?", !!districtForecast);
+  if (!strings) {
+    return html`<div>Configuration error: strings not provided to districtMap.</div>`;
+  }
   if (!portugalTopoJson || !districtForecast) {
     console.log("Data missing, returning empty fragment.");
     return new DocumentFragment();
@@ -154,7 +157,7 @@ export function districtMap(portugalTopoJson, districtForecast, { width } = {}) 
         domain: partyOrder.filter(p => p !== 'OTH'), // Exclude OTH from legend/domain if needed
         range: partyOrder.filter(p => p !== 'OTH').map(p => partyColors[p] || "#888888"), // Map names to colors
         legend: true,
-        label: "Leading Party"
+        label: strings.districtMapLegendLabel // Use translated string
       },
       marks: [
         Plot.geo(districts, {

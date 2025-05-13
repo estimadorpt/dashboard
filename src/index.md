@@ -1,10 +1,58 @@
 ---
-title: Portuguese Election Forecast Model
+title: Portuguese Election Forecast Model # Initial title, will be updated by JS
 theme: air
 toc: false
+head: |
+    <meta property="og:title" content="Portuguese Election Forecast Model">
 ---
 
-# Portuguese Election Forecast
+```js
+// Import translations using standard ES module import syntax
+import { T as enStrings } from "./locales/en.js";
+import { T as ptStrings } from "./locales/pt.js";
+
+// Language detection logic
+const preferredLang = (() => {
+  if (typeof navigator !== "undefined") {
+    const browserLang = navigator.language.split('-')[0];
+    if (browserLang === 'pt') return 'pt';
+  }
+  return 'en'; // Default to English
+})();
+
+// Define globally accessible variables for this page context
+const currentLang = preferredLang;
+const strings = currentLang === 'pt' ? ptStrings : enStrings;
+```
+
+```js
+// Side effect cell to update document properties
+// This cell uses 'strings' and 'currentLang' defined in the block above.
+if (typeof document !== "undefined") {
+  document.title = strings.title;
+  document.documentElement.lang = currentLang;
+
+  let ogTitleMeta = document.querySelector('meta[property="og:title"]');
+  if (ogTitleMeta) {
+    ogTitleMeta.setAttribute('content', strings.title);
+  } else {
+    ogTitleMeta = document.createElement('meta');
+    ogTitleMeta.setAttribute('property', 'og:title');
+    ogTitleMeta.setAttribute('content', strings.title);
+    document.head.appendChild(ogTitleMeta);
+  }
+
+  let ogLocaleMeta = document.querySelector('meta[property="og:locale"]');
+  if (!ogLocaleMeta) {
+    ogLocaleMeta = document.createElement('meta');
+    ogLocaleMeta.setAttribute('property', 'og:locale');
+    document.head.appendChild(ogLocaleMeta);
+  }
+  ogLocaleMeta.setAttribute('content', currentLang === 'pt' ? 'pt_PT' : 'en_US');
+}
+```
+
+# ${strings.title}
 <p class="text-muted text-sm">Last model run: ${new Date().toUTCString()}</p>
 
 <!-- UPDATED HERO PROBABILITIES SECTION - TWO ROWS -->
@@ -13,30 +61,30 @@ toc: false
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem; margin-bottom: 1rem;">
     <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probLeftMajority)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Left Bloc Majority Prob.<br><span style="font-size: 0.8em;">(PS+BE+CDU+L ≥ 116)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroLeftMajorityProb}<br><span style="font-size: 0.8em;">${strings.heroLeftMajorityCondition}</span></p>
     </div>
     <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probRightMajority)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">Right Bloc Majority Prob.<br><span style="font-size: 0.8em;">(AD+IL ≥ 116)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroRightMajorityProb}<br><span style="font-size: 0.8em;">${strings.heroRightMajorityCondition}</span></p>
     </div>
     <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(1 - probLeftMajority - probRightMajority)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">No Bloc Majority Prob.<br><span style="font-size: 0.8em;">(Neither bloc ≥ 116)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroNoMajorityProb}<br><span style="font-size: 0.8em;">${strings.heroNoMajorityCondition}</span></p>
     </div>
   </div>
   <!-- Row 2: Party Most Seats Probabilities -->
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem;">
      <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probAdMostSeats)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">AD Most Seats Prob.<br><span style="font-size: 0.8em;">(AD > PS and AD > CH)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroAdMostSeatsProb}<br><span style="font-size: 0.8em;">${strings.heroAdMostSeatsCondition}</span></p>
     </div>
      <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probPsMostSeats)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">PS Most Seats Prob.<br><span style="font-size: 0.8em;">(PS > AD and PS > CH)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroPsMostSeatsProb}<br><span style="font-size: 0.8em;">${strings.heroPsMostSeatsCondition}</span></p>
     </div>
      <div style="min-width: 150px; flex: 1 1 150px;">
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probChMostSeats)}</p>
-      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">CH Most Seats Prob.<br><span style="font-size: 0.8em;">(CH > AD and CH > PS)</span></p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroChMostSeatsProb} <span class="text-xs">${strings.heroChMostSeatsCondition}</span></p>
     </div>
   </div>
 </div>
@@ -123,110 +171,110 @@ console.log("[index.md] Calculated latestTrends:", JSON.stringify(latestTrends))
 // Placeholder for methodology content (replace with actual markdown/html if available)
 const methodologyContent = html`
     <div class="card p-4"> 
-        <h2>How Our Dynamic Gaussian Process Election Model Works</h2>
-        <p>We've developed a statistical forecasting model for Portuguese elections that captures both long-term political trends and district-level dynamics. It represents an evolution of traditional election models, designed specifically to address the challenges of Portugal's multi-party, district-based electoral system. This document explains the approach, intuition, and technical details behind our methodology.</p>
+        <h2>${strings.methodologyTitle}</h2>
+        <p>${strings.methodologyP1}</p>
         
-        <h4>The Challenge of Forecasting Portuguese Elections</h4>
-        <p>Portugal's electoral landscape presents unique forecasting challenges. The country has multiple significant political parties ranging from the traditional center-left (PS) and center-right (AD) to newer entrants like the liberal IL and right-wing Chega. Elections are decided through a proportional representation system across multiple districts, with seats allocated using the D'Hondt method.</p>
-        <p>Traditional forecasting approaches struggle with several aspects of this system:</p>
+        <h4>${strings.methodologyH4_1}</h4>
+        <p>${strings.methodologyP2}</p>
+        <p>${strings.methodologyP3}</p>
         <ol>
-            <li>District-level variation in political support that doesn't uniformly follow national trends</li>
-            <li>Different parties having varying sensitivity to national sentiment shifts</li>
-            <li>Campaign dynamics that can shift rapidly during election season</li>
-            <li>Pollster-specific biases that need correction</li>
+            <li>${strings.methodologyLi1_1}</li>
+            <li>${strings.methodologyLi1_2}</li>
+            <li>${strings.methodologyLi1_3}</li>
+            <li>${strings.methodologyLi1_4}</li>
         </ol>
-        <p>Our dynamic Gaussian process model addresses these challenges through a principled Bayesian statistical framework.</p>
+        <p>${strings.methodologyP4}</p>
 
-        <h4>The Intuition Behind the Model</h4>
-        <p>Our model works by breaking down party support into several components:</p>
+        <h4>${strings.methodologyH4_2}</h4>
+        <p>${strings.methodologyP5}</p>
         <ol>
-            <li><strong>Long-term national trends</strong>: The baseline support for each party over extended periods</li>
-            <li><strong>Short-term fluctuations</strong>: Changes in support during campaign periods</li>
-            <li><strong>District-specific patterns</strong>: How each district deviates from national trends</li>
-            <li><strong>Pollster effects</strong>: Systematic biases in how polling firms measure support</li>
-            <li><strong>Uncertainty</strong>: The probabilistic range of possible outcomes</li>
+            <li>${strings.methodologyLi2_1}</li>
+            <li>${strings.methodologyLi2_2}</li>
+            <li>${strings.methodologyLi2_3}</li>
+            <li>${strings.methodologyLi2_4}</li>
+            <li>${strings.methodologyLi2_5}</li>
         </ol>
-        <p>The "dynamic" in our model name refers to its ability to capture changing support patterns over time, while "GP" (Gaussian Process) refers to the statistical technique that allows us to model smoothly varying support without imposing rigid assumptions about how it changes.</p>
-        <p>Unlike simpler approaches that rely on uniform national swing (where all districts are assumed to shift by the same amount), our model allows for differential shifts. When national support for party A increases by 5 percentage points, some districts might shift by 8 points, while others barely move. The model learns these patterns from historical data.</p>
+        <p>${strings.methodologyP6}</p>
+        <p>${strings.methodologyP7}</p>
 
-        <h4>How the Model Functions</h4>
-        <p>Imagine a party's support level as an invisible line that evolves continuously over time. We never observe this line directly—we only see noisy snapshots from polls or election results. Our model reconstructs the most likely trajectory of this line by combining:</p>
+        <h4>${strings.methodologyH4_3}</h4>
+        <p>${strings.methodologyP8}</p>
         <ul>
-            <li>Prior knowledge about typical political changes</li>
-            <li>Information from polls</li>
-            <li>Historical election results</li>
-            <li>District-specific patterns</li>
-            <li>Knowledge about how pollsters tend to measure</li>
+            <li>${strings.methodologyLi3_1}</li>
+            <li>${strings.methodologyLi3_2}</li>
+            <li>${strings.methodologyLi3_3}</li>
+            <li>${strings.methodologyLi3_4}</li>
+            <li>${strings.methodologyLi3_5}</li>
         </ul>
-        <p>When the model forecasts an upcoming election, it projects these components forward in time and aggregates them into probabilistic vote shares for each party in each district. These are then translated into seat allocations using the D'Hondt method.</p>
+        <p>${strings.methodologyP9}</p>
 
-        <h4>Technical Components of the Model</h4>
-        <h5>1. Baseline GP over Calendar Time</h5>
-        <p>The foundation of the model is a smooth, long-term trend representing the baseline national support for each party. This is modeled as a Gaussian Process evolving over calendar time. The properties of this GP (specifically its covariance structure) are chosen to reflect assumptions about the slow, gradual nature of fundamental political shifts, capturing dependencies over multiple years.</p>
-        <h5>2. Medium-Term GP over Calendar Time</h5>
-        <p>Superimposed on the baseline trend is a second Gaussian Process, also evolving over calendar time. This component is designed with a moderate correlation length (e.g., centered around a year), allowing it to capture deviations from the long-term baseline over medium timescales. This could reflect evolving responses to specific events or other medium-term dynamics.</p>
-        <h5>3. Very Short-Term GP over Calendar Time</h5>
-        <p>A third Gaussian Process, again over calendar time, is added to capture even more rapid fluctuations. This GP has a very short correlation length (e.g., centered around a few weeks). It is designed to model fast-moving campaign dynamics, late shifts in public opinion, or reactions to breaking news closer to an election.</p>
-        <p>The sum of these three processes (baseline, medium-term, very short-term) forms the latent (unobserved) national support trajectory for each party.</p>
-        <h5>4. District-Level Effects</h5>
-        <p>To account for Portugal's district-based system, the model incorporates district-specific deviations from the national trend. In the current implementation, this is achieved solely through estimated <strong>static base offset</strong> parameters for each district and party. These parameters represent the persistent, time-invariant tendency for a district's support for a given party to be higher or lower than the national average, relative to the average trend. These offsets are learned primarily from historical election results at the district level. Unlike previous experimental versions, this model <em>currently uses only these static offsets</em>. It assumes that district deviations from the national trend do not dynamically change based on the magnitude of national swings within a single election cycle (i.e., the sensitivity or 'beta' component is not currently active).</p>
-        <h5>5. House Effects (Pollster Biases) and Poll Bias</h5>
-        <p>The model explicitly accounts for systematic variations between polling firms. These "house effects" are modeled as parameters specific to each pollster and party, constrained such that they represent relative deviations (i.e., summing to zero across parties for a given pollster). This captures the tendency of some pollsters to relatively overestimate or underestimate certain parties.</p>
-        <p>Additionally, an overall poll bias term, also constrained to sum to zero across parties, is included. This captures any average systematic deviation of poll results from the underlying national trend, distinct from individual pollster effects.</p>
-        <h5>6. Latent Score, Transformation, and Likelihood</h5>
-        <p>The national trend components (sum of the three calendar-time GPs) are combined with the relevant bias terms (house effects and poll bias for poll observations, or the static district base offsets for district predictions) to produce a latent score representing underlying support.</p>
-        <p>A softmax transformation converts these unbounded latent scores into a set of probabilities (vote shares) for each party that necessarily sum to one.</p>
-        <p>Finally, the observed data—vote counts from polls, district-level election results, <strong>and national-level election results</strong>—are linked to these modeled probabilities through a statistical likelihood function. The chosen likelihood (typically a Dirichlet-Multinomial distribution) is suitable for count data representing proportions and includes parameters to accommodate potential overdispersion (more variability than predicted by simpler models). The inclusion of both district and national results helps anchor the national trend prediction and inform the district offsets.</p>
+        <h4>${strings.methodologyH4_4}</h4>
+        <h5>${strings.methodologyH5_1}</h5>
+        <p>${strings.methodologyP10}</p>
+        <h5>${strings.methodologyH5_2}</h5>
+        <p>${strings.methodologyP11}</p>
+        <h5>${strings.methodologyH5_3}</h5>
+        <p>${strings.methodologyP12}</p>
+        <p>${strings.methodologyP13}</p>
+        <h5>${strings.methodologyH5_4}</h5>
+        <p>${strings.methodologyP14}</p>
+        <h5>${strings.methodologyH5_5}</h5>
+        <p>${strings.methodologyP15}</p>
+        <p>${strings.methodologyP16}</p>
+        <h5>${strings.methodologyH5_6}</h5>
+        <p>${strings.methodologyP17}</p>
+        <p>${strings.methodologyP18}</p>
+        <p>${strings.methodologyP19}</p>
 
-        <h4>Statistical Methodology</h4>
-        <h5>Gaussian Processes</h5>
-        <p>Gaussian Processes provide a flexible, non-parametric Bayesian approach to function estimation. Here, they are used to model the unobserved national support trends over time without imposing rigid functional forms. The choice of covariance kernel and its parameters (lengthscale, amplitude) encode prior beliefs about the smoothness and variability of these trends.</p>
-        <h5>Hierarchical Modeling</h5>
-        <p>The model employs a hierarchical structure, particularly for house effects and district offsets. Parameters for individual pollsters or districts are assumed to be drawn from common distributions, allowing the model to borrow strength across units and make more robust estimates, especially for units with less data.</p>
-        <h5>Bayesian Inference</h5>
-        <p>The model parameters are estimated within a Bayesian framework, typically using Markov Chain Monte Carlo (MCMC) methods. This yields a full posterior distribution for all parameters and derived quantities (like vote shares and seat predictions), naturally quantifying uncertainty.</p>
-        <h5>Computational Techniques</h5>
-        <p>To make Bayesian inference computationally feasible, the model utilizes:</p>
-        <ul><li><strong>GP Approximations:</strong> Efficient methods (like basis function expansions) are used to approximate the full Gaussian Processes, reducing the computational complexity.</li>
-        <li><strong>Reparameterization:</strong> Techniques like non-centered parameterization are used for certain hierarchical parameters to improve the geometry of the posterior distribution and the efficiency of MCMC sampling algorithms.</li></ul>
-        <h5>Overdispersion Modeling</h5>
-        <p>The use of a likelihood function that explicitly models overdispersion (like the Dirichlet-Multinomial) is crucial for realistically capturing the noise characteristics of polling and election data.</p>
+        <h4>${strings.methodologyH4_5}</h4>
+        <h5>${strings.methodologyH5_7}</h5>
+        <p>${strings.methodologyP20}</p>
+        <h5>${strings.methodologyH5_8}</h5>
+        <p>${strings.methodologyP21}</p>
+        <h5>${strings.methodologyH5_9}</h5>
+        <p>${strings.methodologyP22}</p>
+        <h5>${strings.methodologyH5_10}</h5>
+        <p>${strings.methodologyP23}</p>
+        <ul><li>${strings.methodologyLi4_1}</li>
+        <li>${strings.methodologyLi4_2}</li></ul>
+        <h5>${strings.methodologyH5_11}</h5>
+        <p>${strings.methodologyP24}</p>
         
-        <h4>Making Predictions</h4>
-        <p>Generating forecasts involves several steps:</p>
+        <h4>${strings.methodologyH4_6}</h4>
+        <p>${strings.methodologyP25}</p>
         <ol>
-            <li>Draw samples from the joint posterior distribution of all model parameters obtained via Bayesian inference.</li>
-            <li>For each sample, compute the latent national support trend (sum of the three calendar-time GPs) at the desired future date(s).</li>
-            <li>Apply the relevant district-specific <strong>static base offset</strong> parameters (as estimated from the posterior) to the national latent trend to get district-level latent scores.</li>
-            <li>Convert these latent scores into predicted vote share probabilities using the softmax transformation.</li>
-            <li>Simulate the seat allocation process (D'Hondt method) using these predicted vote shares for each posterior sample.</li>
+            <li>${strings.methodologyLi5_1}</li>
+            <li>${strings.methodologyLi5_2}</li>
+            <li>${strings.methodologyLi5_3}</li>
+            <li>${strings.methodologyLi5_4}</li>
+            <li>${strings.methodologyLi5_5}</li>
         </ol>
-        <p>Aggregating the results across all posterior samples provides a probabilistic forecast for vote shares and seat counts, inherently reflecting model uncertainty.</p>
-        <h5>District Vote Share Prediction</h5>
-        <p>District-level vote share predictions are derived by combining the posterior distribution of the national latent trend (sum of the three calendar-time GPs) with the posterior distribution of the <strong>static</strong> district base offsets.</p>
-        <p>Specifically, for each posterior sample and each district:</p>
+        <p>${strings.methodologyP26}</p>
+        <h5>${strings.methodologyH5_12}</h5>
+        <p>${strings.methodologyP27}</p>
+        <p>${strings.methodologyP28}</p>
         <ol>
-            <li>The estimated <strong>static base offset</strong> for that district and party is added to the national latent trend value (sum of the three GPs) for that party at the target date.</li>
-            <li>The resulting adjusted latent scores are transformed into probabilities (vote shares summing to 1) via the softmax function.</li>
+            <li>${strings.methodologyLi6_1}</li>
+            <li>${strings.methodologyLi6_2}</li>
         </ol>
-        <p>This procedure yields a full posterior distribution of predicted vote shares for each party within each district.</p>
-        <h5>Seat Allocation</h5>
-        <p>Once we have vote share predictions, we simulate the election outcome using the D'Hondt method, which allocates seats proportionally based on each party's votes. By running this simulation thousands of times across our posterior samples, we generate a probability distribution over possible seat outcomes for each party.</p>
+        <p>${strings.methodologyP29}</p>
+        <h5>${strings.methodologyH5_13}</h5>
+        <p>${strings.methodologyP30}</p>
         
-        <h4>Limitations and Future Improvements</h4>
-        <p>Like all models, ours has limitations based on its current structure:</p>
+        <h4>${strings.methodologyH4_7}</h4>
+        <p>${strings.methodologyP31}</p>
         <ol>
-            <li>It assumes that historical patterns of <em>static</em> district behavior (relative to the nation, captured by the base offsets) will continue into the future. The model currently does not account for potential dynamic changes in how districts respond to national swings within a cycle.</li>
-            <li>It does not incorporate non-polling data such as economic indicators or government approval ratings.</li>
-            <li>The district effects model could potentially be enhanced in future versions by re-introducing dynamic components (like sensitivity/beta), adding district-level covariates, or incorporating spatial correlation structures.</li>
+            <li>${strings.methodologyLi7_1}</li>
+            <li>${strings.methodologyLi7_2}</li>
+            <li>${strings.methodologyLi7_3}</li>
         </ol>
-        <p>Future versions may address these limitations by incorporating additional data sources (like economic indicators), activating dynamic district effects, using district-level covariates (such as demographics or past voting patterns) to better model the static offsets, or implementing spatial modeling techniques to capture correlations between neighboring districts.</p>
+        <p>${strings.methodologyP32}</p>
         
-        <p><strong>Sources:</strong></p>
+        <p>${strings.methodologyP33_sources}</p>
         <ul>
-            <li>Polling data aggregate from major national pollsters (Aximage, CESOP, Eurosondagem, Intercampus).</li>
-            <li>Historical election results from CNE (Comissão Nacional de Eleições).</li>
-            <li>Demographic data from INE (Instituto Nacional de Estatística).</li>
+            <li>${strings.methodologyLi8_1}</li>
+            <li>${strings.methodologyLi8_2}</li>
+            <li>${strings.methodologyLi8_3}</li>
         </ul>
     </div>
 `;
@@ -263,91 +311,130 @@ function extractDateFromPath(path) {
 // Function to render the forecast comparison table
 function renderForecastComparisonTable(data) {
   if (!data || !data.metadata || !data.vote_share_comparison || !data.seat_comparison) {
-    return html`<p>Forecast comparison data is unavailable or incomplete.</p>`;
+    return html`<p class="note">${strings.forecastCompUnavailable}</p>`;
   }
 
-  const runADate = extractDateFromPath(data.metadata.run_A_path);
-  const runBDate = extractDateFromPath(data.metadata.run_B_path);
+  const runADateStr = extractDateFromPath(data.metadata.run_A_path);
+  const runBDateStr = extractDateFromPath(data.metadata.run_B_path);
 
-  const formatChange = (value, isPercentage = false) => {
-    const num = parseFloat(value);
-    if (isNaN(num)) return "N/A";
-    const fixedNum = isPercentage ? (num * 100).toFixed(1) : num.toFixed(1);
-    const sign = num > 0 ? "+" : (num < 0 ? "" : ""); // Negative sign is already part of toFixed
-    return `${sign}${fixedNum}${isPercentage ? "pp" : ""}`;
-  };
+  const dateFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const currentLocale = currentLang === 'pt' ? 'pt-PT' : 'en-US';
 
-  const formatValue = (value, isPercentage = false) => {
-    const num = parseFloat(value);
-    if (isNaN(num)) return "N/A";
-    return isPercentage ? (num * 100).toFixed(1) + "%" : num.toFixed(1);
-  };
-  
-  const getPartyFromKey = (key) => {
-    const match = key.match(/\[(.*?)\]/);
-    return match ? match[1] : key;
-  };
+  const runADate = runADateStr !== "N/A" ? new Date(runADateStr).toLocaleDateString(currentLocale, dateFormatOptions) : strings.forecastCompDateUnavailable;
+  const runBDate = runBDateStr !== "N/A" ? new Date(runBDateStr).toLocaleDateString(currentLocale, dateFormatOptions) : strings.forecastCompDateUnavailable;
+  const comparisonDate = new Date(data.metadata.comparison_timestamp).toLocaleDateString(currentLocale, {...dateFormatOptions, hour: '2-digit', minute: '2-digit'});
 
-  return html`
-    <div class="card p-4">
-      <h2>Forecast Evolution: Comparison with Previous Run</h2>
-      <p class="text-muted text-sm">
-        Comparing current forecast (dated: ${runADate}) with previous forecast (dated: ${runBDate}).
-        <br>Comparison generated on: ${new Date(data.metadata.comparison_timestamp).toLocaleDateString()}.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <div>
-          <h3>National Vote Share Evolution</h3>
-          <table class="table table-striped table-sm" style="width: 100%;">
-            <thead>
-              <tr>
-                <th>Party</th>
-                <th>Current</th>
-                <th>Previous</th>
-                <th>Change</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${Object.entries(data.vote_share_comparison).map(([key, comp]) => {
-                const party = getPartyFromKey(key);
-                return html`<tr>
-                  <td>${party}</td>
-                  <td>${formatValue(comp.run_A?.mean_value, true)}</td>
-                  <td>${formatValue(comp.run_B?.mean_value, true)}</td>
-                  <td style="color: ${comp.change?.mean_value > 0 ? 'var(--theme-green)' : (comp.change?.mean_value < 0 ? 'var(--theme-red)' : 'inherit')}">
-                    ${formatChange(comp.change?.mean_value, true)}
-                  </td>
-                </tr>`;
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <h3>Projected Seats Evolution</h3>
-          <table class="table table-striped table-sm" style="width: 100%;">
-            <thead>
-              <tr>
-                <th>Party</th>
-                <th>Current</th>
-                <th>Previous</th>
-                <th>Change</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${Object.entries(data.seat_comparison).map(([party, comp]) => html`<tr>
-                <td>${party}</td>
-                <td>${formatValue(comp.run_A?.mean_value)}</td>
-                <td>${formatValue(comp.run_B?.mean_value)}</td>
-                <td style="color: ${comp.change?.mean_value > 0 ? 'var(--theme-green)' : (comp.change?.mean_value < 0 ? 'var(--theme-red)' : 'inherit')}">
-                  ${formatChange(comp.change?.mean_value)}
-                </td>
-              </tr>`)}
-            </tbody>
-          </table>
-        </div>
-      </div>
+  // Helper to extract party from complex key like "latent_popularity_national[AD]"
+  function getPartyFromKey(key) {
+    const match = key.match(/\[(.*?)\]$/);
+    return match ? match[1] : key; // Fallback to key if no match (shouldn't happen for vote_share)
+  }
+
+  // Determine the order of parties based on a typical display order or from the data itself.
+  // Using a predefined order for consistency.
+  const partyOrder = ["PS", "AD", "CH", "IL", "BE", "CDU", "L", "PAN", "OTH"];
+
+
+  let tableHtml = `
+    <div class="forecast-comparison-content">
+      <p class="text-sm text-muted">${strings.forecastCompSubtitle1Part1}${runADate}${strings.forecastCompSubtitle1Part2}${runBDate}${strings.forecastCompSubtitle1Part3}</p>
+      <p class="text-sm text-muted">${strings.forecastCompSubtitle2Part1}${comparisonDate}${strings.forecastCompSubtitle2Part2}</p>
+
+      <h5>${strings.forecastCompH3_Vote}</h5>
+      <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th>${strings.forecastCompThParty}</th>
+            <th>${strings.forecastCompThCurrent}</th>
+            <th>${strings.forecastCompThPrevious}</th>
+            <th>${strings.forecastCompThChange}</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  // Vote Share Table
+  const voteShareEntries = Object.entries(data.vote_share_comparison);
+  // Create a map for quick lookup
+  const voteShareMap = new Map(voteShareEntries.map(([key, value]) => [getPartyFromKey(key), value]));
+
+  // Convert map to array and sort for Vote Share
+  const sortedVoteShare = Array.from(voteShareMap.entries())
+    .map(([party, stats]) => ({ party, ...stats }))
+    .sort((a, b) => b.run_A.mean_value - a.run_A.mean_value);
+
+  for (const item of sortedVoteShare) {
+    const party = item.party;
+    const stats = item; // item already contains run_A and run_B
+    const currentVote = (stats.run_A.mean_value * 100).toFixed(1);
+    const previousVote = (stats.run_B.mean_value * 100).toFixed(1);
+    const changeVote = ((stats.run_A.mean_value - stats.run_B.mean_value) * 100);
+    const voteChangeClass = Math.abs(changeVote) < 0.0001 ? 'change-neutral' : (changeVote >= 0 ? 'change-positive' : 'change-negative');
+
+    tableHtml += `
+      <tr>
+        <td>${party}</td>
+        <td>${currentVote}%</td>
+        <td>${previousVote}%</td>
+        <td><span class="${voteChangeClass}">${changeVote >= 0 && Math.abs(changeVote) >= 0.0001 ? '+' : ''}${changeVote.toFixed(1)}%</span></td>
+      </tr>
+    `;
+  }
+
+  tableHtml += `
+        </tbody>
+      </table>
+
+      <h5>${strings.forecastCompH3_Seats}</h5>
+      <table class="table table-sm table-striped">
+        <thead>
+          <tr>
+            <th>${strings.forecastCompThParty}</th>
+            <th>${strings.forecastCompThCurrent}</th>
+            <th>${strings.forecastCompThPrevious}</th>
+            <th>${strings.forecastCompThChange}</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  // Seat Comparison Table
+  const seatEntries = Object.entries(data.seat_comparison);
+  // Create a map for quick lookup
+  const seatMap = new Map(seatEntries); // Party is already the key
+
+  // Convert map to array and sort for Seat Comparison
+  const sortedSeatComparison = Array.from(seatMap.entries())
+    .map(([party, stats]) => ({ party, ...stats }))
+    .sort((a, b) => b.run_A.mean_value - a.run_A.mean_value);
+
+  for (const item of sortedSeatComparison) {
+    const party = item.party;
+    const stats = item; // item already contains run_A and run_B
+    const currentSeats = stats.run_A.mean_value.toFixed(1);
+    const previousSeats = stats.run_B.mean_value.toFixed(1);
+    const changeSeats = (stats.run_A.mean_value - stats.run_B.mean_value);
+    const seatChangeClass = Math.abs(changeSeats) < 0.0001 ? 'change-neutral' : (changeSeats >= 0 ? 'change-positive' : 'change-negative');
+
+    tableHtml += `
+      <tr>
+        <td>${party}</td>
+        <td>${currentSeats}</td>
+        <td>${previousSeats}</td>
+        <td><span class="${seatChangeClass}">${changeSeats >= 0 && Math.abs(changeSeats) >= 0.0001 ? '+' : ''}${changeSeats.toFixed(1)}</span></td>
+      </tr>
+    `;
+  }
+
+  tableHtml += `
+        </tbody>
+      </table>
     </div>
   `;
+  // Create a div and set its innerHTML to the constructed string
+  const container = document.createElement("div");
+  container.innerHTML = tableHtml;
+  return container.firstElementChild; // Return the actual content div
 }
 
 // --- Remove Reactive State for Sidebar --- 
@@ -358,58 +445,59 @@ function renderForecastComparisonTable(data) {
 ```
 
 <!-- Row 1 Annotation -->
-<p class="text-muted text-sm mb-2">Seat projections show likely outcomes for each party, with 116 seats needed for a majority (red line). The first chart displays the seat distribution per party, while the second illustrates the distribution of total seats for the left and right coalition blocs.</p>
+<p class="text-muted text-sm mb-2">${strings.annoRow1}</p>
 
 <!-- Row 1: Seat Projection Histogram and NEW Coalition Dot Plot -->
 <div class="grid grid-cols-2 gap-4">
   <div id="seat-histogram-container" class="card p-4">
-    <h2>Seat Projection</h2>
-    ${seatProjection(seatProjectionData)}
+    <h2>${strings.seatProjectionTitle}</h2>
+    ${seatProjection(seatProjectionData, {strings})}
   </div>
   <div id="coalition-violin-container" class="card p-4" style="overflow: hidden;">
-    <h2>Coalition Totals Distribution</h2>
-    ${resize((width) => coalitionDotPlot(seatProjectionData, {width}))}
+    <h2>${strings.coalitionTotalsTitle}</h2>
+    ${resize((width) => coalitionDotPlot(seatProjectionData, {width, strings}))}
   </div>
 </div>
 
 <!-- Row 2 Annotation -->
-<p class="text-muted text-sm mb-2">District map colored by predicted leading party in each region. Click any district to see detailed vote share forecasts, or view national trends in the right panel when no district is selected.</p>
+<p class="text-muted text-sm mb-2">${strings.annoRow2}</p>
 
 <!-- Row 2: Combined Map and Sidebar -->
 <div class="card col-span-2 p-4">
-    <h2>District Forecast & Details</h2>
-    ${mapWithSidebar(portugalTopoJson, mappedForecastData, latestTrends)}
+    <h2>${strings.districtForecastTitle}</h2>
+    ${mapWithSidebar(portugalTopoJson, mappedForecastData, latestTrends, strings)}
 </div>
   
 <!-- Row 3 Annotation -->
-<p class="text-muted text-sm mb-2">Most contested seats across Portugal where small shifts could change outcomes. The table shows seats closest to flipping, with probability breakdown bars showing which parties might win each seat. Click any row for detailed analysis.</p>
+<p class="text-muted text-sm mb-2">${strings.annoRow3}</p>
   
 <!-- Row 3: Contested Seats Section -->
 <div class="card grid-colspan-2 p-4">
-${contestedSeatsSection(contestedSummaryData)}
+${contestedSeatsSection(contestedSummaryData, {strings})}
 </div>
 
 <!-- Row 4 Annotation -->
-<p class="text-muted text-sm mb-2">Left: National voting intention trends with 95% credible intervals, combining polling data since 2024. Right: Estimated polling house effects showing systematic biases — red indicates pollsters overestimating parties, blue shows underestimation.</p>
+<p class="text-muted text-sm mb-2">${strings.annoRow4}</p>
 
 <!-- Row 4: National Trends Chart and Pollster Diagnostics -->
 <div class="grid grid-cols-2 gap-4">
   <div class="card p-4">
-    <h2>National Vote Intention</h2>
-    <p class="small note">Modeled national vote share for major parties over time.</p>
-    ${resize((width) => nationalTrendsChart(nationalTrends, {width}))}
+    <h2>${strings.nationalVoteIntentionTitle}</h2>
+    <p class="small note">${strings.nationalVoteIntentionNote}</p>
+    ${resize((width) => nationalTrendsChart(nationalTrends, {width, strings}))}
   </div>
   <div class="card p-4" style="display: flex; flex-direction: column; justify-content: flex-start;">
-    <h2>Pollster House-Effects</h2> 
+    <h2>${strings.pollsterHouseEffectsTitle}</h2> 
     <div> 
-      ${resize(width => houseEffectsHeatmap(houseEffectsData, { width }))}
+      ${resize(width => houseEffectsHeatmap(houseEffectsData, { width, strings }))}
     </div>
   </div>
 </div>
 
 <!-- Insert the new forecast comparison section -->
-<div class="py-4">
-${renderForecastComparisonTable(forecastComparisonData)}
+<div class="card p-4">
+    <h2>${strings.forecastCompTitle}</h2>
+    ${renderForecastComparisonTable(forecastComparisonData)}
 </div>
 
 <!-- Methodology - Display directly -->
@@ -419,8 +507,9 @@ ${methodologyContent}
 
 <!-- Updated Footer -->
 <div class="small note py-4">
-    Model and visualizations by Estimador. Last updated: ${new Date().toLocaleDateString()}.
-    <br>Data sources: Polling aggregation from national pollsters (Aximage, CESOP, Eurosondagem, Intercampus), historical election results from CNE, and demographic data from INE.
+    ${strings.footerModelBy} ${strings.footerLastUpdated} <span data-source="currentDate"></span>.
+    <br>
+    ${strings.footerDataSources}
   </div>
 
 <!-- Add global styles via a style tag -->
@@ -437,8 +526,29 @@ ${methodologyContent}
   .plot {
       font-family: inherit;
   }
+
+  .change-positive {
+    color: var(--theme-foreground-positive, green);
+  }
+
+  .change-negative {
+    color: var(--theme-foreground-negative, red);
+  }
+
+  .change-neutral {
+    color: var(--theme-foreground-muted, gray);
+  }
   
   /* REMOVED OG Mode CSS */
   /* body.og-mode ... */
 
 </style>
+
+```js
+document.addEventListener("DOMContentLoaded", () => {
+    const dateSpan = document.querySelector("span[data-source='currentDate']");
+    if (dateSpan) {
+        dateSpan.textContent = new Date().toLocaleDateString(currentLang === 'pt' ? 'pt-PT' : 'en-US');
+    }
+});
+```

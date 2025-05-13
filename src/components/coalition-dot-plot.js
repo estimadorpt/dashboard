@@ -3,9 +3,12 @@ import * as d3 from "d3";
 import { partyColors } from "../config/colors.js"; // For potential future coloring
 import { leftBlocParties, rightBlocParties, majorityThreshold } from "../config/blocs.js";
 
-export function coalitionDotPlot(drawData, options = {}) {
+export function coalitionDotPlot(drawData, { width = 600, strings, ...options } = {}) {
+  if (!strings) {
+    return document.createTextNode("Configuration error: strings not provided.");
+  }
   if (!drawData || drawData.length === 0) {
-    return document.createTextNode("Coalition data loading...");
+    return document.createTextNode(strings.coalitionDotPlotLoading);
   }
 
   // --- Calculate Bloc Seats per Draw ---
@@ -21,8 +24,8 @@ export function coalitionDotPlot(drawData, options = {}) {
 
   // Convert rollup map to flat array suitable for Plot
   const blocDrawData = Array.from(seatsByDraw.entries()).flatMap(([draw, seats]) => [
-    { draw, bloc: "Left Bloc", totalSeats: seats.leftSeats },
-    { draw, bloc: "Right Bloc", totalSeats: seats.rightSeats }
+    { draw, bloc: strings.coalitionDotPlotLeftBloc, totalSeats: seats.leftSeats },
+    { draw, bloc: strings.coalitionDotPlotRightBloc, totalSeats: seats.rightSeats }
   ]);
 
   // --- Calculate Medians per Bloc ---
@@ -32,10 +35,9 @@ export function coalitionDotPlot(drawData, options = {}) {
   );
 
   // --- Dynamically Sample Data based on Width ---
-  const width = options.width ?? 600; // Default width if not provided
   const minSampleSize = 250;
   const maxSampleSize = 2500; // INCREASE max sample size
-  const targetSampleSize = Math.round((5 / 3) * width);
+  const targetSampleSize = Math.round((5 / 3) * width); // Now uses width from parameters
   const sampleSize = Math.max(minSampleSize, Math.min(targetSampleSize, maxSampleSize));
   console.log(`[coalition-dot-plot] Width: ${width}, TargetSampleSize: ${targetSampleSize}, ActualSampleSize: ${sampleSize}`); // Log for debugging
 
@@ -43,7 +45,7 @@ export function coalitionDotPlot(drawData, options = {}) {
   // Shuffle the full data and take the calculated sample size
   const sampledBlocData = d3.shuffle(blocDrawData.slice()).slice(0, sampleSize);
 
-  const blocOrder = ["Left Bloc", "Right Bloc"]; // Define facet order
+  const blocOrder = [strings.coalitionDotPlotLeftBloc, strings.coalitionDotPlotRightBloc];
 
   // --- Plotting ---
   const plot = Plot.plot({
@@ -52,7 +54,7 @@ export function coalitionDotPlot(drawData, options = {}) {
     marginRight: 20,
     x: {
         domain: [0, d3.max(blocDrawData, d => d.totalSeats) * 1.05 ?? 230], // Use original data
-        label: "Total Seats Won by Bloc", // Restore label
+        label: strings.coalitionDotPlotXLabel,
         axis: "bottom",
         ticks: [0, 50, 100, majorityThreshold, 150, 200] // Include majority threshold
     },
@@ -73,7 +75,9 @@ export function coalitionDotPlot(drawData, options = {}) {
         fill: "bloc", // RESTORE Color channel
         fillOpacity: 1, // INCREASE opacity
         tip: true, 
-        title: d => `${d.bloc}\nTotal Seats: ${d.totalSeats}` // Restore tooltip text
+        title: d => strings.coalitionDotPlotTooltipTitle
+                        .replace("{bloc}", d.bloc)
+                        .replace("{totalSeats}", d.totalSeats)
       })), 
       // Median lines - Use original medians, add fy
       Plot.ruleX(blocMedians, {

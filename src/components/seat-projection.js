@@ -2,10 +2,16 @@ import * as Plot from "@observablehq/plot";
 import * as d3 from "d3";
 import { partyColors, partyOrder } from "../config/colors.js"; // Import shared config
 
-export function seatProjection(drawData, options) {
+export function seatProjection(drawData, {width, strings, ...options} = {}) {
+  if (!strings) {
+    const placeholderDiv = document.createElement("div");
+    placeholderDiv.textContent = "Configuration error: strings not provided.";
+    return placeholderDiv;
+  }
+
   if (!drawData || drawData.length === 0) {
     const placeholderDiv = document.createElement("div");
-    placeholderDiv.textContent = "Seat projection data loading...";
+    placeholderDiv.textContent = strings.seatProjectionLoading;
     Object.assign(placeholderDiv.style, {
       display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100px"
     });
@@ -53,7 +59,7 @@ export function seatProjection(drawData, options) {
     marginRight: 20,
     x: { 
         domain: [0, 150], 
-        label: "Seats won", 
+        label: strings.seatProjectionXLabel,
         axis: "bottom",
         ticks: [0, 50, 100, 116, 150]
     },

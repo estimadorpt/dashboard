@@ -16,10 +16,10 @@ const partyColors = {
 };
 */
 
-export function nationalTrendsChart(trendsData, { width } = {}) {
+export function nationalTrendsChart(trendsData, { width, strings } = {}) {
   console.log("[TrendsChart] Received trendsData:", trendsData);
-  if (!trendsData || trendsData.length === 0) {
-    console.log("[TrendsChart] Data missing or empty, returning empty fragment.");
+  if (!trendsData || trendsData.length === 0 || !strings) {
+    console.log("[TrendsChart] Data or strings missing or empty, returning empty fragment.");
     return new DocumentFragment();
   }
 
@@ -80,13 +80,13 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
       marginLeft: 40,
       y: { 
           grid: true, 
-          label: "National Vote Intention (%)",
+          label: strings.trendsChartYLabel,
           percent: true // Format axis as percent
       },
       x: { 
           // Explicitly set scale type to utc for dates
           type: "utc", 
-          label: "Date"
+          label: strings.trendsChartXLabel
       },
       // Use imported config for color scale
       color: { 
@@ -110,7 +110,10 @@ export function nationalTrendsChart(trendsData, { width } = {}) {
               y: false, // Don't show y value for band
               fill: true, // Show party
               // Custom title for interval
-              title: (d) => `${d.party}\n${(d.low).toFixed(1)}% - ${(d.high).toFixed(1)}%`
+              title: (d) => strings.trendsChartTooltipTitle
+                                  .replace("{party}", d.party)
+                                  .replace("{low}", d.low.toFixed(1))
+                                  .replace("{high}", d.high.toFixed(1))
             }
           }
         }),
