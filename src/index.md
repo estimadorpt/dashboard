@@ -4,6 +4,9 @@ theme: air
 toc: false
 head: |
     <meta property="og:title" content="Portuguese Election Forecast Model">
+    <meta property="og:image" content="/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/og.png">
 ---
 
 ```js
@@ -39,6 +42,9 @@ if (typeof document !== "undefined") {
   document.title = strings.title;
   document.documentElement.lang = currentLang;
 
+  const cacheBuster = new Date().getTime();
+  const ogImageUrlWithBuster = `/og.png?v=${cacheBuster}`;
+
   let ogTitleMeta = document.querySelector('meta[property="og:title"]');
   if (ogTitleMeta) {
     ogTitleMeta.setAttribute('content', strings.title);
@@ -56,6 +62,37 @@ if (typeof document !== "undefined") {
     document.head.appendChild(ogLocaleMeta);
   }
   ogLocaleMeta.setAttribute('content', currentLang === 'pt' ? 'pt_PT' : 'en_US');
+
+  // Update og:image
+  let ogImageMeta = document.querySelector('meta[property="og:image"]');
+  if (ogImageMeta) {
+    ogImageMeta.setAttribute('content', ogImageUrlWithBuster);
+  } else {
+    ogImageMeta = document.createElement('meta');
+    ogImageMeta.setAttribute('property', 'og:image');
+    ogImageMeta.setAttribute('content', ogImageUrlWithBuster);
+    document.head.appendChild(ogImageMeta);
+  }
+
+  // Update twitter:image
+  let twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
+  if (twitterImageMeta) {
+    twitterImageMeta.setAttribute('content', ogImageUrlWithBuster);
+  } else {
+    twitterImageMeta = document.createElement('meta');
+    twitterImageMeta.setAttribute('name', 'twitter:image');
+    twitterImageMeta.setAttribute('content', ogImageUrlWithBuster);
+    document.head.appendChild(twitterImageMeta);
+  }
+
+  // Ensure twitter:card is present
+  let twitterCardMeta = document.querySelector('meta[name="twitter:card"]');
+  if (!twitterCardMeta) {
+    twitterCardMeta = document.createElement('meta');
+    twitterCardMeta.setAttribute('name', 'twitter:card');
+    twitterCardMeta.setAttribute('content', 'summary_large_image');
+    document.head.appendChild(twitterCardMeta);
+  }
 }
 ```
 
