@@ -31,7 +31,7 @@ export default {
     <meta property="og:url" content="https://www.estimador.pt">
     <meta property="og:title" content="Portuguese Election Forecast">
     <meta property="og:description" content="Live Bayesian seat projections & coalition odds.">
-    <meta property="og:image" content="https://www.estimador.pt/og.png">
+    <meta property="og:image" content="https://www.estimador.pt/og.png?v=${new Date().getTime()}">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -41,7 +41,7 @@ export default {
     <meta name="twitter:url" content="https://www.estimador.pt">
     <meta name="twitter:title" content="Portuguese Election Forecast">
     <meta name="twitter:description" content="Live Bayesian seat projections & coalition odds.">
-    <meta name="twitter:image" content="https://www.estimador.pt/og.png">
+    <meta name="twitter:image" content="https://www.estimador.pt/og.png?v=${new Date().getTime()}">
     <!-- Optional: <meta name="twitter:site" content="@YourTwitterHandle"> -->
   `,
 
