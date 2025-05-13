@@ -87,6 +87,8 @@ const wideSeatProjectionData = await FileAttachment("data/seat_forecast_simulati
 // const pollErrorData = await FileAttachment("data/sample_poll_errors.json").json(); 
 // Load NEW house effects data
 const houseEffectsData = await FileAttachment("data/house_effects.json").json();
+// Load NEW forecast comparison data
+const forecastComparisonData = await FileAttachment("data/forecast_comparison_with_previous.json").json();
 
 // --- Calculate Hero Banner Probs ---
 import * as d3 from "npm:d3"; // Need d3 for calculations
@@ -242,6 +244,112 @@ console.log("[index.md] Transformed seatProjectionData (first 10 entries):", JSO
 // Prepare map data
 const mappedForecastData = districtForecastData.map(d => ({...d, district_id: d.NAME_1}));
 
+// Function to extract date from run path
+function extractDateFromPath(path) {
+  if (!path) return "N/A";
+  const match = path.match(/(\d{4})(\d{2})(\d{2})_\d{6}$/);
+  if (match) {
+    return `${match[1]}-${match[2]}-${match[3]}`;
+  }
+  // Fallback for different date_time string in path
+  const pathMatch = path.match(/(\d{8})/);
+  if (pathMatch && pathMatch[1]) {
+    const dateStr = pathMatch[1];
+    return `${dateStr.substring(0,4)}-${dateStr.substring(4,6)}-${dateStr.substring(6,8)}`;
+  }
+  return "N/A";
+}
+
+// Function to render the forecast comparison table
+function renderForecastComparisonTable(data) {
+  if (!data || !data.metadata || !data.vote_share_comparison || !data.seat_comparison) {
+    return html`<p>Forecast comparison data is unavailable or incomplete.</p>`;
+  }
+
+  const runADate = extractDateFromPath(data.metadata.run_A_path);
+  const runBDate = extractDateFromPath(data.metadata.run_B_path);
+
+  const formatChange = (value, isPercentage = false) => {
+    const num = parseFloat(value);
+    if (isNaN(num)) return "N/A";
+    const fixedNum = isPercentage ? (num * 100).toFixed(1) : num.toFixed(1);
+    const sign = num > 0 ? "+" : (num < 0 ? "" : ""); // Negative sign is already part of toFixed
+    return `${sign}${fixedNum}${isPercentage ? "pp" : ""}`;
+  };
+
+  const formatValue = (value, isPercentage = false) => {
+    const num = parseFloat(value);
+    if (isNaN(num)) return "N/A";
+    return isPercentage ? (num * 100).toFixed(1) + "%" : num.toFixed(1);
+  };
+  
+  const getPartyFromKey = (key) => {
+    const match = key.match(/\[(.*?)\]/);
+    return match ? match[1] : key;
+  };
+
+  return html`
+    <div class="card p-4">
+      <h2>Forecast Evolution: Comparison with Previous Run</h2>
+      <p class="text-muted text-sm">
+        Comparing current forecast (dated: ${runADate}) with previous forecast (dated: ${runBDate}).
+        <br>Comparison generated on: ${new Date(data.metadata.comparison_timestamp).toLocaleDateString()}.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+          <h3>National Vote Share Evolution</h3>
+          <table class="table table-striped table-sm" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Party</th>
+                <th>Current</th>
+                <th>Previous</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${Object.entries(data.vote_share_comparison).map(([key, comp]) => {
+                const party = getPartyFromKey(key);
+                return html`<tr>
+                  <td>${party}</td>
+                  <td>${formatValue(comp.run_A?.mean_value, true)}</td>
+                  <td>${formatValue(comp.run_B?.mean_value, true)}</td>
+                  <td style="color: ${comp.change?.mean_value > 0 ? 'var(--theme-green)' : (comp.change?.mean_value < 0 ? 'var(--theme-red)' : 'inherit')}">
+                    ${formatChange(comp.change?.mean_value, true)}
+                  </td>
+                </tr>`;
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Projected Seats Evolution</h3>
+          <table class="table table-striped table-sm" style="width: 100%;">
+            <thead>
+              <tr>
+                <th>Party</th>
+                <th>Current</th>
+                <th>Previous</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${Object.entries(data.seat_comparison).map(([party, comp]) => html`<tr>
+                <td>${party}</td>
+                <td>${formatValue(comp.run_A?.mean_value)}</td>
+                <td>${formatValue(comp.run_B?.mean_value)}</td>
+                <td style="color: ${comp.change?.mean_value > 0 ? 'var(--theme-green)' : (comp.change?.mean_value < 0 ? 'var(--theme-red)' : 'inherit')}">
+                  ${formatChange(comp.change?.mean_value)}
+                </td>
+              </tr>`)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 // --- Remove Reactive State for Sidebar --- 
 // mutable hoveredDistrictData = null; 
 
@@ -297,6 +405,11 @@ ${contestedSeatsSection(contestedSummaryData)}
       ${resize(width => houseEffectsHeatmap(houseEffectsData, { width }))}
     </div>
   </div>
+</div>
+
+<!-- Insert the new forecast comparison section -->
+<div class="py-4">
+${renderForecastComparisonTable(forecastComparisonData)}
 </div>
 
 <!-- Methodology - Display directly -->
