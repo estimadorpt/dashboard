@@ -3,6 +3,39 @@ title: "/og"
 layout: null
 ---
 
+```js
+// --- LOCALE SETUP ---
+// Import translations
+import { T as enStrings } from "../locales/en.js";
+import { T as ptStrings } from "../locales/pt.js";
+
+// Language detection logic (adapted for OG page context)
+const preferredLang = (() => {
+  // Check for URL parameter first (assuming it might be passed to the OG rendering endpoint)
+  if (typeof URLSearchParams !== "undefined" && typeof window !== "undefined" && window.location && window.location.search) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const langParam = params.get('lang');
+      if (langParam === 'pt' || langParam === 'en') {
+        return langParam;
+      }
+    } catch (e) {
+      console.error("Error parsing URL params for lang in og.md:", e);
+    }
+  }
+  // Fallback to a global variable if set by a parent context (less likely for direct /og call)
+  if (typeof globalThis !== 'undefined' && globalThis.currentLang && (globalThis.currentLang === 'pt' || globalThis.currentLang === 'en')) {
+      return globalThis.currentLang;
+  }
+  // Default to Portuguese if no other clues
+  return 'pt'; 
+})();
+
+const currentLang = preferredLang;
+const strings = currentLang === 'pt' ? ptStrings : enStrings;
+// --- END LOCALE SETUP ---
+```
+
 <style>
   /* Import Inter font */
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap'); /* Added 500 weight */
@@ -150,6 +183,14 @@ const totalSeats = 230;
 // A. Headline Data
 const adMostSeatsProb = calculatePartyMostSeatsProbability(allSeatSimulations, 'AD', ['PS', 'CH']);
 
+// Helper function to format OG hero probability
+function formatOgHeroProb(prob) {
+  const percent = prob * 100;
+  if (percent < 1) return "<1";
+  if (percent > 99) return ">99";
+  return percent.toFixed(0);
+}
+
 // D. Calculate Party Median Seats
 const partyMedians = {};
 const plotPartyOrder = ["AD","PS","CH","IL","BE","CDU","OTH"]; // Specific order for the plot/bar
@@ -212,7 +253,11 @@ const stackedBarPlot = Plot.plot({
 
 // 5. Prepare Subtitle Text
 const medianCH = Math.round(partyMedians['CH']);
-const subtitleText = `Median seats – AD ${Math.round(partyMedians['AD'])} • PS ${Math.round(partyMedians['PS'])} • CH ${medianCH}`;
+const medianAD = Math.round(partyMedians['AD']);
+const medianPS = Math.round(partyMedians['PS']);
+
+// Construct subtitle using locale strings
+const subtitleText = `${strings.ogSubtitlePrefix} ${strings.ogSubtitlePartySeat.replace("{party}", "AD").replace("{seats}", medianAD)} \u2022 ${strings.ogSubtitlePartySeat.replace("{party}", "PS").replace("{seats}", medianPS)} \u2022 ${strings.ogSubtitlePartySeat.replace("{party}", "CH").replace("{seats}", medianCH)}`;
 
 ```
 
@@ -221,7 +266,7 @@ const subtitleText = `Median seats – AD ${Math.round(partyMedians['AD'])} • 
 
   <!-- 2. Hero Headline -->
   <div id="hero-stat">
-    ${html`${(adMostSeatsProb * 100).toFixed(0)}% chance<br>AD wins most seats`}
+    ${html`${formatOgHeroProb(adMostSeatsProb)}${strings.ogHeroStatChance}<br>${strings.ogHeroStatCondition}`}
   </div>
 
   <!-- 3. Bar Chart Outer Container (for centering/spacing) -->
@@ -244,5 +289,5 @@ const subtitleText = `Median seats – AD ${Math.round(partyMedians['AD'])} • 
 
 <!-- ADD New Footer Element (Outside #og-content, inside main) -->
 <footer id="og-footer">
-  <span>estimador.pt</span>
+  <span>${strings.ogFooter}</span>
 </footer> 

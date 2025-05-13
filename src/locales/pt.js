@@ -1,19 +1,19 @@
 export const T = {
     // Page Title
-    title: "Modelo de Previsão Eleitoral Português",
+    title: "Modelo de projeção de resultados das Eleições Legislativas",
   
     // Hero Banner Probabilities
-    heroLeftMajorityProb: "Prob. Maioria Esquerda",
+    heroLeftMajorityProb: "Prob. Maioria de Esquerda",
     heroLeftMajorityCondition: "(PS+BE+CDU+L ≥ 116)",
-    heroRightMajorityProb: "Prob. Maioria Direita",
+    heroRightMajorityProb: "Prob. Maioria de Direita (sem CH)",
     heroRightMajorityCondition: "(AD+IL ≥ 116)",
-    heroNoMajorityProb: "Prob. Sem Maioria de Bloco",
+    heroNoMajorityProb: "Prob. de não haver maioria",
     heroNoMajorityCondition: "(Nenhum bloco ≥ 116)",
-    heroAdMostSeatsProb: "Prob. AD Mais Deputados",
+    heroAdMostSeatsProb: "Prob. AD ser a maior força",
     heroAdMostSeatsCondition: "(AD > PS e AD > CH)",
-    heroPsMostSeatsProb: "Prob. PS Mais Deputados",
+    heroPsMostSeatsProb: "Prob. PS ser a maior força",
     heroPsMostSeatsCondition: "(PS > AD e PS > CH)",
-    heroChMostSeatsProb: "Prob. CH Mais Deputados",
+    heroChMostSeatsProb: "Prob. CH ser a maior força",
     heroChMostSeatsCondition: "(CH > AD e CH > PS)",
   
     // Methodology Section
@@ -204,8 +204,15 @@ export const T = {
     heatstripLegendMax: "50% Virar",
 
     // Contested Heatmap
-    heatmapNoContestedData: "Não existem dados de assentos disputados para o mapa de calor.",
-    heatmapNoSeats: "Nenhum assento encontrado para o mapa de calor após filtragem/ordenação.",
-    heatmapTitle: "Mapa de Calor de Assentos Disputados (Probabilidade de Virar)",
-    heatmapTooltip: "Distrito: {district}, Assento: {rank}, Prob. de Virar: {probability}%"
+    heatmapNoContestedData: "Não existem dados de mandatos disputados para o heatmap.",
+    heatmapNoSeats: "Nenhum mandato disputado encontrado para o heatmap após filtragem/ordenação.",
+    heatmapTitle: "Heatmap de Mandatos Disputados (Probabilidade de Virar)",
+    heatmapTooltip: "Distrito: {district}, Mandato: {rank}, Prob. de Virar: {probability}%",
+
+    // OG Image specific
+    ogHeroStatChance: "% de probabilidade",
+    ogHeroStatCondition: "AD ser a maior força política",
+    ogSubtitlePrefix: "Mediana de mandatos –",
+    ogSubtitlePartySeat: "{party} {seats}", // Party names AD, PS, CH usually not translated here
+    ogFooter: "estimador.pt"
   };

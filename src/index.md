@@ -13,11 +13,18 @@ import { T as ptStrings } from "./locales/pt.js";
 
 // Language detection logic
 const preferredLang = (() => {
-  if (typeof navigator !== "undefined") {
-    const browserLang = navigator.language.split('-')[0];
-    if (browserLang === 'pt') return 'pt';
+  if (typeof window !== "undefined") { // Ensure window context for URLSearchParams and navigator
+    const params = new URLSearchParams(window.location.search);
+    const langParam = params.get('lang');
+    if (langParam === 'pt' || langParam === 'en') {
+      return langParam;
+    }
+    if (typeof navigator !== "undefined" && navigator.language) {
+      const browserLang = navigator.language.split('-')[0];
+      if (browserLang === 'pt') return 'pt';
+    }
   }
-  return 'en'; // Default to English
+  return 'pt'; // Default to Portuguese
 })();
 
 // Define globally accessible variables for this page context
@@ -168,113 +175,121 @@ console.log("[index.md] Calculated latestTrends:", JSON.stringify(latestTrends))
 // REMOVE State for Methodology visibility
 // let methodologyVisible = false;
 
+// Helper function to treat a string as raw HTML for HTL
+function makeRaw(htmlString) {
+  if (typeof document !== "undefined") {
+    return document.createRange().createContextualFragment(htmlString);
+  }
+  return htmlString; // Fallback for non-browser environments (though unlikely here)
+}
+
 // Placeholder for methodology content (replace with actual markdown/html if available)
 const methodologyContent = html`
     <div class="card p-4"> 
-        <h2>${strings.methodologyTitle}</h2>
-        <p>${strings.methodologyP1}</p>
+        <h2>${makeRaw(strings.methodologyTitle)}</h2>
+        <p>${makeRaw(strings.methodologyP1)}</p>
         
-        <h4>${strings.methodologyH4_1}</h4>
-        <p>${strings.methodologyP2}</p>
-        <p>${strings.methodologyP3}</p>
+        <h4>${makeRaw(strings.methodologyH4_1)}</h4>
+        <p>${makeRaw(strings.methodologyP2)}</p>
+        <p>${makeRaw(strings.methodologyP3)}</p>
         <ol>
-            <li>${strings.methodologyLi1_1}</li>
-            <li>${strings.methodologyLi1_2}</li>
-            <li>${strings.methodologyLi1_3}</li>
-            <li>${strings.methodologyLi1_4}</li>
+            <li>${makeRaw(strings.methodologyLi1_1)}</li>
+            <li>${makeRaw(strings.methodologyLi1_2)}</li>
+            <li>${makeRaw(strings.methodologyLi1_3)}</li>
+            <li>${makeRaw(strings.methodologyLi1_4)}</li>
         </ol>
-        <p>${strings.methodologyP4}</p>
+        <p>${makeRaw(strings.methodologyP4)}</p>
 
-        <h4>${strings.methodologyH4_2}</h4>
-        <p>${strings.methodologyP5}</p>
+        <h4>${makeRaw(strings.methodologyH4_2)}</h4>
+        <p>${makeRaw(strings.methodologyP5)}</p>
         <ol>
-            <li>${strings.methodologyLi2_1}</li>
-            <li>${strings.methodologyLi2_2}</li>
-            <li>${strings.methodologyLi2_3}</li>
-            <li>${strings.methodologyLi2_4}</li>
-            <li>${strings.methodologyLi2_5}</li>
+            <li>${makeRaw(strings.methodologyLi2_1)}</li>
+            <li>${makeRaw(strings.methodologyLi2_2)}</li>
+            <li>${makeRaw(strings.methodologyLi2_3)}</li>
+            <li>${makeRaw(strings.methodologyLi2_4)}</li>
+            <li>${makeRaw(strings.methodologyLi2_5)}</li>
         </ol>
-        <p>${strings.methodologyP6}</p>
-        <p>${strings.methodologyP7}</p>
+        <p>${makeRaw(strings.methodologyP6)}</p>
+        <p>${makeRaw(strings.methodologyP7)}</p>
 
-        <h4>${strings.methodologyH4_3}</h4>
-        <p>${strings.methodologyP8}</p>
+        <h4>${makeRaw(strings.methodologyH4_3)}</h4>
+        <p>${makeRaw(strings.methodologyP8)}</p>
         <ul>
-            <li>${strings.methodologyLi3_1}</li>
-            <li>${strings.methodologyLi3_2}</li>
-            <li>${strings.methodologyLi3_3}</li>
-            <li>${strings.methodologyLi3_4}</li>
-            <li>${strings.methodologyLi3_5}</li>
+            <li>${makeRaw(strings.methodologyLi3_1)}</li>
+            <li>${makeRaw(strings.methodologyLi3_2)}</li>
+            <li>${makeRaw(strings.methodologyLi3_3)}</li>
+            <li>${makeRaw(strings.methodologyLi3_4)}</li>
+            <li>${makeRaw(strings.methodologyLi3_5)}</li>
         </ul>
-        <p>${strings.methodologyP9}</p>
+        <p>${makeRaw(strings.methodologyP9)}</p>
 
-        <h4>${strings.methodologyH4_4}</h4>
-        <h5>${strings.methodologyH5_1}</h5>
-        <p>${strings.methodologyP10}</p>
-        <h5>${strings.methodologyH5_2}</h5>
-        <p>${strings.methodologyP11}</p>
-        <h5>${strings.methodologyH5_3}</h5>
-        <p>${strings.methodologyP12}</p>
-        <p>${strings.methodologyP13}</p>
-        <h5>${strings.methodologyH5_4}</h5>
-        <p>${strings.methodologyP14}</p>
-        <h5>${strings.methodologyH5_5}</h5>
-        <p>${strings.methodologyP15}</p>
-        <p>${strings.methodologyP16}</p>
-        <h5>${strings.methodologyH5_6}</h5>
-        <p>${strings.methodologyP17}</p>
-        <p>${strings.methodologyP18}</p>
-        <p>${strings.methodologyP19}</p>
+        <h4>${makeRaw(strings.methodologyH4_4)}</h4>
+        <h5>${makeRaw(strings.methodologyH5_1)}</h5>
+        <p>${makeRaw(strings.methodologyP10)}</p>
+        <h5>${makeRaw(strings.methodologyH5_2)}</h5>
+        <p>${makeRaw(strings.methodologyP11)}</p>
+        <h5>${makeRaw(strings.methodologyH5_3)}</h5>
+        <p>${makeRaw(strings.methodologyP12)}</p>
+        <p>${makeRaw(strings.methodologyP13)}</p>
+        <h5>${makeRaw(strings.methodologyH5_4)}</h5>
+        <p>${makeRaw(strings.methodologyP14)}</p>
+        <h5>${makeRaw(strings.methodologyH5_5)}</h5>
+        <p>${makeRaw(strings.methodologyP15)}</p>
+        <p>${makeRaw(strings.methodologyP16)}</p>
+        <h5>${makeRaw(strings.methodologyH5_6)}</h5>
+        <p>${makeRaw(strings.methodologyP17)}</p>
+        <p>${makeRaw(strings.methodologyP18)}</p>
+        <p>${makeRaw(strings.methodologyP19)}</p>
 
-        <h4>${strings.methodologyH4_5}</h4>
-        <h5>${strings.methodologyH5_7}</h5>
-        <p>${strings.methodologyP20}</p>
-        <h5>${strings.methodologyH5_8}</h5>
-        <p>${strings.methodologyP21}</p>
-        <h5>${strings.methodologyH5_9}</h5>
-        <p>${strings.methodologyP22}</p>
-        <h5>${strings.methodologyH5_10}</h5>
-        <p>${strings.methodologyP23}</p>
-        <ul><li>${strings.methodologyLi4_1}</li>
-        <li>${strings.methodologyLi4_2}</li></ul>
-        <h5>${strings.methodologyH5_11}</h5>
-        <p>${strings.methodologyP24}</p>
+        <h4>${makeRaw(strings.methodologyH4_5)}</h4>
+        <h5>${makeRaw(strings.methodologyH5_7)}</h5>
+        <p>${makeRaw(strings.methodologyP20)}</p>
+        <h5>${makeRaw(strings.methodologyH5_8)}</h5>
+        <p>${makeRaw(strings.methodologyP21)}</p>
+        <h5>${makeRaw(strings.methodologyH5_9)}</h5>
+        <p>${makeRaw(strings.methodologyP22)}</p>
+        <h5>${makeRaw(strings.methodologyH5_10)}</h5>
+        <p>${makeRaw(strings.methodologyP23)}</p>
+        <ul><li>${makeRaw(strings.methodologyLi4_1)}</li>
+        <li>${makeRaw(strings.methodologyLi4_2)}</li></ul>
+        <h5>${makeRaw(strings.methodologyH5_11)}</h5>
+        <p>${makeRaw(strings.methodologyP24)}</p>
         
-        <h4>${strings.methodologyH4_6}</h4>
-        <p>${strings.methodologyP25}</p>
+        <h4>${makeRaw(strings.methodologyH4_6)}</h4>
+        <p>${makeRaw(strings.methodologyP25)}</p>
         <ol>
-            <li>${strings.methodologyLi5_1}</li>
-            <li>${strings.methodologyLi5_2}</li>
-            <li>${strings.methodologyLi5_3}</li>
-            <li>${strings.methodologyLi5_4}</li>
-            <li>${strings.methodologyLi5_5}</li>
+            <li>${makeRaw(strings.methodologyLi5_1)}</li>
+            <li>${makeRaw(strings.methodologyLi5_2)}</li>
+            <li>${makeRaw(strings.methodologyLi5_3)}</li>
+            <li>${makeRaw(strings.methodologyLi5_4)}</li>
+            <li>${makeRaw(strings.methodologyLi5_5)}</li>
         </ol>
-        <p>${strings.methodologyP26}</p>
-        <h5>${strings.methodologyH5_12}</h5>
-        <p>${strings.methodologyP27}</p>
-        <p>${strings.methodologyP28}</p>
+        <p>${makeRaw(strings.methodologyP26)}</p>
+        <h5>${makeRaw(strings.methodologyH5_12)}</h5>
+        <p>${makeRaw(strings.methodologyP27)}</p>
+        <p>${makeRaw(strings.methodologyP28)}</p>
         <ol>
-            <li>${strings.methodologyLi6_1}</li>
-            <li>${strings.methodologyLi6_2}</li>
+            <li>${makeRaw(strings.methodologyLi6_1)}</li>
+            <li>${makeRaw(strings.methodologyLi6_2)}</li>
         </ol>
-        <p>${strings.methodologyP29}</p>
-        <h5>${strings.methodologyH5_13}</h5>
-        <p>${strings.methodologyP30}</p>
+        <p>${makeRaw(strings.methodologyP29)}</p>
+        <h5>${makeRaw(strings.methodologyH5_13)}</h5>
+        <p>${makeRaw(strings.methodologyP30)}</p>
         
-        <h4>${strings.methodologyH4_7}</h4>
-        <p>${strings.methodologyP31}</p>
+        <h4>${makeRaw(strings.methodologyH4_7)}</h4>
+        <p>${makeRaw(strings.methodologyP31)}</p>
         <ol>
-            <li>${strings.methodologyLi7_1}</li>
-            <li>${strings.methodologyLi7_2}</li>
-            <li>${strings.methodologyLi7_3}</li>
+            <li>${makeRaw(strings.methodologyLi7_1)}</li>
+            <li>${makeRaw(strings.methodologyLi7_2)}</li>
+            <li>${makeRaw(strings.methodologyLi7_3)}</li>
         </ol>
-        <p>${strings.methodologyP32}</p>
+        <p>${makeRaw(strings.methodologyP32)}</p>
         
-        <p>${strings.methodologyP33_sources}</p>
+        <p>${makeRaw(strings.methodologyP33_sources)}</p>
         <ul>
-            <li>${strings.methodologyLi8_1}</li>
-            <li>${strings.methodologyLi8_2}</li>
-            <li>${strings.methodologyLi8_3}</li>
+            <li>${makeRaw(strings.methodologyLi8_1)}</li>
+            <li>${makeRaw(strings.methodologyLi8_2)}</li>
+            <li>${makeRaw(strings.methodologyLi8_3)}</li>
         </ul>
     </div>
 `;

@@ -7,6 +7,7 @@ const path = require('path');
 const LOCAL_URL = 'http://127.0.0.1:4173'; 
 // Correct path for pages built from src/pages/
 const OG_PAGE_PATH = '/pages/og.html'; // Use explicit .html extension
+const OG_QUERY_PARAMS = '?lang=pt'; // Added query parameters for Portuguese
 const OUTPUT_DIR = path.resolve(process.cwd(), 'public');
 const OUTPUT_PATH = path.join(OUTPUT_DIR, 'og.png');
 const VIEWPORT_WIDTH = 1200;
@@ -20,7 +21,7 @@ const VIEWPORT_HEIGHT = 630;
     deviceScaleFactor: 2 // For higher resolution
   });
 
-  const targetUrl = `${LOCAL_URL}${OG_PAGE_PATH}`;
+  const targetUrl = `${LOCAL_URL}${OG_PAGE_PATH}${OG_QUERY_PARAMS}`;
 
   try {
     console.log(`Navigating to ${targetUrl}...`);

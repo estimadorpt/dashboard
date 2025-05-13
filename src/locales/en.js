@@ -207,5 +207,12 @@ export const T = {
   heatmapNoContestedData: "No contested seat data available for heatmap.",
   heatmapNoSeats: "No seats found for heatmap after filtering/sorting.",
   heatmapTitle: "Contested Seats Heatmap (Flip Probability)",
-  heatmapTooltip: "District: {district}, Seat: {rank}, Flip Prob: {probability}%"
+  heatmapTooltip: "District: {district}, Seat: {rank}, Flip Prob: {probability}%",
+
+  // OG Image specific
+  ogHeroStatChance: "% chance",
+  ogHeroStatCondition: "AD wins most seats",
+  ogSubtitlePrefix: "Median seats –",
+  ogSubtitlePartySeat: "{party} {seats}",
+  ogFooter: "estimador.pt"
 }; 
