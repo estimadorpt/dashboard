@@ -132,6 +132,8 @@ import { houseEffectsHeatmap } from "./components/house-effects-heatmap.js";
 import {html} from "npm:htl"; 
 // Import the NEW probability calculation functions
 import { calculateBlocMajorityProbability, calculatePartyMostSeatsProbability, formatProbabilityPercent } from "./components/probability-calculator.js";
+// Import partyOrder for filtering seat projection data
+import { partyOrder } from "./config/colors.js"; 
 
 // Data loaders
 const portugalTopoJson = await FileAttachment("data/Portugal-Distritos-Ilhas_TopoJSON.json").json();
@@ -192,6 +194,9 @@ function makeRaw(htmlString) {
   }
   return htmlString; // Fallback for non-browser environments (though unlikely here)
 }
+
+// Create a Set of known party keys for efficient lookup
+const knownParties = new Set(partyOrder);
 
 // Placeholder for methodology content (replace with actual markdown/html if available)
 const methodologyContent = html`
@@ -306,11 +311,13 @@ const methodologyContent = html`
 
 // --- Transform Seat Projection Data from Wide to Long --- 
 const seatProjectionData = wideSeatProjectionData.flatMap((drawObject, drawIndex) => 
-    Object.entries(drawObject).map(([party, seats]) => ({
-        draw: drawIndex, // Add a draw identifier if needed later, though not strictly used by current component
-        party: party,
-        seats: seats
-    }))
+    Object.entries(drawObject)
+        .filter(([partyKey, value]) => knownParties.has(partyKey)) // Only include known parties
+        .map(([party, seats]) => ({
+            draw: drawIndex, 
+            party: party,
+            seats: seats
+        }))
 );
 console.log("[index.md] Transformed seatProjectionData (first 10 entries):", JSON.stringify(seatProjectionData.slice(0, 10)));
 

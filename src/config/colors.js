@@ -6,10 +6,11 @@ export const partyColors = {
   "BE": "#000000",  // Black (Changed from Purple)
   "CDU": "#E41A1C", // Red (Changed from Green)
   "L":  "#90EE90",  // Light Green (Added Livre)
+  "PAN": "#4CAF50", // Green for PAN (Added)
   "OTH": "#A65628"  // Brown
 };
 
-export const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "L", "OTH"]; // Added L
+export const partyOrder = ["AD", "PS", "CH", "IL", "BE", "CDU", "L", "PAN", "OTH"]; // Added L and PAN
 
 // You could add other color-related constants here if needed 
 

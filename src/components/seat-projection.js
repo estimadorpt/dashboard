@@ -33,6 +33,10 @@ export function seatProjection(drawData, {width, strings, ...options} = {}) {
   medians.sort((a, b) => b.medianSeats - a.medianSeats);
   const sortedPartyNames = medians.map(d => d.party);
 
+  // Log the filtered data and calculated medians for debugging
+  console.log("[seatProjection] filteredDrawData (first 50 entries):", filteredDrawData.slice(0, 50));
+  console.log("[seatProjection] Calculated medians:", JSON.parse(JSON.stringify(medians)));
+
   // Convert medians to a Map for easy lookup in tooltips (use filtered medians)
   const medianMap = new Map(medians.map(d => [d.party, d.medianSeats]));
   // console.log("[seatProjection] medianMap:", medianMap); // REMOVE Log
