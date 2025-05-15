@@ -1,250 +1,250 @@
 {
     "metadata": {
-        "run_A_path": "/Users/bernardocaldas/code/models/outputs/dynamic_gp_run_20250513_095116",
-        "run_B_path": "/Users/bernardocaldas/code/models/outputs/dynamic_gp_run_20250504_142007",
+        "run_A_path": "/Users/bernardocaldas/code/models/outputs/dynamic_gp_run_20250514_234734",
+        "run_B_path": "/Users/bernardocaldas/code/models/outputs/dynamic_gp_run_20250513_095116",
         "prediction_date_mode": "election_day",
         "hdi_prob_used_for_columns": 0.94,
-        "comparison_timestamp": "2025-05-13T14:15:38.536781"
+        "comparison_timestamp": "2025-05-15T10:22:18.362827"
     },
     "vote_share_comparison": {
         "latent_popularity_national[AD]": {
             "run_A": {
+                "mean_value": 0.343,
+                "sd_value": 0.012,
+                "hdi_low_value": 0.321,
+                "hdi_high_value": 0.365
+            },
+            "run_B": {
                 "mean_value": 0.345,
                 "sd_value": 0.013,
                 "hdi_low_value": 0.321,
                 "hdi_high_value": 0.368
             },
-            "run_B": {
-                "mean_value": 0.342,
-                "sd_value": 0.016,
-                "hdi_low_value": 0.312,
-                "hdi_high_value": 0.372
-            },
             "change": {
-                "mean_value": 0.002999999999999947
+                "mean_value": -0.0019999999999999463
             }
         },
         "latent_popularity_national[BE]": {
             "run_A": {
+                "mean_value": 0.026,
+                "sd_value": 0.003,
+                "hdi_low_value": 0.021,
+                "hdi_high_value": 0.031
+            },
+            "run_B": {
                 "mean_value": 0.025,
                 "sd_value": 0.003,
                 "hdi_low_value": 0.02,
                 "hdi_high_value": 0.03
             },
-            "run_B": {
-                "mean_value": 0.024,
-                "sd_value": 0.003,
-                "hdi_low_value": 0.018,
-                "hdi_high_value": 0.03
-            },
             "change": {
-                "mean_value": 0.0010000000000000009
+                "mean_value": 0.0009999999999999974
             }
         },
         "latent_popularity_national[CDU]": {
             "run_A": {
                 "mean_value": 0.033,
+                "sd_value": 0.003,
+                "hdi_low_value": 0.027,
+                "hdi_high_value": 0.039
+            },
+            "run_B": {
+                "mean_value": 0.033,
                 "sd_value": 0.004,
                 "hdi_low_value": 0.027,
                 "hdi_high_value": 0.04
-            },
-            "run_B": {
-                "mean_value": 0.034,
-                "sd_value": 0.005,
-                "hdi_low_value": 0.026,
-                "hdi_high_value": 0.043
-            },
-            "change": {
-                "mean_value": -0.0010000000000000009
-            }
-        },
-        "latent_popularity_national[CH]": {
-            "run_A": {
-                "mean_value": 0.202,
-                "sd_value": 0.013,
-                "hdi_low_value": 0.178,
-                "hdi_high_value": 0.226
-            },
-            "run_B": {
-                "mean_value": 0.194,
-                "sd_value": 0.015,
-                "hdi_low_value": 0.166,
-                "hdi_high_value": 0.223
-            },
-            "change": {
-                "mean_value": 0.008000000000000007
-            }
-        },
-        "latent_popularity_national[IL]": {
-            "run_A": {
-                "mean_value": 0.057,
-                "sd_value": 0.005,
-                "hdi_low_value": 0.047,
-                "hdi_high_value": 0.066
-            },
-            "run_B": {
-                "mean_value": 0.061,
-                "sd_value": 0.007,
-                "hdi_low_value": 0.048,
-                "hdi_high_value": 0.073
-            },
-            "change": {
-                "mean_value": -0.003999999999999997
-            }
-        },
-        "latent_popularity_national[L]": {
-            "run_A": {
-                "mean_value": 0.045,
-                "sd_value": 0.005,
-                "hdi_low_value": 0.036,
-                "hdi_high_value": 0.054
-            },
-            "run_B": {
-                "mean_value": 0.045,
-                "sd_value": 0.006,
-                "hdi_low_value": 0.034,
-                "hdi_high_value": 0.057
             },
             "change": {
                 "mean_value": 0.0
             }
         },
+        "latent_popularity_national[CH]": {
+            "run_A": {
+                "mean_value": 0.206,
+                "sd_value": 0.012,
+                "hdi_low_value": 0.184,
+                "hdi_high_value": 0.229
+            },
+            "run_B": {
+                "mean_value": 0.202,
+                "sd_value": 0.013,
+                "hdi_low_value": 0.178,
+                "hdi_high_value": 0.226
+            },
+            "change": {
+                "mean_value": 0.003999999999999976
+            }
+        },
+        "latent_popularity_national[IL]": {
+            "run_A": {
+                "mean_value": 0.056,
+                "sd_value": 0.005,
+                "hdi_low_value": 0.047,
+                "hdi_high_value": 0.065
+            },
+            "run_B": {
+                "mean_value": 0.057,
+                "sd_value": 0.005,
+                "hdi_low_value": 0.047,
+                "hdi_high_value": 0.066
+            },
+            "change": {
+                "mean_value": -0.0010000000000000009
+            }
+        },
+        "latent_popularity_national[L]": {
+            "run_A": {
+                "mean_value": 0.044,
+                "sd_value": 0.005,
+                "hdi_low_value": 0.035,
+                "hdi_high_value": 0.052
+            },
+            "run_B": {
+                "mean_value": 0.045,
+                "sd_value": 0.005,
+                "hdi_low_value": 0.036,
+                "hdi_high_value": 0.054
+            },
+            "change": {
+                "mean_value": -0.0010000000000000009
+            }
+        },
         "latent_popularity_national[PAN]": {
             "run_A": {
-                "mean_value": 0.013,
+                "mean_value": 0.014,
                 "sd_value": 0.002,
                 "hdi_low_value": 0.01,
                 "hdi_high_value": 0.017
             },
             "run_B": {
-                "mean_value": 0.012,
+                "mean_value": 0.013,
                 "sd_value": 0.002,
-                "hdi_low_value": 0.008,
-                "hdi_high_value": 0.016
+                "hdi_low_value": 0.01,
+                "hdi_high_value": 0.017
             },
             "change": {
-                "mean_value": 0.0009999999999999992
+                "mean_value": 0.0010000000000000009
             }
         },
         "latent_popularity_national[PS]": {
             "run_A": {
+                "mean_value": 0.279,
+                "sd_value": 0.011,
+                "hdi_low_value": 0.259,
+                "hdi_high_value": 0.299
+            },
+            "run_B": {
                 "mean_value": 0.28,
                 "sd_value": 0.011,
                 "hdi_low_value": 0.259,
                 "hdi_high_value": 0.301
             },
-            "run_B": {
-                "mean_value": 0.289,
-                "sd_value": 0.015,
-                "hdi_low_value": 0.261,
-                "hdi_high_value": 0.317
-            },
             "change": {
-                "mean_value": -0.008999999999999952
+                "mean_value": -0.0010000000000000009
             }
         }
     },
     "seat_comparison": {
         "AD": {
             "run_A": {
-                "mean_value": 88.9,
-                "sd_value": 3.5,
-                "hdi_low_value": 82.0,
+                "mean_value": 89.7,
+                "sd_value": 3.3,
+                "hdi_low_value": 83.0,
                 "hdi_high_value": 95.0
             },
             "run_B": {
-                "mean_value": 87.9,
-                "sd_value": 4.6,
-                "hdi_low_value": 79.0,
+                "mean_value": 90.2,
+                "sd_value": 3.5,
+                "hdi_low_value": 83.0,
                 "hdi_high_value": 96.0
             },
             "change": {
-                "mean_value": 1.0
+                "mean_value": -0.5
             }
         },
         "BE": {
             "run_A": {
+                "mean_value": 2.0,
+                "sd_value": 0.2,
+                "hdi_low_value": 2.0,
+                "hdi_high_value": 2.0
+            },
+            "run_B": {
                 "mean_value": 1.9,
                 "sd_value": 0.3,
                 "hdi_low_value": 1.0,
                 "hdi_high_value": 2.0
             },
-            "run_B": {
-                "mean_value": 1.9,
-                "sd_value": 0.4,
-                "hdi_low_value": 1.0,
-                "hdi_high_value": 2.0
-            },
             "change": {
-                "mean_value": 0.0
+                "mean_value": 0.10000000000000009
             }
         },
         "CDU": {
             "run_A": {
+                "mean_value": 3.4,
+                "sd_value": 0.7,
+                "hdi_low_value": 2.0,
+                "hdi_high_value": 4.0
+            },
+            "run_B": {
                 "mean_value": 3.5,
                 "sd_value": 0.8,
                 "hdi_low_value": 2.0,
                 "hdi_high_value": 5.0
             },
-            "run_B": {
-                "mean_value": 3.5,
-                "sd_value": 0.9,
-                "hdi_low_value": 2.0,
-                "hdi_high_value": 5.0
-            },
             "change": {
-                "mean_value": 0.0
+                "mean_value": -0.10000000000000009
             }
         },
         "CH": {
             "run_A": {
-                "mean_value": 47.0,
-                "sd_value": 3.3,
-                "hdi_low_value": 40.0,
-                "hdi_high_value": 52.0
+                "mean_value": 48.8,
+                "sd_value": 3.2,
+                "hdi_low_value": 42.0,
+                "hdi_high_value": 54.0
             },
             "run_B": {
-                "mean_value": 44.6,
-                "sd_value": 4.2,
-                "hdi_low_value": 37.0,
-                "hdi_high_value": 52.0
+                "mean_value": 47.7,
+                "sd_value": 3.4,
+                "hdi_low_value": 41.0,
+                "hdi_high_value": 53.0
             },
             "change": {
-                "mean_value": 2.3999999999999986
+                "mean_value": 1.0999999999999943
             }
         },
         "IL": {
             "run_A": {
+                "mean_value": 9.7,
+                "sd_value": 1.3,
+                "hdi_low_value": 8.0,
+                "hdi_high_value": 12.0
+            },
+            "run_B": {
                 "mean_value": 9.9,
                 "sd_value": 1.4,
                 "hdi_low_value": 7.0,
                 "hdi_high_value": 12.0
             },
-            "run_B": {
-                "mean_value": 10.8,
-                "sd_value": 1.8,
-                "hdi_low_value": 8.0,
-                "hdi_high_value": 14.0
-            },
             "change": {
-                "mean_value": -0.9000000000000004
+                "mean_value": -0.20000000000000107
             }
         },
         "L": {
             "run_A": {
-                "mean_value": 6.1,
-                "sd_value": 1.4,
+                "mean_value": 5.7,
+                "sd_value": 1.3,
                 "hdi_low_value": 4.0,
                 "hdi_high_value": 8.0
             },
             "run_B": {
                 "mean_value": 6.1,
-                "sd_value": 1.6,
+                "sd_value": 1.4,
                 "hdi_low_value": 4.0,
-                "hdi_high_value": 9.0
+                "hdi_high_value": 8.0
             },
             "change": {
-                "mean_value": 0.0
+                "mean_value": -0.39999999999999947
             }
         },
         "PAN": {
@@ -255,30 +255,30 @@
                 "hdi_high_value": 1.0
             },
             "run_B": {
-                "mean_value": 0.1,
-                "sd_value": 0.3,
+                "mean_value": 0.2,
+                "sd_value": 0.4,
                 "hdi_low_value": 0.0,
                 "hdi_high_value": 1.0
             },
             "change": {
-                "mean_value": 0.1
+                "mean_value": 0.0
             }
         },
         "PS": {
             "run_A": {
-                "mean_value": 68.5,
-                "sd_value": 3.2,
-                "hdi_low_value": 63.0,
-                "hdi_high_value": 74.0
+                "mean_value": 70.4,
+                "sd_value": 3.1,
+                "hdi_low_value": 65.0,
+                "hdi_high_value": 76.0
             },
             "run_B": {
-                "mean_value": 71.2,
-                "sd_value": 4.4,
-                "hdi_low_value": 62.0,
-                "hdi_high_value": 78.0
+                "mean_value": 70.5,
+                "sd_value": 3.3,
+                "hdi_low_value": 64.0,
+                "hdi_high_value": 76.0
             },
             "change": {
-                "mean_value": -2.700000000000003
+                "mean_value": -0.09999999999999432
             }
         }
     }
