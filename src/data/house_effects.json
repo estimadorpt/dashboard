@@ -2,157 +2,157 @@
   {
     "pollster": "Aximage",
     "party": "PS",
-    "house_effect": -0.0058
+    "house_effect": -0.0057
   },
   {
     "pollster": "Aximage",
     "party": "CH",
-    "house_effect": 0.0172
+    "house_effect": 0.018
   },
   {
     "pollster": "Aximage",
     "party": "IL",
-    "house_effect": 0.05
+    "house_effect": 0.0505
   },
   {
     "pollster": "Aximage",
     "party": "BE",
-    "house_effect": -0.0069
+    "house_effect": -0.0078
   },
   {
     "pollster": "Aximage",
     "party": "CDU",
-    "house_effect": -0.0167
+    "house_effect": -0.0162
   },
   {
     "pollster": "Aximage",
     "party": "PAN",
-    "house_effect": 0.0413
+    "house_effect": 0.0405
   },
   {
     "pollster": "Aximage",
     "party": "L",
-    "house_effect": 0.0962
+    "house_effect": 0.0936
   },
   {
     "pollster": "Aximage",
     "party": "AD",
-    "house_effect": -0.038
+    "house_effect": -0.0385
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "PS",
-    "house_effect": 0.0061
+    "house_effect": 0.0065
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "CH",
-    "house_effect": -0.0281
+    "house_effect": -0.0253
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "IL",
-    "house_effect": 0.1762
+    "house_effect": 0.1753
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "BE",
-    "house_effect": -0.0164
+    "house_effect": -0.0179
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "CDU",
-    "house_effect": 0.0028
+    "house_effect": 0.0036
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "PAN",
-    "house_effect": -0.1391
+    "house_effect": -0.1389
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "L",
-    "house_effect": 0.163
+    "house_effect": 0.1522
   },
   {
     "pollster": "CESOP-U.Católica",
     "party": "AD",
-    "house_effect": 0.0098
+    "house_effect": 0.0096
   },
   {
     "pollster": "Consulmark2",
     "party": "PS",
-    "house_effect": -0.0251
+    "house_effect": -0.0275
   },
   {
     "pollster": "Consulmark2",
     "party": "CH",
-    "house_effect": 0.0021
+    "house_effect": -0.0097
   },
   {
     "pollster": "Consulmark2",
     "party": "IL",
-    "house_effect": 0.2096
+    "house_effect": 0.2195
   },
   {
     "pollster": "Consulmark2",
     "party": "BE",
-    "house_effect": 0.0058
+    "house_effect": 0.0111
   },
   {
     "pollster": "Consulmark2",
     "party": "CDU",
-    "house_effect": -0.0327
+    "house_effect": -0.0388
   },
   {
     "pollster": "Consulmark2",
     "party": "PAN",
-    "house_effect": -0.2082
+    "house_effect": -0.2128
   },
   {
     "pollster": "Consulmark2",
     "party": "L",
-    "house_effect": 0.1509
+    "house_effect": 0.2224
   },
   {
     "pollster": "Consulmark2",
     "party": "AD",
-    "house_effect": 0.0313
+    "house_effect": 0.027
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "PS",
-    "house_effect": 0.0377
+    "house_effect": 0.0381
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "CH",
-    "house_effect": 0.0413
+    "house_effect": 0.0426
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "IL",
-    "house_effect": -0.2381
+    "house_effect": -0.2386
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "BE",
-    "house_effect": -0.0142
+    "house_effect": -0.0158
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "CDU",
-    "house_effect": 0.0625
+    "house_effect": 0.0639
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "PAN",
-    "house_effect": 0.0375
+    "house_effect": 0.0374
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
     "party": "L",
-    "house_effect": -0.3819
+    "house_effect": -0.3903
   },
   {
     "pollster": "ICS/ISCTE/GFK Metris",
@@ -162,77 +162,77 @@
   {
     "pollster": "Intercampus",
     "party": "PS",
-    "house_effect": -0.0779
+    "house_effect": -0.0775
   },
   {
     "pollster": "Intercampus",
     "party": "CH",
-    "house_effect": -0.0068
+    "house_effect": -0.0051
   },
   {
     "pollster": "Intercampus",
     "party": "IL",
-    "house_effect": 0.2459
+    "house_effect": 0.2461
   },
   {
     "pollster": "Intercampus",
     "party": "BE",
-    "house_effect": 0.0176
+    "house_effect": 0.0173
   },
   {
     "pollster": "Intercampus",
     "party": "CDU",
-    "house_effect": -0.0568
+    "house_effect": -0.0567
   },
   {
     "pollster": "Intercampus",
     "party": "PAN",
-    "house_effect": 0.2655
+    "house_effect": 0.2654
   },
   {
     "pollster": "Intercampus",
     "party": "L",
-    "house_effect": 0.2442
+    "house_effect": 0.2373
   },
   {
     "pollster": "Intercampus",
     "party": "AD",
-    "house_effect": -0.1163
+    "house_effect": -0.1164
   },
   {
     "pollster": "Metris",
     "party": "PS",
-    "house_effect": 0.0166
+    "house_effect": 0.017
   },
   {
     "pollster": "Metris",
     "party": "CH",
-    "house_effect": 0.0096
+    "house_effect": 0.0098
   },
   {
     "pollster": "Metris",
     "party": "IL",
-    "house_effect": 0.0144
+    "house_effect": 0.016
   },
   {
     "pollster": "Metris",
     "party": "BE",
-    "house_effect": 0.0048
+    "house_effect": 0.0046
   },
   {
     "pollster": "Metris",
     "party": "CDU",
-    "house_effect": 0.0169
+    "house_effect": 0.0185
   },
   {
     "pollster": "Metris",
     "party": "PAN",
-    "house_effect": -0.0433
+    "house_effect": -0.0434
   },
   {
     "pollster": "Metris",
     "party": "L",
-    "house_effect": -0.183
+    "house_effect": -0.1913
   },
   {
     "pollster": "Metris",
@@ -242,41 +242,41 @@
   {
     "pollster": "Pitagorica",
     "party": "PS",
-    "house_effect": 0.0094
+    "house_effect": 0.0097
   },
   {
     "pollster": "Pitagorica",
     "party": "CH",
-    "house_effect": -0.0288
+    "house_effect": -0.0256
   },
   {
     "pollster": "Pitagorica",
     "party": "IL",
-    "house_effect": 0.1907
+    "house_effect": 0.191
   },
   {
     "pollster": "Pitagorica",
     "party": "BE",
-    "house_effect": -0.0372
+    "house_effect": -0.0394
   },
   {
     "pollster": "Pitagorica",
     "party": "CDU",
-    "house_effect": 0.0079
+    "house_effect": 0.0094
   },
   {
     "pollster": "Pitagorica",
     "party": "PAN",
-    "house_effect": -0.1079
+    "house_effect": -0.1078
   },
   {
     "pollster": "Pitagorica",
     "party": "L",
-    "house_effect": 0.2082
+    "house_effect": 0.1958
   },
   {
     "pollster": "Pitagorica",
     "party": "AD",
-    "house_effect": 0.0045
+    "house_effect": 0.0042
   }
 ]
