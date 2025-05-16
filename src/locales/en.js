@@ -146,6 +146,7 @@ export const T = {
   footerModelBy: "Model and visualizations by Estimador.",
   footerLastUpdated: "Last updated: ", // Placeholder for ${new Date().toLocaleDateString()}
   footerDataSources: "Data sources: Polling aggregation from national pollsters (Aximage, CESOP, Eurosondagem, Intercampus), historical election results from CNE, and demographic data from INE.",
+  footerAttribution: "This project was developed by estimador.pt, Bernardo Caldas (info@estimador.pt).",
 
   // National Trends Chart
   trendsChartYLabel: "National Vote Intention (%)",

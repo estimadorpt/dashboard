@@ -146,6 +146,7 @@ export const T = {
     footerModelBy: "Modelo e visualizações por Estimador.",
     footerLastUpdated: "Última atualização: ",
     footerDataSources: "Fontes de dados: Agregação de sondagens de institutos nacionais (Aximage, CESOP, Eurosondagem, Intercampus), resultados eleitorais históricos da CNE e dados demográficos do INE.",
+    footerAttribution: "Este projeto foi desenvolvido por estimador.pt, Bernardo Caldas (info@estimador.pt).",
 
     // National Trends Chart
     trendsChartYLabel: "Intenção de Voto Nacional (%)",

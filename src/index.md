@@ -642,6 +642,8 @@ ${methodologyContent}
     ${strings.footerModelBy} ${strings.footerLastUpdated} <span data-source="currentDate"></span>.
     <br>
     ${strings.footerDataSources}
+    <br>
+    ${strings.footerAttribution || "This project was developed by estimador.pt, Bernardo Caldas (info@estimador.pt)."}
   </div>
 
 <!-- Add global styles via a style tag -->
