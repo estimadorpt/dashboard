@@ -88,6 +88,10 @@ if (typeof document !== "undefined") {
       <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(1 - probLeftMajority - probRightMajority)}</p>
       <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroNoMajorityProb}<br><span style="font-size: 0.8em;">${strings.heroNoMajorityCondition}</span></p>
     </div>
+    <div style="min-width: 150px; flex: 1 1 150px;">
+      <p style="font-size: 2em; font-weight: 500; margin-bottom: 0.2rem; line-height: 1;">${formatProbabilityPercent(probRightPlusBeatsLeftPlus)}</p>
+      <p style="font-size: 0.9em; color: var(--theme-foreground-muted); margin-top: 0;">${strings.heroRightPlusVsLeftPlusProb}<br><span style="font-size: 0.8em;">${strings.heroRightPlusVsLeftPlusCondition}</span></p>
+    </div>
   </div>
   <!-- Row 2: Party Most Seats Probabilities -->
   <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; text-align: center; gap: 1rem;">
@@ -131,7 +135,7 @@ import { houseEffectsHeatmap } from "./components/house-effects-heatmap.js";
 // Import the standard html tag function
 import {html} from "npm:htl"; 
 // Import the NEW probability calculation functions
-import { calculateBlocMajorityProbability, calculatePartyMostSeatsProbability, formatProbabilityPercent } from "./components/probability-calculator.js";
+import { calculateBlocMajorityProbability, calculatePartyMostSeatsProbability, formatProbabilityPercent, calculateBlocAGreaterThanBlocBProbability } from "./components/probability-calculator.js";
 // Import partyOrder for filtering seat projection data
 import { partyOrder } from "./config/colors.js"; 
 
@@ -165,6 +169,10 @@ import { leftBlocParties, rightBlocParties, majorityThreshold } from "./config/b
 // const rightBlocParties = ["AD", "IL"]; // REMOVE local definition
 // const majorityThreshold = 116; // REMOVE local definition
 
+// Define party groupings for the new scenario
+const rightPlusParties = ["AD", "IL"];
+const leftPlusScenarioParties = ["PS", "L", "PAN", "BE", "CDU"];
+
 // USE imported functions
 const probLeftMajority = calculateBlocMajorityProbability(wideSeatProjectionData, leftBlocParties, majorityThreshold);
 const probRightMajority = calculateBlocMajorityProbability(wideSeatProjectionData, rightBlocParties, majorityThreshold);
@@ -173,6 +181,7 @@ const probRightMajority = calculateBlocMajorityProbability(wideSeatProjectionDat
 const probAdMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'AD', ['PS', 'CH']);
 const probPsMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'PS', ['AD', 'CH']);
 const probChMostSeats = calculatePartyMostSeatsProbability(wideSeatProjectionData, 'CH', ['AD', 'PS']);
+const probRightPlusBeatsLeftPlus = calculateBlocAGreaterThanBlocBProbability(wideSeatProjectionData, rightPlusParties, leftPlusScenarioParties);
 
 // --- Get Latest National Trends for Sidebar Default ---
 // Sort trends by date descending, filter for the mean metric, and transform the structure

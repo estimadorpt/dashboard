@@ -83,4 +83,30 @@ export function formatProbabilityPercent(probability) {
     }
     // Otherwise, round to nearest integer percentage
     return `${(probability * 100).toFixed(0)}%`;
+}
+
+/**
+ * Calculates the probability that Bloc A gets strictly more seats than Bloc B.
+ * Assumes wide format data: [{AD: 10, PS: 9, CH: 5, ...}, ...]
+ * @param {Array<Object>} wideDrawData - Array of simulation draws in wide format.
+ * @param {Array<string>} blocAParties - Array of party identifiers for Bloc A.
+ * @param {Array<string>} blocBParties - Array of party identifiers for Bloc B.
+ * @returns {number} - Probability (0 to 1).
+ */
+export function calculateBlocAGreaterThanBlocBProbability(wideDrawData, blocAParties, blocBParties) {
+    if (!wideDrawData || wideDrawData.length === 0) return 0;
+
+    const totalDraws = wideDrawData.length;
+    let blocAWinsCount = 0;
+
+    for (const draw of wideDrawData) {
+        const seatsBlocA = d3.sum(blocAParties, party => draw[party] || 0);
+        const seatsBlocB = d3.sum(blocBParties, party => draw[party] || 0);
+
+        if (seatsBlocA > seatsBlocB) {
+            blocAWinsCount++;
+        }
+    }
+
+    return totalDraws > 0 ? blocAWinsCount / totalDraws : 0;
 } 

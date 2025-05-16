@@ -16,6 +16,9 @@ export const T = {
     heroChMostSeatsProb: "Prob. CH ser a maior força",
     heroChMostSeatsCondition: "(CH > AD e CH > PS)",
   
+    heroRightPlusVsLeftPlusProb: "Prob. AD+IL > PS+L+PAN+BE+CDU",
+    heroRightPlusVsLeftPlusCondition: "AD+IL mais deputados que PS+L+PAN+BE+CDU",
+  
     // Methodology Section
     methodologyTitle: "Como Funciona o Nosso Modelo Dinâmico de Processo Gaussiano para Eleições",
     methodologyP1: "Desenvolvemos um modelo estatístico de previsão para as eleições portuguesas que capta tanto as tendências políticas de longo prazo como as dinâmicas ao nível distrital. Representa uma evolução dos modelos eleitorais tradicionais, concebido especificamente para enfrentar os desafios do sistema eleitoral multipartidário e de base distrital de Portugal. Este documento explica a abordagem, a intuição e os detalhes técnicos subjacentes à nossa metodologia.",

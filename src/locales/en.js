@@ -16,6 +16,9 @@ export const T = {
   heroChMostSeatsProb: "CH Most Seats Prob.",
   heroChMostSeatsCondition: "(CH > AD and CH > PS)",
 
+  heroRightPlusVsLeftPlusProb: "AD+IL > PS+L+PAN+BE+CDU Prob.",
+  heroRightPlusVsLeftPlusCondition: "AD+IL more seats than PS+L+PAN+BE+CDU",
+
   // Methodology Section
   methodologyTitle: "How Our Dynamic Gaussian Process Election Model Works",
   methodologyP1: "We've developed a statistical forecasting model for Portuguese elections that captures both long-term political trends and district-level dynamics. It represents an evolution of traditional election models, designed specifically to address the challenges of Portugal's multi-party, district-based electoral system. This document explains the approach, intuition, and technical details behind our methodology.",
