@@ -117,23 +117,15 @@ import { nationalTrendsChart } from "./components/national-trends-chart.js";
 // Placeholder components
 import { seatProjection } from "./components/seat-projection.js";
 import { coalitionDotPlot } from "./components/coalition-dot-plot.js";
-// REMOVE OLD diagnostics placeholder import
-// import { pollsterDiagnostics } from "./components/pollster-diagnostics.js"; 
-// Remove placeholder import
-// import { contestedBarsPlaceholder } from "./components/contested-bars-placeholder.js";
-// Map sidebar component - No longer imported directly here
-// import { mapSidebar } from "./components/map-sidebar.js";
 // NEW Combined Component
 import { mapWithSidebar } from "./components/mapWithSidebar.js"; 
-// REMOVE OLD Imports
-// import { contestedTable } from "./components/contested-table.js";
-// import { contestedBarsPlaceholder } from "./components/contested-bars-placeholder.js";
 // Import the NEW combined section component
 import { contestedSeatsSection } from "./components/contested-seats-section.js";
 // Import the NEW house effects heatmap component
 import { houseEffectsHeatmap } from "./components/house-effects-heatmap.js";
 // Import the standard html tag function
 import {html} from "npm:htl"; 
+import * as d3 from "npm:d3";
 // Import the NEW probability calculation functions
 import { calculateBlocMajorityProbability, calculatePartyMostSeatsProbability, formatProbabilityPercent, calculateBlocAGreaterThanBlocBProbability } from "./components/probability-calculator.js";
 // Import partyOrder for filtering seat projection data
@@ -158,11 +150,14 @@ const wideSeatProjectionData = await FileAttachment("data/seat_forecast_simulati
 // const pollErrorData = await FileAttachment("data/sample_poll_errors.json").json(); 
 // Load NEW house effects data
 const houseEffectsData = await FileAttachment("data/house_effects.json").json();
+console.log("[index.md] Loaded houseEffectsData:", JSON.stringify(houseEffectsData?.slice(0,5))); // Log first 5 entries
 // Load NEW forecast comparison data
 const forecastComparisonData = await FileAttachment("data/forecast_comparison_with_previous.json").json();
+// Load NEW poll bias data
+const pollBiasData = await FileAttachment("data/poll_bias.json").json();
+console.log("[index.md] Loaded pollBiasData:", JSON.stringify(pollBiasData?.slice(0,5))); // Log first 5 entries
 
 // --- Calculate Hero Banner Probs ---
-import * as d3 from "npm:d3"; // Need d3 for calculations
 // Import bloc definitions from NEW config file
 import { leftBlocParties, rightBlocParties, majorityThreshold } from "./config/blocs.js";
 // const leftBlocParties = ["PS", "BE", "CDU", "L"]; // REMOVE local definition 
@@ -202,6 +197,63 @@ function makeRaw(htmlString) {
     return document.createRange().createContextualFragment(htmlString);
   }
   return htmlString; // Fallback for non-browser environments (though unlikely here)
+}
+
+// Function to render the poll bias section
+function renderPollBiasSection(data, strings) {
+  console.log("[renderPollBiasSection] Received data:", JSON.stringify(data?.slice(0,5))); // Log first 5 entries
+  if (!data || data.length === 0) {
+    return html`<p class="note">${strings.pollBiasUnavailable || "Poll bias data is currently unavailable."}</p>`;
+  }
+
+  const partyOrderToUse = (typeof partyOrder !== 'undefined' && partyOrder.length > 0) ? partyOrder : null;
+  
+  const sortedData = data.slice().sort((a, b) => {
+    if (partyOrderToUse) {
+      const indexA = partyOrderToUse.indexOf(a.party);
+      const indexB = partyOrderToUse.indexOf(b.party);
+      if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+      if (indexA !== -1) return -1;
+      if (indexB !== -1) return 1;
+      return a.party.localeCompare(b.party);
+    }
+    return Math.abs(b.poll_bias) - Math.abs(a.poll_bias);
+  });
+
+  const biasValues = data.map(d => d.poll_bias);
+  const maxAbsBias = d3.max(biasValues.map(Math.abs));
+  const colorScale = d3.scaleDiverging([-maxAbsBias, 0, maxAbsBias], d3.interpolateBrBG);
+  const biasThreshold = 0.0001;
+
+  let itemsHtml = "";
+  for (const item of sortedData) {
+    const biasNumber = parseFloat(item.poll_bias);
+    const color = colorScale(biasNumber);
+    let qualitativeDescription;
+
+    if (biasNumber > biasThreshold) {
+      qualitativeDescription = strings.pollBiasLegendOver || "Overestimated by polls";
+    } else if (biasNumber < -biasThreshold) {
+      qualitativeDescription = strings.pollBiasLegendUnder || "Underestimated by polls";
+    } else {
+      qualitativeDescription = strings.pollBiasLegendBalanced || "Balanced in polls";
+    }
+    
+    const tooltipText = `${strings.pollBiasTooltipPrefix || "Bias: "}${biasNumber.toFixed(3)} (${qualitativeDescription})`;
+
+    itemsHtml += `
+      <div title="${tooltipText}" style="display: flex; align-items: center; margin-right: 1rem; margin-bottom: 0.5rem; padding: 0.25rem 0.5rem; background-color: var(--theme-background-alt); border-radius: 4px; border: 1px solid var(--theme-divider);">
+        <span style="font-weight: 500; font-size: 0.9em; white-space: nowrap; margin-right: 0.5rem;">${strings.partyNames?.[item.party] || item.party}</span>
+        <span style="width: 1em; height: 1em; background-color: ${color}; border-radius: 3px; display: inline-block; border: 1px solid var(--theme-divider-strong);"></span>
+      </div>
+    `;
+  }
+
+  return html`
+    <div class="poll-bias-horizontal-list" style="display: flex; flex-wrap: wrap; justify-content: center; margin: 0.5rem auto 0 auto; padding: 0 0.5rem;">
+      ${makeRaw(itemsHtml)}
+    </div>
+  `;
 }
 
 // Create a Set of known party keys for efficient lookup
@@ -483,6 +535,50 @@ function renderForecastComparisonTable(data) {
 
 // Remove event listener block if it exists
 // ```js ... listeners ... ``` 
+
+// --- Define the Poll Analysis Card HTML ---
+const pollAnalysisCardHTML = html`
+  <div class="card p-4" style="display: flex; flex-direction: column; justify-content: flex-start;">
+    <h2 style="text-align: center; margin-bottom: 1rem;">${strings.pollAnalysisTitle || "Poll Analysis"}</h2>
+    
+    <!-- Shared Color Legend -->
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5rem;">
+      <div style="display: flex; align-items: center; margin-bottom: 0.25rem;">
+        <span style="font-size: 0.85em; padding-right: 0.5em;">${strings.legendOverestimation || "Overestimation"}</span>
+        <svg width="120" height="20" style="border: 1px solid var(--theme-divider);">
+          <defs>
+            <linearGradient id="biasLegendGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="${d3.interpolateBrBG(0)}" /> <!-- Brown/Tan side -->
+              <stop offset="50%" stop-color="${d3.interpolateBrBG(0.5)}" /> <!-- Neutral middle -->
+              <stop offset="100%" stop-color="${d3.interpolateBrBG(1)}" /> <!-- Teal/Green side -->
+            </linearGradient>
+          </defs>
+          <rect width="120" height="20" fill="url(#biasLegendGradient)" />
+        </svg>
+        <span style="font-size: 0.85em; padding-left: 0.5em;">${strings.legendUnderestimation || "Underestimation"}</span>
+      </div>
+      <span style="font-size: 0.85em; color: var(--theme-foreground-muted);">${strings.legendBalanced || "(0 = Balanced)"}</span>
+    </div>
+
+    <p class="text-sm" style="text-align: left; margin-bottom:1.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        ${makeRaw(strings.pollAnalysisNote || "The heatmap below shows Pollster House Effects: how individual pollsters tend to deviate for specific parties. The list shows Average Poll Bias: the overall tendency of polls for each party. Colors indicate the direction and magnitude of these effects.")}
+    </p>
+
+    <h3 style="text-align: center; font-size: 1.15em; margin-bottom: 0.25rem;">${strings.averagePollBiasTitle || "Average Poll Bias"}</h3>
+    <div>
+      ${renderPollBiasSection(pollBiasData, strings)}
+    </div>
+
+    <hr style="margin: 2rem 0 1.5rem 0;">
+    
+    <h3 style="text-align: center; font-size: 1.15em; margin-bottom: 0.75rem; margin-top: 1rem;">${strings.pollsterHouseEffectsTitle || "Pollster House Effects"}</h3>
+    <div> 
+      ${resize(width => {
+        console.log("[houseEffectsHeatmap resize] Received houseEffectsData:", JSON.stringify(houseEffectsData?.slice(0,5)));
+        return houseEffectsHeatmap(houseEffectsData, { width, strings });
+      })}
+    </div>
+  </div>`;
 ```
 
 <!-- Row 1 Annotation -->
@@ -527,12 +623,7 @@ ${contestedSeatsSection(contestedSummaryData, {strings})}
     <p class="small note">${strings.nationalVoteIntentionNote}</p>
     ${resize((width) => nationalTrendsChart(nationalTrends, {width, strings}))}
   </div>
-  <div class="card p-4" style="display: flex; flex-direction: column; justify-content: flex-start;">
-    <h2>${strings.pollsterHouseEffectsTitle}</h2> 
-    <div> 
-      ${resize(width => houseEffectsHeatmap(houseEffectsData, { width, strings }))}
-    </div>
-  </div>
+  ${pollAnalysisCardHTML}
 </div>
 
 <!-- Insert the new forecast comparison section -->

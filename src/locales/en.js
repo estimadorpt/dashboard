@@ -100,12 +100,12 @@ export const T = {
   methodologyLi7_3: "The district effects model could potentially be enhanced in future versions by re-introducing dynamic components (like sensitivity/beta), adding district-level covariates, or incorporating spatial correlation structures.",
   methodologyP32: "Future versions may address these limitations by incorporating additional data sources (like economic indicators), activating dynamic district effects, using district-level covariates (such as demographics or past voting patterns) to better model the static offsets, or implementing spatial modeling techniques to capture correlations between neighboring districts.",
   methodologyP33_sources: "<strong>Sources:</strong>",
-  methodologyLi8_1: "Polling data aggregate from major national pollsters (Aximage, CESOP, Eurosondagem, Intercampus).",
-  methodologyLi8_2: "Historical election results from CNE (Comissão Nacional de Eleições).",
-  methodologyLi8_3: "Demographic data from INE (Instituto Nacional de Estatística).",
+  methodologyLi8_1: "Poll data: Aggregated from publicly available polls.",
+  methodologyLi8_2: "Election results: Official results from the Portuguese Electoral Commission (CNE) and other historical archives.",
+  methodologyLi8_3: "Economic data: Relevant economic indicators from national and international statistical agencies.",
 
   // Forecast Comparison Table
-  forecastCompUnavailable: "Forecast comparison data is unavailable or incomplete.",
+  forecastCompUnavailable: "Forecast comparison data is not available at this time.",
   forecastCompTitle: "Forecast Evolution: Comparison with Previous Run",
   forecastCompSubtitle1Part1: "Comparing current forecast (dated: ", // Placeholder for ${runADate}
   forecastCompSubtitle1Part2: ") with previous forecast (dated: ", // Placeholder for ${runBDate}
@@ -113,12 +113,12 @@ export const T = {
   forecastCompSubtitle2Part1: "Comparison generated on: ", // Placeholder for ${new Date(data.metadata.comparison_timestamp).toLocaleDateString()}
   forecastCompSubtitle2Part2: ".",
   forecastCompH3_Vote: "National Vote Share Evolution",
+  forecastCompH3_Seats: "Seat Projection Comparison",
   forecastCompThParty: "Party",
   forecastCompThCurrent: "Current Run",
   forecastCompThPrevious: "Previous Run",
   forecastCompThChange: "Change",
-  forecastCompH3_Seats: "Evolution of Projected Seats",
-  forecastCompDateUnavailable: "Date Unavailable",
+  forecastCompDateUnavailable: "N/A",
 
   // Annotations
   annoRow1: "Seat projections show likely outcomes for each party, with 116 seats needed for a majority (red line). The first chart displays the seat distribution per party, while the second illustrates the distribution of total seats for the left and right coalition blocs.",
@@ -132,7 +132,15 @@ export const T = {
   districtForecastTitle: "District Forecast & Details",
   nationalVoteIntentionTitle: "National Vote Intention",
   nationalVoteIntentionNote: "Modeled national vote share for major parties over time.",
-  pollsterHouseEffectsTitle: "Pollster House-Effects",
+  pollsterHouseEffectsTitle: "Pollster House Effects",
+  averagePollBiasTitle: "Average Poll Bias",
+
+  // Shared Poll Analysis Section
+  pollAnalysisTitle: "Poll Analysis: House Effects & Average Bias",
+  pollAnalysisNote: "The color scale indicates poll deviations: Brown suggests polls tend to overestimate a party's support, while Green suggests underestimation. The intensity reflects the magnitude of the deviation. Zero (light neutral) means balanced. <br><b>Pollster House Effects (heatmap):</b> Shows how individual pollsters tend to deviate for specific parties. <br><b>Average Poll Bias (list):</b> Shows the overall tendency of polls for each party.",
+  legendOverestimation: "Overestimation",
+  legendUnderestimation: "Underestimation",
+  legendBalanced: "(0 = Balanced)",
 
   // Footer
   footerModelBy: "Model and visualizations by Estimador.",
@@ -217,5 +225,26 @@ export const T = {
   ogHeroStatCondition: "AD wins most seats",
   ogSubtitlePrefix: "Median seats –",
   ogSubtitlePartySeat: "{party} {seats}",
-  ogFooter: "estimador.pt"
+  ogFooter: "estimador.pt",
+
+  // Poll Bias Section
+  pollBiasUnavailable: "Poll bias data is currently unavailable.",
+  pollBiasLegendOver: "Overestimated by polls",
+  pollBiasLegendUnder: "Underestimated by polls",
+  pollBiasLegendBalanced: "Balanced in polls",
+  pollBiasTooltipPrefix: "Bias: ",
+
+  // Party Names (basic, can be expanded)
+  partyNames: {
+    "AD": "AD",
+    "PS": "PS",
+    "CH": "CH",
+    "IL": "IL",
+    "BE": "BE",
+    "CDU": "CDU",
+    "L": "L",
+    "PAN": "PAN",
+    "OTH": "Others", // Example for 'Others'
+    // Add more full names if desired, e.g. "Aliança Democrática"
+  }
 }; 

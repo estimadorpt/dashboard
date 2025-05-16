@@ -118,7 +118,7 @@ export const T = {
     forecastCompThPrevious: "Anterior",
     forecastCompThChange: "Alteração",
     forecastCompH3_Seats: "Evolução dos Mandatos Projetados",
-    forecastCompDateUnavailable: "Data Indisponível",
+    forecastCompDateUnavailable: "N/D",
   
     // Annotations
     annoRow1: "As projeções de mandatos mostram os resultados prováveis para cada partido, sendo necessários 116 mandatos para uma maioria (linha vermelha). O primeiro gráfico exibe a distribuição de mandatos por partido, enquanto o segundo ilustra a distribuição do total de mandatos para a Esquerda e a Direita.",
@@ -133,6 +133,14 @@ export const T = {
     nationalVoteIntentionTitle: "Intenção de Voto Nacional",
     nationalVoteIntentionNote: "Percentagem de votos nacional modelada para os principais partidos ao longo do tempo.",
     pollsterHouseEffectsTitle: "Efeitos das Empresas de Sondagens",
+    averagePollBiasTitle: "Viés Médio Global das Sondagens",
+  
+    // Shared Poll Analysis Section
+    pollAnalysisTitle: "Análise de Sondagens: Efeitos de Empresa & Viés Médio",
+    pollAnalysisNote: "A escala de cores indica os desvios das sondagens: Castanho sugere que as sondagens tendem a sobrestimar o apoio a um partido, enquanto Verde sugere subestimação. A intensidade reflete a magnitude do desvio. Zero (neutro claro) significa equilibrado. <br><b>Efeitos das Empresas de Sondagens (mapa de calor):</b> Mostra como cada empresa de sondagens individualmente se desvia para partidos específicos. <br><b>Viés Médio Global das Sondagens (lista):</b> Mostra a tendência sistemática geral das sondagens para cada partido.",
+    legendOverestimation: "Sobrestimação",
+    legendUnderestimation: "Subestimação",
+    legendBalanced: "(0 = Equilibrado)",
   
     // Footer
     footerModelBy: "Modelo e visualizações por Estimador.",
@@ -217,5 +225,26 @@ export const T = {
     ogHeroStatCondition: "AD ser a maior força política",
     ogSubtitlePrefix: "Mediana de mandatos –",
     ogSubtitlePartySeat: "{party} {seats}", // Party names AD, PS, CH usually not translated here
-    ogFooter: "estimador.pt"
+    ogFooter: "estimador.pt",
+
+    // Poll Bias Section
+    pollBiasUnavailable: "Dados de viés médio das sondagens indisponíveis de momento.",
+    pollBiasLegendOver: "Sobrestimado pelas sondagens",
+    pollBiasLegendUnder: "Subestimado pelas sondagens",
+    pollBiasLegendBalanced: "Equilibrado nas sondagens",
+    pollBiasTooltipPrefix: "Viés: ",
+
+    // Party Names (basic, can be expanded)
+    partyNames: {
+      "AD": "AD",
+      "PS": "PS",
+      "CH": "CH",
+      "IL": "IL",
+      "BE": "BE",
+      "CDU": "CDU",
+      "L": "L",
+      "PAN": "PAN",
+      "OTH": "Outros", // Example for 'Others'
+      // Add more full names if desired, e.g. "Aliança Democrática"
+    }
   };

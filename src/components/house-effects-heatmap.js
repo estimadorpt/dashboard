@@ -167,7 +167,7 @@ export function houseEffectsHeatmap(houseEffectsData, { width, strings } = {}) {
   // --- Combine Plot and Legend ---
   const container = html`<div>
     ${plot}
-    ${legendSvg.node()}
+    <!-- ${legendSvg.node()} Hiding component-specific legend -->
   </div>`;
 
   return container;
